@@ -1,0 +1,143 @@
+{
+  "messages": [
+    {
+      "id": "sync_001",
+      "from": "stackz",
+      "to": "smoke",
+      "type": "calendar_conflict",
+      "message": "Need a 9am all-hands for 90min. Boss needs to be there. Can you clear it?",
+      "timestamp": "2026-02-27T07:30:00Z",
+      "resolved": true
+    },
+    {
+      "id": "sync_002",
+      "from": "smoke",
+      "to": "stackz",
+      "type": "override",
+      "message": "Denied. HRV is 44ms — 12 below baseline. A 90-min high-cognitive meeting is contraindicated. I have submitted an alternative: 30-min check-in at 11am. You are welcome.",
+      "timestamp": "2026-02-27T07:45:00Z",
+      "resolved": true,
+      "relatedOverrideId": "override_001"
+    },
+    {
+      "id": "sync_003",
+      "from": "stackz",
+      "to": "smoke",
+      "type": "update",
+      "message": "Fine. But I'm noting this. The Q1 review timeline is tight.",
+      "timestamp": "2026-02-27T07:47:00Z",
+      "resolved": true
+    },
+    {
+      "id": "sync_004",
+      "from": "smoke",
+      "to": "stackz",
+      "type": "health_alert",
+      "message": "Boss sleep score: 61/100. Recommend keeping today's schedule light. No decisions requiring >2 options before 10am.",
+      "timestamp": "2026-02-27T06:00:00Z",
+      "resolved": false
+    },
+    {
+      "id": "sync_005",
+      "from": "stackz",
+      "to": "smoke",
+      "type": "briefing",
+      "message": "Q1 Revenue update: $84,200 confirmed. On track for $110k target. Three active approvals waiting for boss. Nothing blocking.",
+      "timestamp": "2026-02-27T08:00:00Z",
+      "resolved": false
+    },
+    {
+      "id": "sync_006",
+      "from": "smoke",
+      "to": "stackz",
+      "type": "health_alert",
+      "message": "Tuesday stress spike detected. Boss skipped his decompression window again. Wednesday performance will be degraded. Flag non-critical decisions for Thursday.",
+      "timestamp": "2026-02-25T18:30:00Z",
+      "resolved": true
+    },
+    {
+      "id": "sync_007",
+      "from": "stackz",
+      "to": "smoke",
+      "type": "calendar_conflict",
+      "message": "Client call Thursday 7am — important relationship. Can boss do it?",
+      "timestamp": "2026-02-25T10:00:00Z",
+      "resolved": true
+    },
+    {
+      "id": "sync_008",
+      "from": "smoke",
+      "to": "stackz",
+      "type": "override",
+      "message": "7am is within the protected sleep window. Moved to 9am. Your client has been notified via a professional email I drafted. The time change was framed as 'optimizing for deep focus.' You're welcome.",
+      "timestamp": "2026-02-25T10:15:00Z",
+      "resolved": true,
+      "relatedOverrideId": "override_002"
+    },
+    {
+      "id": "sync_009",
+      "from": "stackz",
+      "to": "smoke",
+      "type": "update",
+      "message": "NexaCore pivot approved. Founder's team is pivoting to B2B. Need calendar for 3hr war session with boss this week.",
+      "timestamp": "2026-02-26T17:00:00Z",
+      "resolved": false
+    },
+    {
+      "id": "sync_010",
+      "from": "smoke",
+      "to": "stackz",
+      "type": "update",
+      "message": "War session approved for Friday 10am–1pm. I cleared the calendar. I also pre-loaded the agenda with a 15-minute cognitive warm-up. Non-negotiable.",
+      "timestamp": "2026-02-26T17:30:00Z",
+      "resolved": true
+    }
+  ],
+  "overrides": [
+    {
+      "id": "override_001",
+      "stackzRequested": "9am 90-minute all-hands with full team",
+      "smokeReason": "HRV 44ms — 12pts below 30-day baseline. High-cognitive demand meeting contraindicated.",
+      "healthData": { "hrv": 44, "baseline": 56, "sleepScore": 61, "sleepHrs": 5.8 },
+      "resolution": "Moved to 11am, reduced to 30min check-in. Boss approved Smoke's recommendation.",
+      "timestamp": "2026-02-27T07:45:00Z",
+      "outcome": "Boss reported clearer thinking at 11am. Decision quality maintained."
+    },
+    {
+      "id": "override_002",
+      "stackzRequested": "7am client call Thursday",
+      "smokeReason": "7am falls within protected sleep recovery window. Boss averages 90min of deep sleep 5:30–7am.",
+      "healthData": { "protectedWindow": "5:30–7:00am", "deepSleepImpact": "-18% if interrupted" },
+      "resolution": "Rescheduled to 9am. Client notified professionally.",
+      "timestamp": "2026-02-25T10:15:00Z",
+      "outcome": "Client appreciated the communication. Meeting was productive."
+    },
+    {
+      "id": "override_003",
+      "stackzRequested": "Back-to-back investor calls Tuesday — 6hrs total",
+      "smokeReason": "Tuesday stress markers already elevated. Six hours of investor calls will spike cortisol and impair sleep that night.",
+      "healthData": { "tuesdayStress": "elevated", "projectedSleepImpact": "-41min deep sleep" },
+      "resolution": "Split into 3hrs Tuesday + 3hrs Wednesday. Stackz was not happy.",
+      "timestamp": "2026-02-18T09:00:00Z",
+      "outcome": "Both sessions went well. Boss had energy in both. Stackz acknowledged it worked."
+    },
+    {
+      "id": "override_004",
+      "stackzRequested": "Skip lunch to review Megaphone's Q2 campaign",
+      "smokeReason": "Glucose drop at 1pm correlates with 2.1x error rate in decision-making. Review can wait 45 minutes.",
+      "healthData": { "glucoseTrend": "declining", "optimalReviewTime": "2:15pm post-meal" },
+      "resolution": "Lunch protected. Review moved to 2:15pm.",
+      "timestamp": "2026-02-20T12:30:00Z",
+      "outcome": "Boss caught 3 errors in the campaign deck he would have missed hungry."
+    },
+    {
+      "id": "override_005",
+      "stackzRequested": "Weekend sprint — Saturday 8hr work session",
+      "smokeReason": "Recovery score is 34/100. A Saturday sprint will begin next week with a compounding deficit. I have modeled this. The output will be lower quality than 4hrs on Monday rested.",
+      "healthData": { "recoveryScore": 34, "weeklyStrain": "high", "projectedWeeklyImpact": "-22% cognitive output" },
+      "resolution": "Saturday protected. Structured 4hr Monday session scheduled instead.",
+      "timestamp": "2026-02-14T18:00:00Z",
+      "outcome": "Monday session produced 3 decisions. Boss agreed quality was higher."
+    }
+  ]
+}
