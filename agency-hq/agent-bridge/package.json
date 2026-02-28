@@ -1,0 +1,14 @@
+{
+  "name": "agent-bridge",
+  "version": "1.0.0",
+  "description": "File‑watcher that routes messages to AI agents.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "chokidar": "^5.3.3",
+    "fs-extra": "^11.2.0"
+  }
+}
