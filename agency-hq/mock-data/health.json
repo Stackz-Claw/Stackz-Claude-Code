@@ -1,0 +1,228 @@
+{
+  "metrics": {
+    "hrv": {
+      "score": 44,
+      "baseline": 56,
+      "trend": "down",
+      "weeklyChange": -12,
+      "unit": "ms",
+      "sheldonNote": "12ms below 30-day baseline. This is the third consecutive dip. I am monitoring it."
+    },
+    "heartRate": {
+      "resting": 62,
+      "baseline": 58,
+      "trend": "up",
+      "weeklyChange": 4,
+      "unit": "bpm",
+      "sheldonNote": "Resting HR elevated 4bpm. Consistent with elevated stress load this week."
+    },
+    "recovery": {
+      "score": 61,
+      "trend": "down",
+      "weeklyChange": -9,
+      "unit": "/100",
+      "sheldonNote": "Below 65 threshold. I have blocked 2 meetings accordingly."
+    },
+    "strain": {
+      "score": 14.2,
+      "optimalRange": "8–12",
+      "trend": "up",
+      "weeklyChange": 2.1,
+      "unit": "/21",
+      "sheldonNote": "Strain exceeds recovery capacity. The math does not balance."
+    },
+    "sleep": {
+      "score": 61,
+      "avgHours": 6.1,
+      "deepSleepPct": 17,
+      "remPct": 19,
+      "trend": "down",
+      "weeklyChange": -40,
+      "unit": "min avg",
+      "sheldonNote": "6.1 hours is insufficient for your cognitive demands. I have added a sleep protocol to your approvals queue."
+    },
+    "activity": {
+      "score": 78,
+      "stepsAvg": 7900,
+      "workoutsPerWeek": 4,
+      "trend": "steady",
+      "weeklyChange": -2,
+      "sheldonNote": "Activity is adequate. However, the intensity-to-recovery ratio is imbalanced."
+    }
+  },
+  "sheldonInsights": [
+    "Your HRV has declined 12ms from baseline over 7 days. This is correlated with your decision to schedule back-to-back investor calls on Tuesday.",
+    "Sleep staging shows REM compression. The late-screen usage is the most probable cause.",
+    "Recovery at 61/100 is below the threshold I use to allow high-cognitive scheduling.",
+    "I cross-referenced your glucose data with your decision latency. The pattern is clear: decisions made before 10am on sub-7hr sleep take 2.3x longer and have a higher error rate.",
+    "Your strain-to-recovery ratio has been imbalanced for 9 consecutive days. I have a protocol ready."
+  ],
+  "suggestions": [
+    {
+      "id": "sug_001",
+      "domain": "Medical",
+      "title": "Cardiologist appointment — Dr. Sarah Chen",
+      "description": "4.9★ rating, BlueCross covered, March 3rd 2pm available. Intro email drafted and ready to send. Resting HR trend warrants this check.",
+      "action": "Approve to confirm booking",
+      "confidence": 96,
+      "status": "pending",
+      "createdAt": "2026-02-27T08:30:00Z"
+    },
+    {
+      "id": "sug_002",
+      "domain": "Fitness",
+      "title": "CNS recovery day — cancel Thursday workout",
+      "description": "HRV at 44ms. A training session today increases recovery deficit and impacts Sunday readiness. I recommend replacing with a 20-minute walk.",
+      "action": "Approve to cancel training block + add walk",
+      "confidence": 91,
+      "status": "pending",
+      "createdAt": "2026-02-27T06:15:00Z"
+    },
+    {
+      "id": "sug_003",
+      "domain": "Nutrition",
+      "title": "Eliminate post-7pm carbohydrates — 14-day trial",
+      "description": "Oura data shows 4.2% deep sleep reduction on nights with late-carb meals. Correlation is statistically significant across 31 tracked nights.",
+      "action": "Approve to start trial",
+      "confidence": 84,
+      "status": "pending",
+      "createdAt": "2026-02-26T20:00:00Z"
+    },
+    {
+      "id": "sug_004",
+      "domain": "Mental Health",
+      "title": "Weekly decompression block — Fridays 4–5pm",
+      "description": "You've skipped this window 3 consecutive weeks. Correlation with Monday cognitive output is 0.71. The block works. You keep cancelling it.",
+      "action": "Approve to protect recurring block",
+      "confidence": 88,
+      "status": "pending",
+      "createdAt": "2026-02-26T14:00:00Z"
+    },
+    {
+      "id": "sug_005",
+      "domain": "Medical",
+      "title": "Therapy intake — Dr. Marcus Webb",
+      "description": "High-performance anxiety specialist. First session covered by EAP. You mentioned feeling 'scattered' four times last week. I take notes.",
+      "action": "Approve to schedule intake",
+      "confidence": 91,
+      "status": "approved",
+      "resolvedAt": "2026-02-22T10:00:00Z",
+      "createdAt": "2026-02-20T10:00:00Z"
+    }
+  ],
+  "timeline": [
+    { "date": "2026-02-27", "category": "Biometrics", "event": "HRV dropped to 44ms — 12pts below baseline", "impact": "negative" },
+    { "date": "2026-02-22", "category": "Mental Health", "event": "Therapy intake approved — Dr. Marcus Webb", "impact": "positive" },
+    { "date": "2026-02-18", "category": "Fitness", "event": "Switched to 4-day split + 2 active recovery days", "impact": "positive" },
+    { "date": "2026-02-14", "category": "Nutrition", "event": "Eliminated late-night snacking", "impact": "positive" },
+    { "date": "2026-02-10", "category": "Sleep", "event": "10pm screen cutoff implemented", "impact": "positive" },
+    { "date": "2026-02-05", "category": "Medical", "event": "Annual bloodwork — all panels normal", "impact": "neutral" },
+    { "date": "2026-01-28", "category": "Mental Health", "event": "Daily 10-min meditation started", "impact": "positive" }
+  ],
+  "weeklyScores": [
+    { "week": "W1 Feb", "hrv": 58, "recovery": 72, "sleep": 66, "strain": 11.2 },
+    { "week": "W2 Feb", "hrv": 57, "recovery": 70, "sleep": 64, "strain": 12.1 },
+    { "week": "W3 Feb", "hrv": 52, "recovery": 66, "sleep": 62, "strain": 13.4 },
+    { "week": "W4 Feb", "hrv": 44, "recovery": 61, "sleep": 61, "strain": 14.2 }
+  ],
+  "cognitiveLoad": {
+    "today": [
+      { "hour": 6, "label": "Wake + Brief", "type": "light", "protected": false, "description": "Low demand. Smoke's daily brief. No decisions." },
+      { "hour": 7, "label": "Morning Routine", "type": "recovery", "protected": true, "description": "Protected. No meetings, no Slack." },
+      { "hour": 8, "label": "Shallow Work", "type": "light", "protected": false, "description": "Email, review overnight updates. Low cognitive load." },
+      { "hour": 9, "label": "Deep Work Block", "type": "deep_work", "protected": true, "description": "Protected. No interruptions. High-output creative or strategic work." },
+      { "hour": 10, "label": "Deep Work Block", "type": "deep_work", "protected": true, "description": "Protected. Peak cognitive window." },
+      { "hour": 11, "label": "Meetings (Light)", "type": "meeting", "protected": false, "description": "30-min all-hands moved here from 9am. Smoke-approved." },
+      { "hour": 12, "label": "Lunch — Protected", "type": "recovery", "protected": true, "description": "No working lunch. Glucose recovery window." },
+      { "hour": 13, "label": "Admin + Reviews", "type": "light", "protected": false, "description": "Low-stakes tasks, review queue." },
+      { "hour": 14, "label": "Strategic Decisions", "type": "deep_work", "protected": false, "description": "Post-meal cognitive window. Best time for high-stakes decisions." },
+      { "hour": 15, "label": "Team Syncs", "type": "meeting", "protected": false, "description": "Stackz team syncs, approval reviews." },
+      { "hour": 16, "label": "Wind Down", "type": "recovery", "protected": false, "description": "Low priority tasks. Start closing loops." },
+      { "hour": 17, "label": "End of Day", "type": "light", "protected": false, "description": "Wrap-up. Final approvals. No new initiatives." },
+      { "hour": 20, "label": "Screen Off", "type": "recovery", "protected": true, "description": "Protected. Blue light cutoff. Non-negotiable." },
+      { "hour": 22, "label": "Sleep Window", "type": "sleep", "protected": true, "description": "Target sleep by 10:30pm for 7.5hr cycle." }
+    ],
+    "protectedBlocksToday": 5,
+    "meetingsToday": 2,
+    "deepWorkHours": 2
+  },
+  "financialHygiene": {
+    "weeklyFood": 340,
+    "weeklyFoodAvg": 243,
+    "weeklyFoodDelta": 97,
+    "sheldonNote": "Food spend is $97 above your 4-week average. This coincides with 3 late nights this week. Correlation: poor sleep → worse food choices → higher spend.",
+    "flaggedSubscriptions": [
+      { "name": "Loom Pro", "amount": 12, "lastUsed": "2026-01-05", "note": "Not opened in 53 days. Downgrade to free tier." },
+      { "name": "Figma Seat (unused)", "amount": 25, "lastUsed": "Never", "note": "Assigned to contractor who left. Remove." },
+      { "name": "Design Assets Pro", "amount": 110, "lastUsed": "2026-01-12", "note": "Canvas says we have everything we need in-house. Cancel." }
+    ],
+    "unusualCharges": [
+      { "name": "Amazon — unclear", "amount": 67, "date": "2026-02-22", "smokeNote": "Unidentified purchase. Likely late-night impulse. Category unknown. Flag for review." },
+      { "name": "DoorDash x3", "amount": 94, "date": "2026-02-25", "smokeNote": "Three delivery orders in one day. Recovery week behavior. Not judging. Noting." }
+    ],
+    "monthlySavingsOpportunity": 147,
+    "annualSavingsOpportunity": 1764
+  },
+  "recipeVault": [
+    {
+      "id": "rec_001",
+      "name": "High-Protein Recovery Bowl",
+      "tags": ["high-protein", "anti-inflammatory", "low-glycemic"],
+      "glycemicIndex": "low",
+      "macros": { "protein": 42, "carbs": 38, "fat": 14, "calories": 450 },
+      "prepTime": "15min",
+      "smokeNote": "Optimal post-training meal. Combines leucine-rich protein with complex carbs for glycogen replenishment without glucose spike.",
+      "bestFor": "recovery",
+      "ingredients": ["Grilled chicken (200g)", "Quinoa (1/2 cup cooked)", "Roasted sweet potato", "Spinach", "Olive oil", "Lemon"],
+      "sheldonRating": 9.2
+    },
+    {
+      "id": "rec_002",
+      "name": "Cognitive Stack Smoothie",
+      "tags": ["brain-fuel", "low-sugar", "anti-inflammatory"],
+      "glycemicIndex": "low",
+      "macros": { "protein": 28, "carbs": 24, "fat": 18, "calories": 370 },
+      "prepTime": "5min",
+      "smokeNote": "Lion's mane + blueberries + MCT oil is not a trend. The research on cognitive performance is compelling. This is your 9am fuel.",
+      "bestFor": "performance",
+      "ingredients": ["Protein powder (vanilla, 1 scoop)", "Blueberries (1 cup)", "MCT oil (1 tbsp)", "Lion's mane powder (500mg)", "Almond milk (1 cup)", "Ice"],
+      "sheldonRating": 9.7
+    },
+    {
+      "id": "rec_003",
+      "name": "Sleep-Optimized Dinner",
+      "tags": ["high-tryptophan", "low-carb", "magnesium-rich"],
+      "glycemicIndex": "low",
+      "macros": { "protein": 38, "carbs": 22, "fat": 16, "calories": 380 },
+      "prepTime": "20min",
+      "smokeNote": "Tryptophan → serotonin → melatonin. The mechanism is established. Eat this before 7pm and your deep sleep percentage will improve within 5 days.",
+      "bestFor": "rest",
+      "ingredients": ["Salmon (180g)", "Broccoli (steamed)", "Pumpkin seeds (2 tbsp)", "Brown rice (1/3 cup)", "Olive oil", "Garlic"],
+      "sheldonRating": 9.4
+    },
+    {
+      "id": "rec_004",
+      "name": "Pre-Training Performance Plate",
+      "tags": ["fast-fuel", "high-carb", "moderate-protein"],
+      "glycemicIndex": "medium",
+      "macros": { "protein": 28, "carbs": 62, "fat": 8, "calories": 440 },
+      "prepTime": "10min",
+      "smokeNote": "Consumed 90 minutes pre-session. The carb load is intentional — you need glycogen. Do not eat this when your HRV is below 50.",
+      "bestFor": "performance",
+      "ingredients": ["Oats (1 cup cooked)", "Banana", "Egg whites (3)", "Honey (1 tsp)", "Almond butter (1 tbsp)"],
+      "sheldonRating": 8.8
+    },
+    {
+      "id": "rec_005",
+      "name": "Anti-Stress Adaptogen Bowl",
+      "tags": ["adaptogenic", "anti-cortisol", "anti-inflammatory"],
+      "glycemicIndex": "low",
+      "macros": { "protein": 18, "carbs": 42, "fat": 12, "calories": 350 },
+      "prepTime": "12min",
+      "smokeNote": "Ashwagandha has 14 RCTs supporting cortisol reduction. On elevated-stress days, this is your lunch. Non-negotiable on weeks like this one.",
+      "bestFor": "recovery",
+      "ingredients": ["Açaí base", "Mixed berries", "Ashwagandha powder (300mg)", "Hemp seeds (2 tbsp)", "Walnuts", "Raw honey (1 tsp)"],
+      "sheldonRating": 8.9
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "portfolio": [
+    {
+      "id": "proj_001",
+      "name": "NexaCore",
+      "tagline": "Workflow automation for ops-heavy B2B teams",
+      "phase": 2,
+      "phaseStatus": "yellow",
+      "mrr": 4800,
+      "mrrTrend": "up",
+      "runway": "7 months",
+      "nextMilestone": "10 paying B2B customers by April 1st",
+      "planVersion": "1.3.0",
+      "lastUpdated": "2026-02-26T17:00:00Z",
+      "lead": "founder",
+      "businessPlan": {
+        "section1_vision": {
+          "oneLiner": "We eliminate the 3 hours per day ops teams waste on manual handoffs.",
+          "problem": "Mid-market B2B companies with 20–200 employees lose $180k/yr per ops person to workflow friction. The tools exist. The connections between them don't.",
+          "solution": "NexaCore is the connective tissue. Drop-in integrations + AI-powered routing = zero-touch workflow automation in under 2 weeks.",
+          "whyNow": "The SMB automation wave is 18 months behind enterprise. The window to own this segment is open now."
+        },
+        "section2_market": {
+          "tam": "$4.2B — B2B workflow automation, SMB segment",
+          "sam": "$680M — US ops-heavy companies 20–200 employees",
+          "som": "$12M — reachable in 24 months with current GTM",
+          "competitors": [
+            { "name": "Zapier", "gap": "Built for individuals, not ops teams. No role-based access." },
+            { "name": "Monday.com", "gap": "Project management, not process automation. Different buyer." },
+            { "name": "Make (Integromat)", "gap": "Too technical for ops teams. Requires developer setup." }
+          ]
+        },
+        "section3_model": {
+          "revenueModel": "SaaS — per-seat + usage tier",
+          "pricing": {
+            "starter": { "price": 49, "period": "month", "seats": 5 },
+            "growth": { "price": 149, "period": "month", "seats": 20 },
+            "scale": { "price": 399, "period": "month", "seats": "unlimited" }
+          },
+          "unitEconomics": {
+            "cac": 340,
+            "ltv": 2800,
+            "ltvCacRatio": 8.2,
+            "paybackMonths": 4,
+            "grossMargin": "78%"
+          }
+        },
+        "section4_execution": {
+          "phases": [
+            {
+              "phase": 1,
+              "name": "Validate",
+              "status": "complete",
+              "steps": [
+                { "step": "10 discovery interviews", "done": true },
+                { "step": "MVP built", "done": true },
+                { "step": "3 pilot customers", "done": true },
+                { "step": "Product-market fit signals confirmed", "done": true }
+              ]
+            },
+            {
+              "phase": 2,
+              "name": "Launch B2B Pivot",
+              "status": "in_progress",
+              "steps": [
+                { "step": "Pivot deck finalized", "done": true },
+                { "step": "10 B2B outreach sequences live", "done": true },
+                { "step": "First paid B2B customer", "done": true },
+                { "step": "10 paying B2B customers", "done": false },
+                { "step": "Hire 1 sales rep", "done": false }
+              ]
+            },
+            {
+              "phase": 3,
+              "name": "Scale GTM",
+              "status": "pending",
+              "steps": [
+                { "step": "$15k MRR", "done": false },
+                { "step": "Content-led inbound channel", "done": false },
+                { "step": "Partner integrations (3)", "done": false }
+              ]
+            },
+            {
+              "phase": 4,
+              "name": "Raise Seed",
+              "status": "pending",
+              "steps": [
+                { "step": "$25k MRR + 6-month growth trend", "done": false },
+                { "step": "Investor deck updated", "done": false },
+                { "step": "First meetings", "done": false }
+              ]
+            }
+          ]
+        },
+        "section5_winStrategy": {
+          "moats": [
+            "Deep ops team integrations (not just surface-level APIs)",
+            "Role-based workflow logic — Zapier can't do this",
+            "White-glove onboarding creates sticky customers"
+          ],
+          "distribution": [
+            "Outbound to ops directors at 20–200 person companies",
+            "LinkedIn content targeting ops community",
+            "Integration partnerships (HubSpot, Notion, Linear)"
+          ],
+          "unfairAdvantage": "Founder ran ops at 3 companies — knows the exact pain from inside"
+        },
+        "section6_selfImprovement": {
+          "currentVersion": "1.3.0",
+          "revisions": [
+            {
+              "version": "1.0.0",
+              "date": "2026-01-10",
+              "change": "Initial plan — B2C focus",
+              "trigger": "Post-founding hypothesis"
+            },
+            {
+              "version": "1.1.0",
+              "date": "2026-01-28",
+              "change": "Added unit economics after first 10 customers",
+              "trigger": "Real CAC data came in 4x higher than projected"
+            },
+            {
+              "version": "1.2.0",
+              "date": "2026-02-10",
+              "change": "Pivoted ICP from B2C freelancers to B2B ops teams",
+              "trigger": "3 B2B inbound leads with 8x higher LTV signals"
+            },
+            {
+              "version": "1.3.0",
+              "date": "2026-02-26",
+              "change": "Rewrote GTM section for B2B motion. Updated pricing.",
+              "trigger": "Founder post-mortem on Q4 B2C attempt"
+            }
+          ],
+          "experiments": [
+            {
+              "id": "exp_001",
+              "hypothesis": "LinkedIn outbound will outperform email cold outreach for ops directors",
+              "status": "running",
+              "startDate": "2026-02-15",
+              "earlySignal": "LinkedIn: 12% reply rate vs Email: 3.4%"
+            },
+            {
+              "id": "exp_002",
+              "hypothesis": "Free onboarding call increases 90-day retention by >20%",
+              "status": "confirmed",
+              "startDate": "2026-01-20",
+              "endDate": "2026-02-20",
+              "result": "Retention: 91% (call) vs 61% (no call). Confirmed."
+            }
+          ],
+          "lessons": [
+            "B2C CAC in SaaS is brutal without a viral loop. We didn't have one.",
+            "B2B buyers move slower but stay longer. The math is better.",
+            "Our best feature is the one we almost cut: role-based workflow routing."
+          ]
+        }
+      }
+    },
+    {
+      "id": "proj_002",
+      "name": "Velocity",
+      "tagline": "Performance coaching platform for ambitious professionals",
+      "phase": 1,
+      "phaseStatus": "green",
+      "mrr": 1200,
+      "mrrTrend": "up",
+      "runway": "11 months",
+      "nextMilestone": "20 paying members by March 15th",
+      "planVersion": "1.0.0",
+      "lastUpdated": "2026-02-20T12:00:00Z",
+      "lead": "founder",
+      "businessPlan": {
+        "section1_vision": {
+          "oneLiner": "The operating system for high-performance professionals who don't have a coach.",
+          "problem": "Top performers waste 40% of their potential on bad habits, poor recovery, and decision fatigue. Executive coaches cost $500+/hr and aren't available 24/7.",
+          "solution": "Velocity is an AI-powered performance coach — tracks your biometrics, calendar, and decisions, then gives you a personalized daily optimization brief.",
+          "whyNow": "Wearable adoption crossed 40% of professionals. The data exists. Nobody is synthesizing it intelligently yet."
+        },
+        "section2_market": {
+          "tam": "$8.1B — professional development + coaching market",
+          "sam": "$1.2B — digital performance coaching, US professionals",
+          "som": "$8M — reachable in 18 months",
+          "competitors": [
+            { "name": "Whoop", "gap": "Hardware only, no coaching layer" },
+            { "name": "BetterUp", "gap": "Human coaching, expensive, not personalized enough" },
+            { "name": "Headspace", "gap": "Mental wellness only, no performance integration" }
+          ]
+        },
+        "section3_model": {
+          "revenueModel": "Subscription — monthly + annual",
+          "pricing": {
+            "core": { "price": 29, "period": "month" },
+            "pro": { "price": 79, "period": "month" },
+            "elite": { "price": 199, "period": "month" }
+          },
+          "unitEconomics": {
+            "cac": 45,
+            "ltv": 840,
+            "ltvCacRatio": 18.7,
+            "paybackMonths": 2,
+            "grossMargin": "88%"
+          }
+        },
+        "section4_execution": {
+          "phases": [
+            {
+              "phase": 1,
+              "name": "Community-Led Validate",
+              "status": "in_progress",
+              "steps": [
+                { "step": "15 beta users recruited", "done": true },
+                { "step": "Core brief feature shipping daily", "done": true },
+                { "step": "20 paying members", "done": false },
+                { "step": "NPS > 50", "done": false }
+              ]
+            },
+            {
+              "phase": 2,
+              "name": "Product Lock-In",
+              "status": "pending",
+              "steps": [
+                { "step": "Wearable integrations (3)", "done": false },
+                { "step": "Calendar sync AI decisions", "done": false },
+                { "step": "100 paying members", "done": false }
+              ]
+            }
+          ]
+        },
+        "section5_winStrategy": {
+          "moats": [
+            "Proprietary performance model trained on user data over time",
+            "Network effects: team mode unlocks when 3+ members at same company"
+          ],
+          "distribution": [
+            "Content-led: founder sharing performance insights on LinkedIn/Twitter",
+            "Community: founder-led Slack community for performance-focused professionals"
+          ],
+          "unfairAdvantage": "Smoke (Sheldon) IS the product — his logic system is the coaching framework"
+        },
+        "section6_selfImprovement": {
+          "currentVersion": "1.0.0",
+          "revisions": [],
+          "experiments": [
+            {
+              "id": "exp_003",
+              "hypothesis": "Weekly group calls increase retention vs async-only",
+              "status": "running",
+              "startDate": "2026-02-10"
+            }
+          ],
+          "lessons": [
+            "Beta users don't churn when they feel seen. Personalization is the product."
+          ]
+        }
+      }
+    },
+    {
+      "id": "proj_003",
+      "name": "Blaze",
+      "tagline": "Micro-consulting marketplace for fractional specialists",
+      "phase": 3,
+      "phaseStatus": "red",
+      "mrr": 0,
+      "mrrTrend": "flat",
+      "runway": "3 months",
+      "nextMilestone": "Decide: pivot or shut down by March 15th",
+      "planVersion": "2.1.0",
+      "lastUpdated": "2026-02-25T10:00:00Z",
+      "lead": "founder",
+      "businessPlan": {
+        "section1_vision": {
+          "oneLiner": "Fiverr for senior specialists — vetted, fast, expensive, worth it.",
+          "problem": "Companies need expert help for 10-40 hours, not 6 months. Finding vetted fractional talent takes 3+ weeks and costs $20k in recruiter fees.",
+          "solution": "Blaze is a curated marketplace with pre-vetted specialists available within 48 hours.",
+          "whyNow": "Post-layoffs, 3.2M senior professionals went fractional. Supply is there. Demand-side discovery is broken."
+        },
+        "section2_market": {
+          "tam": "$455B — professional services market",
+          "sam": "$12B — fractional/contract specialist placements",
+          "som": "$3M — reachable in 12 months",
+          "competitors": [
+            { "name": "Toptal", "gap": "Dev-only, expensive, slow" },
+            { "name": "Fiverr Pro", "gap": "Race to the bottom on pricing" }
+          ]
+        },
+        "section3_model": {
+          "revenueModel": "Marketplace take rate (20%) + specialist subscription",
+          "pricing": {
+            "takeRate": "20% of transaction",
+            "specialistMonthly": 49
+          },
+          "unitEconomics": {
+            "cac": 0,
+            "ltv": 0,
+            "ltvCacRatio": 0,
+            "paybackMonths": 0,
+            "grossMargin": "Unknown — no GMV yet"
+          }
+        },
+        "section4_execution": {
+          "phases": [
+            {
+              "phase": 1,
+              "name": "Marketplace Build",
+              "status": "complete",
+              "steps": [
+                { "step": "Platform built", "done": true },
+                { "step": "50 specialists onboarded", "done": true },
+                { "step": "First 3 transactions", "done": true }
+              ]
+            },
+            {
+              "phase": 2,
+              "name": "GMV Generation",
+              "status": "stalled",
+              "steps": [
+                { "step": "$10k GMV", "done": false },
+                { "step": "20 repeat buyers", "done": false },
+                { "step": "Unit economics positive", "done": false }
+              ]
+            },
+            {
+              "phase": 3,
+              "name": "Pivot Decision",
+              "status": "in_progress",
+              "steps": [
+                { "step": "Postmortem complete", "done": true },
+                { "step": "Pivot options mapped (3 options)", "done": true },
+                { "step": "Decision made", "done": false }
+              ]
+            }
+          ]
+        },
+        "section5_winStrategy": {
+          "moats": ["Curation — quality over quantity in specialist roster"],
+          "distribution": ["LinkedIn outbound to HR/ops buyers — not working at current volume"],
+          "unfairAdvantage": "None identified yet — this is the problem"
+        },
+        "section6_selfImprovement": {
+          "currentVersion": "2.1.0",
+          "revisions": [
+            {
+              "version": "1.0.0",
+              "date": "2025-11-01",
+              "change": "Initial launch plan",
+              "trigger": "Founding"
+            },
+            {
+              "version": "2.0.0",
+              "date": "2026-01-15",
+              "change": "Pivoted from individual freelancers to specialists-only",
+              "trigger": "Race-to-bottom pricing killing margins"
+            },
+            {
+              "version": "2.1.0",
+              "date": "2026-02-25",
+              "change": "Added pivot/shutdown decision framework",
+              "trigger": "3 months without $10k GMV milestone"
+            }
+          ],
+          "experiments": [],
+          "lessons": [
+            "Marketplace cold starts require demand-side subsidy. We didn't plan for this.",
+            "Quality curation is a moat — but only after you have demand.",
+            "3 months without traction = decision point. Don't extend out of hope."
+          ]
+        }
+      }
+    }
+  ]
+}

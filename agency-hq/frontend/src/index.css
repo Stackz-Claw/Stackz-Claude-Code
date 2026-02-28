@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* v2 primary palette */
+    --smoke: #0EA5E9;
+    --stackz: #10B981;
+    --warden: #F59E0B;
+    --megaphone: #EC4899;
+    --forge: #6366F1;
+    --radar: #14B8A6;
+    --canvas: #A78BFA;
+    --cashflow: #22C55E;
+    --founder: #F97316;
+    /* Base */
+    --hq-dark: #0F172A;
+    --hq-surface: #1E293B;
+    --hq-card: #334155;
+  }
+
+  body {
+    @apply bg-hq-dark text-white font-display;
+    overflow: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(14, 165, 233, 0.3);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(14, 165, 233, 0.6);
+  }
+}
+
+@layer components {
+  /* Base glass panel */
+  .glass-panel {
+    @apply bg-glass-bg border border-glass-border backdrop-blur-md rounded-xl shadow-glass;
+  }
+
+  .glass-panel-hover {
+    @apply glass-panel transition-all duration-300 hover:border-smoke-blue/30 hover:shadow-smoke;
+  }
+
+  /* Domain-specific glass panels */
+  .glass-smoke {
+    background: rgba(14, 165, 233, 0.05);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    @apply backdrop-blur-md rounded-xl shadow-glass;
+  }
+
+  .glass-stackz {
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    @apply backdrop-blur-md rounded-xl shadow-glass;
+  }
+
+  /* Text utilities */
+  .neon-text-smoke {
+    color: var(--smoke);
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+  }
+
+  .neon-text-stackz {
+    color: var(--stackz);
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+
+  .neon-text-blue {
+    color: var(--smoke);
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+  }
+
+  .neon-text-green {
+    color: var(--stackz);
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+
+  /* Buttons */
+  .btn-smoke {
+    @apply px-4 py-2 bg-smoke-blue/10 border border-smoke-blue/40 text-smoke-blue rounded-lg
+           hover:bg-smoke-blue/20 hover:border-smoke-blue transition-all duration-200
+           font-mono text-sm font-medium;
+  }
+
+  .btn-stackz {
+    @apply px-4 py-2 bg-stackz-green/10 border border-stackz-green/40 text-stackz-green rounded-lg
+           hover:bg-stackz-green/20 hover:border-stackz-green transition-all duration-200
+           font-mono text-sm font-medium;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-smoke-blue/10 border border-smoke-blue/40 text-smoke-blue rounded-lg
+           hover:bg-smoke-blue/20 hover:border-smoke-blue transition-all duration-200
+           font-mono text-sm font-medium;
+  }
+
+  .btn-success {
+    @apply px-4 py-2 bg-stackz-green/10 border border-stackz-green/40 text-stackz-green rounded-lg
+           hover:bg-stackz-green/20 hover:border-stackz-green transition-all duration-200
+           font-mono text-sm font-medium;
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 bg-red-500/10 border border-red-500/40 text-red-400 rounded-lg
+           hover:bg-red-500/20 hover:border-red-500 transition-all duration-200
+           font-mono text-sm font-medium;
+  }
+
+  /* Status indicators */
+  .status-dot {
+    @apply w-2 h-2 rounded-full animate-pulse;
+  }
+
+  .hq-label {
+    @apply text-xs font-mono uppercase tracking-widest text-white/40;
+  }
+
+  .hq-value {
+    @apply text-lg font-display font-semibold text-white;
+  }
+
+  /* Sync Bus pulse */
+  .sync-pulse {
+    @apply animate-sync-pulse;
+  }
+
+  /* Phase status badges */
+  .phase-green {
+    @apply bg-emerald-500/20 border border-emerald-500/40 text-emerald-400;
+  }
+
+  .phase-yellow {
+    @apply bg-amber-500/20 border border-amber-500/40 text-amber-400;
+  }
+
+  .phase-red {
+    @apply bg-red-500/20 border border-red-500/40 text-red-400;
+  }
+}
+
+/* Scanline CRT overlay */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Neon glow pulse */
+@keyframes neonPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.neon-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+/* Node pulse for React Flow */
+@keyframes nodePulse {
+  0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(14, 165, 233, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+}
+
+.node-pulse {
+  animation: nodePulse 2s infinite;
+}
+
+/* Ticker animation */
+@keyframes tickerSlide {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.ticker-digit {
+  animation: tickerSlide 0.15s ease-out;
+}
+
+/* Sync Bus data line animation */
+@keyframes syncFlow {
+  0% { stroke-dashoffset: 100; opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.3; }
+}
+
+.sync-flow {
+  stroke-dasharray: 20 10;
+  animation: syncFlow 2s linear infinite;
+}
+
+/* MOC node pulse (Zettelkasten) */
+@keyframes mocPulse {
+  0% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(167, 139, 250, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0); }
+}
+
+.moc-pulse {
+  animation: mocPulse 2.5s infinite;
+}
