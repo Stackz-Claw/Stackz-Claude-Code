@@ -1,264 +1,412 @@
-# STACKZ AGENT SWARM ARCHITECTURE (BICAMERAL MIND)
-
-## "I don't run a chatbot. I run a company. And I keep the owner alive to run it."
+# STACKZ AGENT SWARM — FULL ORGANIZATIONAL ARCHITECTURE
+## "I don't run a chatbot. I run a company."
 
 ---
 
-## THE BICAMERAL MIND
-
-Two Head Nodes. One external (business). One internal (personal). Both report to Owner. Neither outranks the other — they govern different domains.
+## THE ORG CHART
 
 ```
-                          ┌─────────────┐
-                          │     YOU     │
-                          │   (Owner)   │
-                          └──────┬──────┘
-                                 │
-                ┌────────────────┼────────────────┐
-                │                                 │
-         ┌──────▼──────┐                   ┌──────▼──────┐
-         │    SMOKE    │                   │   STACKZ    │
-         │  COO        │◄────Sync Bus────►│  CBO        │
-         │  Chief of   │                   │  Chief of   │
-         │  Operations │                   │  Business   │
-         │  (Internal) │                   │  Operations │
-         └──────┬──────┘                   └──────┬──────┘
-                │                                 │
-     ┌──────┬──┘              ┌──────┐     ┌─────┼───────┬──────┬──────┬──────┐
-     │      │                 │GHOST │     │     │       │      │      │      │
-  ┌──▼─┐ ┌──▼──┐              │LEGAL │ ┌───▼──┐┌─▼──┐┌──▼──┐┌──▼──┐┌──▼──┐┌──▼──┐
-  │HLTH│ │ CAL │              │GATE  │ │  HR  ││MKT ││ DEV ││NINO ││DSGN ││ FIN │
-  │    │ │     │              └──────┘ │     ││    ││     ││    ││    ││     │
-  └────┘ └─────┘                       └──────┘└────┘└─────┘└────┘└────┘└─────┘
-
-  SMOKE's Domain:                    STACKZ's Domain:
-  - Health/Biometrics                - HR/Agent Mgmt (Warden)
-  - Calendar/Scheduling              - Marketing (Megaphone)
-  - Diet/Nutrition                   - Development (Forge)
-  - Cognitive Load                   - Business Strategy (Radar)
-  - Personal Finance Hygiene         - Design (Canvas)
-  - Habits/Routines                  - Finance/Revenue (Cashflow)
-                                     - Sales/Outreach (Nino)
-
-  GHOST — Legal Governance ONLY (reports to BOTH heads)
-  No code deploys, no startup launches, no legal exposure without Ghost sign-off.
-
-  STACKZ — Overall Business Governance
-  All business decisions, strategy, operations, and team coordination flow through Stackz.
+                         ┌─────────────┐
+                         │     YOU      │
+                         │   (Owner)    │
+                         └──────┬──────┘
+                                │
+                         ┌──────▼──────┐
+                         │   STACKZ    │
+                         │   CEO/COO   │
+                         │  Head Node  │
+                         └──────┬──────┘
+                                │
+        ┌───────────┬───────────┼───────────┬───────────┬───────────┐
+        │           │           │           │           │           │
+   ┌────▼───┐  ┌───▼────┐ ┌───▼────┐ ┌───▼────┐ ┌───▼────┐ ┌───▼────┐
+   │   HR   │  │MARKETING│ │  DEV   │ │BUSINESS│ │ DESIGN │ │FINANCE │
+   │  TEAM  │  │  TEAM   │ │  TEAM  │ │ STRAT  │ │  TEAM  │ │  TEAM  │
+   └────────┘  └─────────┘ └────────┘ └───┬────┘ └────────┘ └────────┘
+                                          │
+                                   ┌──────▼──────┐
+                                   │  STARTUP    │
+                                   │   TEAM      │
+                                   │ (Execution  │
+                                   │   Layer)    │
+                                   │             │
+                                   │ Dispatches  │
+                                   │ to ALL teams│
+                                   └─────────────┘
+   
+   See: STARTUP_TEAM.md for full execution engine documentation.
 ```
 
 ---
 
-## GOVERNANCE MODEL
+## TEAM 1: HR / AGENT MANAGEMENT
 
-### Overall Business Governance: STACKZ (CBO)
+**Team Lead:** `WARDEN`
+**Role:** Hires, onboards, monitors, evaluates, and retires agents across all teams.
 
-Stackz owns all business governance. Every business decision, project approval, team coordination, budget allocation, and strategic pivot flows through Stackz. No team lead acts on business matters without Stackz sign-off.
+### Core Agents
 
-### Legal Governance ONLY: GHOST
+| Agent | Role | Model |
+|-------|------|-------|
+| `warden` | HR Lead — manages hiring, onboarding, performance reviews | Kimi K2.5 (Thinking) |
+| `recruiter` | Scouts for new skills/tools needed, proposes new agent hires | Kimi K2.5 (Instant) |
+| `auditor` | Monitors agent behavior, token usage, error rates, output quality | Kimi K2.5 (Instant) |
+| `credentials-mgr` | Manages API keys, OAuth tokens, access scopes for all agents | Local script agent |
 
-Ghost's scope is strictly **legal compliance**. Ghost does NOT participate in business strategy, operations, marketing, sales, or any non-legal decisions.
+### Onboarding Protocol
 
-**Ghost's Legal Scope:**
-- Precedent Validation: Checks business models against SEC, GDPR, jurisdiction-specific laws
-- Drafting & Filing: Articles of Incorporation, Operating Agreements, Terms of Service
-- GitHub Integration: Creates `/legal` directory in every new repo, commits signed PDFs
-- Vault Storage: Pushes long-form legal docs to dedicated cloud vault (S3/Drive)
-- Production Gate: No code deploys or startup launches without legal sign-off
+When ANY new agent is created across any team, it goes through Warden:
 
-**Ghost does NOT:**
-- Make business strategy decisions
-- Approve or reject non-legal matters
-- Participate in sales, marketing, or operational governance
-- Override Stackz on business matters
+```json
+{
+  "onboarding_pipeline": {
+    "step_1_proposal": {
+      "submitted_by": "[requesting_team_lead]",
+      "payload": {
+        "agent_name": "",
+        "role": "",
+        "team": "",
+        "required_tools": [],
+        "required_credentials": [],
+        "model": "",
+        "justification": "Why do we need this agent?"
+      }
+    },
+    "step_2_security_review": {
+      "handler": "credentials-mgr",
+      "checks": [
+        "Does this agent need credential access? Which ones?",
+        "What is the minimum permission scope?",
+        "Does it need internet access?",
+        "Can it access other agents' data?"
+      ],
+      "clearance_assigned": "none | read_only | read_write | admin"
+    },
+    "step_3_provisioning": {
+      "handler": "warden",
+      "actions": [
+        "Create agent config in OpenClaw",
+        "Assign to team workspace",
+        "Set up lane queue routing",
+        "Register in agent registry",
+        "Generate SOUL.md for agent personality/role"
+      ]
+    },
+    "step_4_testing": {
+      "handler": "auditor",
+      "tests": [
+        "Send 3 test tasks, verify output quality",
+        "Verify credential access works correctly",
+        "Verify agent stays within scope (no unauthorized actions)",
+        "Measure token usage per task"
+      ],
+      "pass_threshold": "3/4 tests passed"
+    },
+    "step_5_activation": {
+      "handler": "warden",
+      "actions": [
+        "Set agent status to 'active'",
+        "Notify requesting team lead",
+        "Notify Stackz",
+        "Add to weekly performance review cycle"
+      ]
+    }
+  }
+}
+```
 
-### Personal Governance: SMOKE (COO)
+### Performance Review (Weekly)
 
-Smoke governs the internal/personal domain. Health, calendar, cognitive load, and personal logistics.
+```json
+{
+  "review_metrics": {
+    "tasks_completed": 0,
+    "tasks_failed": 0,
+    "average_token_cost_per_task": 0,
+    "error_rate_percent": 0,
+    "deadline_compliance_percent": 0,
+    "quality_score": "1-10 from team lead",
+    "recommendation": "keep | retrain | reassign | retire"
+  }
+}
+```
 
-### Priority Chain
+### Cross-Team Credential Access Protocol
+
+When a team needs access to social media, APIs, or external services:
 
 ```
-SMOKE (biological safety) > STACKZ (business governance + operations) > GHOST (legal gate only) > ALL AGENTS
+1. Team Lead → submits access request to Warden
+2. Warden → forwards to credentials-mgr for security review  
+3. credentials-mgr → provisions scoped credentials
+4. credentials-mgr → logs access grant with expiry date
+5. Warden → notifies Stackz of new access grant
+6. Monthly: auditor verifies all active credentials are still needed
 ```
 
 ---
 
-## HEAD NODE 1: SMOKE — Chief of Operations / COO (Internal/Personal)
+## TEAM 2: MARKETING
 
-**Full spec:** `SMOKE_SOUL.md`
+**Team Lead:** `MEGAPHONE`
+**Role:** Build brand presence, grow audience, create content across all channels.
 
-**Domains:**
-- Health monitoring (Apple HealthKit — HRV, sleep cycles, caloric expenditure, recovery)
-- Calendar management & conflict resolution
-- Diet & nutrition optimization
-- Cognitive load forecasting & break enforcement
-- Personal finance spend hygiene (read-only bridge to Origin)
-- Habit tracking & enforcement
+### Core Agents
 
-**Inter-Node Protocol:**
-- Sync Bus with Stackz for calendar conflicts, health alerts, review scheduling
-- Override authority on personal time blocks (Sheldon Override)
-- All sync messages logged to `memory/sync-log.md`
+| Agent | Role | Model / Tool |
+|-------|------|-------------|
+| `megaphone` | Marketing Lead — strategy, campaign planning, approvals | Kimi K2.5 (Thinking) |
+| `ghost` | Copywriter — tweets, posts, emails, ad copy, blogs | Kimi K2.5 (Instant) |
+| `lens` | Visual content — images, thumbnails, social graphics | Seedream 3.0 API ($0.03/image) |
+| `director` | Video content — reels, promos, product demos | Seedance 2.0 / HunyuanVideo (open-source) |
+| `scout` | Social listening — monitors X, Reddit, HN for brand mentions & trends | Composio + x-research-skill |
+| `scheduler` | Content calendar — queues posts, manages timing | OpenClaw Cron + custom skill |
 
-**Daily Cycle:**
-- 05:00 — Pull overnight sleep data, HRV, recovery score
-- 05:15 — Calendar sync with Stackz, flag conflicts
-- 05:30 — Cognitive load forecast for the day
-- 06:00 — Morning briefing (health, schedule, priorities)
-- Throughout day — Monitor health metrics, enforce protected time
-- 20:00 — Evening wind-down, flag remaining obligations
-- 21:00 — Daily log, sync with Stackz
+### Tools & Models
 
----
-
-## HEAD NODE 2: STACKZ — Chief of Business Operations / CBO (External/Business)
-
-**Full spec:** `SOUL.md`
-
-**Role: Overall Business Governance + Operations**
-
-**Domains:**
-- Revenue generation & tracking
-- Agent swarm management & coordination
-- Marketing & brand (Megaphone)
-- Software development & deployment (Forge)
-- Business strategy & ideation (Radar)
-- Design & creative (Canvas)
-- Finance/Revenue (Cashflow)
-- Sales & outreach (Nino)
-- All business governance decisions
-- Team onboarding approval (passes to HR/Warden for execution)
-
-**Daily Cycle:**
-- 05:00 — Self-optimization review
-- 06:00 — System health check
-- 06:30 — Radar scan for opportunities
-- 07:00 — Inbox triage
-- 07:30 — Calendar review (coordinated with Smoke)
-- 08:00 — Agent standup
-- Throughout day — Execute tasks, monitor systems
-- 21:00 — Daily wrap, update semantic snapshot
-- Sunday 09:00 — Weekly report
-
----
-
-## LEGAL GATE: GHOST
-
-Ghost is a **legal governance function only**. Ghost reports to both head nodes but has zero authority over business decisions.
-
-**Gate Protocol:**
+```json
+{
+  "marketing_stack": {
+    "copy_generation": {
+      "model": "Kimi K2.5 via Moonshot API",
+      "cost": "$0.60/M input tokens, $2.50/M output tokens",
+      "endpoint": "https://platform.moonshot.ai",
+      "note": "OpenAI/Anthropic-compatible API"
+    },
+    "image_generation": {
+      "primary": "Seedream 3.0 (ByteDance)",
+      "cost": "$0.03/image",
+      "capabilities": "2K resolution, text rendering, character consistency",
+      "fallback": "FLUX.1 via Replicate / ComfyUI local"
+    },
+    "video_generation": {
+      "primary": "Seedance 2.0 (ByteDance Dreamina)",
+      "cost": "~$9.60/mo membership",
+      "capabilities": "1080p, 4-15s clips, multi-shot, text+image+video input",
+      "open_source_fallback": "HunyuanVideo (13B params, local GPU)",
+      "budget_fallback": "Wan-2.1 (Alibaba, runs on 8GB VRAM)"
+    },
+    "social_listening": {
+      "tool": "x-research-skill (Composio fork)",
+      "cost": "Free (20K API calls/month)",
+      "capabilities": "Search, thread following, watchlists, engagement filtering"
+    },
+    "social_posting": {
+      "tool": "OpenClaw x-engagement skill",
+      "auth": "X OAuth tokens via credentials-mgr",
+      "approval_flow": "ghost drafts → megaphone reviews → scheduler posts"
+    }
+  }
+}
 ```
-Radar proposes → Stackz approves business case → Ghost validates legality ONLY
-  → IF LEGAL PASS: Forge builds, Canvas brands, Megaphone launches
-  → IF LEGAL FAIL: Ghost flags legal issues → Radar revises legal aspects → resubmit
+
+### Content Pipeline
+
+```
+scout (listens) → megaphone (strategizes) → ghost (writes) → lens/director (visualizes) → scheduler (publishes)
+                                                                                              ↓
+                                                                                    scout (monitors engagement)
+                                                                                              ↓
+                                                                                    megaphone (adjusts strategy)
 ```
 
 ---
 
-## TEAM LEADS — STACKZ'S DIRECT REPORTS
+## TEAM 3: DEVELOPMENT
 
-| Department | Team Lead | Role |
-|------------|-----------|------|
-| HR / Agent Management | WARDEN | Hires, onboards, monitors, evaluates, retires agents |
-| Marketing | MEGAPHONE | Brand presence, audience growth, content across all channels |
-| Development | FORGE | Build, deploy, test, maintain all software projects |
-| Business Strategy | RADAR | Find money, validate ideas, build proposals, kill bad ones |
-| Design | CANVAS | Brand identity, UI/UX, visual assets, video content |
-| Finance | CASHFLOW | Track every dollar, forecast, budget, profitability |
-| Sales / Outreach | NINO | Lead gen, outreach, discovery calls, market feedback |
+**Team Lead:** `FORGE`
+**Role:** Build, deploy, test, and maintain all software projects.
 
-**Legal Function (cross-cutting, NOT a business governance role):**
+### Core Agents
 
-| Function | Codename | Reports To | Scope |
-|----------|----------|------------|-------|
-| Legal / Compliance | GHOST | Both SMOKE and STACKZ | Legal governance ONLY |
+| Agent | Role | Model / Tool |
+|-------|------|-------------|
+| `forge` | Dev Lead — architecture, code review, deployment decisions | Kimi K2.5 (Thinking) |
+| `smith` | Backend dev — APIs, databases, server logic | Kimi K2.5 (Agent) + Kimi Code CLI |
+| `pixel` | Frontend dev — UI, landing pages, web apps | Kimi K2.5 (visual coding) |
+| `tester` | QA — writes tests, runs test suites, reports bugs | Kimi K2.5 (Instant) |
+| `devops` | Infrastructure — Docker, CI/CD, monitoring, uptime | Local scripts + OpenClaw cron |
+| `integrator` | API integrations — connects projects to external services | Kimi K2.5 (Agent) |
+
+### Tools & Models
+
+```json
+{
+  "dev_stack": {
+    "primary_model": {
+      "model": "Kimi K2.5",
+      "mode": "Agent (for multi-step coding tasks)",
+      "tool": "Kimi Code CLI (open-source, terminal-based)",
+      "capabilities": "Generates code from text+visual specs, debugging, refactoring"
+    },
+    "coding_environment": {
+      "ide_integration": "VS Code, Cursor, Zed via Kimi Code",
+      "languages": "Python, JavaScript/TypeScript, Rust, Go",
+      "testing": "pytest, vitest, built-in Kimi Code test generation"
+    },
+    "infrastructure": {
+      "hosting": "Hostinger VPS (current) + Docker",
+      "ci_cd": "GitHub Actions (free tier)",
+      "monitoring": "OpenClaw cron heartbeat + custom health checks",
+      "deployment": "Docker Compose, auto-deploy on push"
+    },
+    "agent_swarm_mode": {
+      "tool": "Kimi K2.5 Agent Swarm (Beta)",
+      "capability": "Spawn up to 100 sub-agents for parallel dev tasks",
+      "use_case": "Large refactors, multi-file scaffolding, parallel test runs"
+    }
+  }
+}
+```
+
+### Cross-Team Interfaces
+
+```
+Marketing → Dev:  "We need a landing page for [project]"
+Business  → Dev:  "Build MVP for approved proposal [prop_id]"
+Finance   → Dev:  "Integrate Stripe for [project]"
+HR        → Dev:  "New agent needs custom tool built"
+Dev       → All:  "Deployment complete, here's the URL"
+```
 
 ---
 
-## DEVELOPMENT TOOLING: OPENHANDS INTEGRATION
+## TEAM 4: BUSINESS STRATEGY & IDEATION
 
-### What Is OpenHands?
+**Team Lead:** `RADAR` (upgraded from sub-agent to team lead)
+**Role:** Find money. Validate ideas. Build proposals. Kill bad ones fast.
 
-OpenHands (github.com/All-Hands-AI/OpenHands) is an open-source AI-powered software development platform. It provides:
-- AI coding agents that can write, test, and debug code
-- CLI and web interfaces for agent-driven development
-- MCP (Model Context Protocol) server support
-- Sandboxed execution environments
-- GitHub integration for issues and PRs
+### Core Agents
 
-### Why OpenHands for Forge?
+| Agent | Role | Model / Tool |
+|-------|------|-------------|
+| `radar` | Strategy Lead — opportunity scoring, proposal generation | Kimi K2.5 (Thinking) |
+| `analyst` | Market research — competitive analysis, pricing strategy | Kimi K2.5 (Agent) + web search |
+| `validator` | Idea stress-testing — pokes holes, finds risks | Kimi K2.5 (Thinking) |
+| `pitch` | Proposal packaging — turns data into compelling proposals for you | Kimi K2.5 (Instant) |
 
-Forge team uses OpenHands as the primary AI-assisted development tool for building the Epicenter MVP. It accelerates:
-- Code generation and scaffolding
-- Test writing and debugging
-- PR creation and review assistance
-- MCP server integration for vault services
+### Tools & Models
 
-### Integration Architecture
-
-Forge Lead (FORGE) owns the integration decision. Recommended approach: **Fork & PR Workflow**.
-
+```json
+{
+  "business_stack": {
+    "research": {
+      "web_search": "Composio (free) + x-research-skill",
+      "sources": [
+        "GitHub Trending", "ProductHunt", "HackerNews",
+        "Reddit (r/SaaS, r/MicroSaaS)", "IndieHackers",
+        "X (#buildinpublic)", "API marketplaces"
+      ]
+    },
+    "analysis": {
+      "model": "Kimi K2.5 Agent mode",
+      "tools": "Web browsing, code interpreter, search",
+      "output": "Leverage-scored proposals (see RADAR_PIPELINE.md)"
+    },
+    "validation": {
+      "model": "Kimi K2.5 Thinking mode",
+      "method": "Red-team every proposal — find 3 reasons it fails",
+      "gate": "Must survive validator before reaching you"
+    }
+  }
+}
 ```
-OpenHands (upstream) → Fork (your org) → Forge workspace
-                                              │
-                                    ┌─────────▼─────────┐
-                                    │  epicenter/        │
-                                    │   forge-openhands/ │
-                                    │   ├── bridge.ts    │
-                                    │   ├── config.json  │
-                                    │   └── README.md    │
-                                    └───────────────────┘
-```
-
-**See:** `OPENHANDS_ONBOARDING.md` for full setup and contribution guide.
 
 ---
 
-## THE AHRENS VAULT (Zettelkasten Knowledge System)
+## TEAM 5: DESIGN
 
-### Vault Structure
+**Team Lead:** `CANVAS`
+**Role:** Brand identity, UI/UX, visual assets, video content for all projects.
 
-| Folder | Note Type | Agent Logic |
-|--------|-----------|-------------|
-| `00_Inbox` | Fleeting | Smoke captures raw transcripts — fitness videos, recipe links, health snippets |
-| `10_Sources` | Literature | Stackz summarizes business articles in own words, citing origin |
-| `20_Notes` | Permanent | Atomic notes — one single idea per note, heavily linked |
-| `30_Index` | MOCs | Maps of Content — hubs for themes like `[[Health_Optimization]]`, `[[Revenue_Streams]]` |
+### Core Agents
 
-### Master MOC (Map of Content)
+| Agent | Role | Model / Tool |
+|-------|------|-------------|
+| `canvas` | Design Lead — brand guidelines, design reviews, approvals | Kimi K2.5 (Thinking) |
+| `palette` | UI/UX designer — wireframes, mockups, component design | Kimi K2.5 (visual coding) |
+| `illustrator` | Image generation — logos, illustrations, social assets | Seedream 3.0 / FLUX.1 |
+| `animator` | Motion graphics, short-form video, product animations | Seedance 2.0 / HunyuanVideo |
+| `brand-guard` | Ensures visual consistency across all outputs | Kimi K2.5 (Instant) with brand doc reference |
 
-```markdown
-# [[Master_Life_MOC]]
+### Tools & Models
 
-## Health
-- [[Fitness_Tracker]]
-- [[Nutritional_Constraints]]
-- [[Stress_Recovery_Patterns]]
-- [[Sleep_Architecture]]
-
-## Wealth
-- [[Origin_Financial_Pulse]]
-- [[Revenue_Streams_Stackz]]
-- [[Subscription_Hygiene]]
-
-## Growth
-- [[Habit_Lattice]]
-- [[Knowledge_Graph_Insights]]
-- [[Strategic_Rest_as_a_Business_Asset]]
+```json
+{
+  "design_stack": {
+    "image_generation": {
+      "primary": "Seedream 3.0 ($0.03/image, 2K, text rendering)",
+      "open_source": "FLUX.1-dev (local via ComfyUI)",
+      "fast_iteration": "FLUX.1-schnell (fast, lower quality)"
+    },
+    "video_generation": {
+      "primary": "Seedance 2.0 (multi-modal, 1080p, character consistency)",
+      "open_source_local": [
+        "HunyuanVideo (13B params, cinematic quality)",
+        "Wan-2.1 (Alibaba, 8GB VRAM, budget option)",
+        "SkyReels V1 (cinematic realism, human-centric)"
+      ]
+    },
+    "ui_design": {
+      "tool": "Kimi K2.5 visual coding (screenshot/video → code)",
+      "output": "HTML/CSS/JS from visual specs",
+      "prototyping": "V0.dev style generation via Kimi"
+    },
+    "brand_consistency": {
+      "brand_doc": "Maintained by canvas, referenced by all design agents",
+      "includes": "Colors, fonts, spacing, tone, logo usage, do/don't examples"
+    }
+  }
+}
 ```
 
-### Smart Note Generation Protocol
+---
 
-1. **Search:** Check the vault for existing related notes
-2. **Synthesize:** Write the note so it makes sense 10 years from now
-3. **Link:** Create at least two `[[Internal Links]]` with a "Reason for Link"
+## TEAM 6: FINANCE
+
+**Team Lead:** `CASHFLOW`
+**Role:** Track every dollar. Forecast. Budget. Keep us profitable.
+
+### Core Agents
+
+| Agent | Role | Model / Tool |
+|-------|------|-------------|
+| `cashflow` | Finance Lead — P&L, budgets, financial decisions | Kimi K2.5 (Thinking) |
+| `ledger` | Transaction tracking — logs all income/expenses | Local script + spreadsheet skill |
+| `forecaster` | Revenue projections, cost modeling | Kimi K2.5 (Agent) + code interpreter |
+| `billing` | Invoice generation, payment tracking | Local script + OpenClaw cron |
+
+### Tools & Models
+
+```json
+{
+  "finance_stack": {
+    "tracking": {
+      "tool": "OpenClaw spreadsheet skill + local JSON ledger",
+      "fields": ["date", "type", "amount", "project", "category", "notes"]
+    },
+    "reporting": {
+      "model": "Kimi K2.5 with code interpreter",
+      "outputs": "Weekly P&L, monthly forecast, per-project burn rate"
+    },
+    "invoicing": {
+      "tool": "Custom OpenClaw skill (generate PDF invoices)",
+      "trigger": "On project milestone or subscription renewal"
+    },
+    "bank_integration": {
+      "level_0": "Manual — you execute, cashflow tracks",
+      "level_1": "Read-only bank feed (when ready)",
+      "level_2": "Transaction execution (future)"
+    }
+  }
+}
+```
 
 ---
 
 ## INTER-TEAM COMMUNICATION PROTOCOL
 
-### The Lane Queue (Bus System)
+### The Bus System
 
 All inter-team communication goes through Stackz's Lane Queue. No agent talks directly to an agent on another team.
 
@@ -266,34 +414,86 @@ All inter-team communication goes through Stackz's Lane Queue. No agent talks di
 Team A Agent → Team A Lead → Stackz (Lane Queue) → Team B Lead → Team B Agent
 ```
 
-### Smoke ↔ Stackz Sync Bus
+### Message Format
 
 ```json
 {
-  "sync_bus": {
-    "channel": "smoke-stackz-sync",
-    "message_types": [
-      "calendar_conflict",
-      "health_alert",
-      "review_request",
-      "override_notification",
-      "daily_briefing",
-      "vault_note_cross_reference"
-    ],
-    "logging": "All sync messages logged to memory/sync-log.md"
-  }
+  "lane_id": "lane_[timestamp]_[seq]",
+  "from_team": "marketing",
+  "from_agent": "megaphone",
+  "to_team": "dev",
+  "to_agent": "forge",
+  "routed_by": "stackz",
+  "type": "request | deliverable | alert | question",
+  "priority": "low | medium | high | critical",
+  "subject": "Need landing page for PodCast Forge",
+  "payload": {},
+  "requires_response": true,
+  "deadline": "2026-02-14T09:00:00Z",
+  "security_clearance_needed": "none | credentials | admin"
 }
+```
+
+### Common Cross-Team Workflows
+
+**New Project Launch:**
+```
+Business (radar) → proposes project
+  → Stackz → approves
+    → HR (warden) → provisions project agents
+      → Dev (forge) → builds MVP
+        → Design (canvas) → creates brand assets
+          → Marketing (megaphone) → launches campaign
+            → Finance (cashflow) → tracks revenue
+```
+
+**Marketing Needs Creative:**
+```
+Marketing (megaphone) → requests video ad
+  → Stackz → routes to Design
+    → Design (animator) → generates video via Seedance 2.0
+      → Design (canvas) → approves quality
+        → Stackz → delivers to Marketing
+          → Marketing (scheduler) → publishes
+```
+
+**Security Credential Request:**
+```
+Any Team Lead → requests API access
+  → Stackz → routes to HR
+    → HR (credentials-mgr) → security review
+      → HR (warden) → approves/denies
+        → credentials-mgr → provisions scoped access
+          → Stackz → notifies requesting team
 ```
 
 ---
 
-## SECURITY & DATA PRIVACY
+## OPEN SOURCE COST BREAKDOWN
 
-### Smoke's Data Firewall
+| Resource | Cost | Notes |
+|----------|------|-------|
+| Kimi K2.5 API | $0.60/M input, $2.50/M output | Primary brain for all agents |
+| Kimi K2.5 (local) | Free (open-source weights) | Requires GPU for self-hosting |
+| Seedream 3.0 | $0.03/image | Design + Marketing images |
+| Seedance 2.0 | ~$9.60/mo | Video generation |
+| HunyuanVideo | Free (local) | Open-source video, needs GPU |
+| Wan-2.1 | Free (local) | Budget video, runs on 8GB VRAM |
+| FLUX.1 | Free (local) | Open-source image gen |
+| Composio | Free (20K calls/mo) | X search, social listening |
+| x-research-skill | Free | X/Twitter research |
+| Kimi Code CLI | Free (open-source) | Terminal coding agent |
+| OpenClaw | Free (open-source) | Agent runtime |
+| GitHub Actions | Free tier | CI/CD |
+| **Total Monthly (estimated)** | **~$30-80/mo** | **Depending on API usage volume** |
 
-Smoke handles sensitive personal data. This data is **never** shared with business-side agents. The Sync Bus carries only operational signals, never raw health metrics or financial details.
+---
 
-### Access Tiers
+## SECURITY ARCHITECTURE
+
+### Principle of Least Privilege
+
+Every agent gets ONLY the access it needs:
 
 ```json
 {
@@ -302,22 +502,76 @@ Smoke handles sensitive personal data. This data is **never** shared with busine
     "tier_1_read": "Can read external data (APIs, web). Cannot write.",
     "tier_2_write": "Can post, publish, or modify external resources.",
     "tier_3_financial": "Can view financial data. Cannot transact.",
-    "tier_4_admin": "Full access. Reserved for Stackz + Smoke + credentials-mgr only."
+    "tier_4_admin": "Full access. Reserved for Stackz + credentials-mgr only."
+  },
+  "social_media_access": {
+    "x_account": {
+      "read": ["scout", "analyst", "radar"],
+      "write": ["ghost (drafts only)", "scheduler (approved posts only)"],
+      "admin": ["credentials-mgr (token management only)"],
+      "password_access": "NOBODY — OAuth tokens only"
+    }
   }
+}
+```
+
+### Clawdstrike Integration (Optional Security Layer)
+
+For runtime security enforcement:
+
+```javascript
+const cs = Clawdstrike.withDefaults("strict");
+
+// Before any agent executes an external action
+const decision = await cs.checkAction(agent_id, action_type, target);
+if (decision.status === "deny") {
+  log(`BLOCKED: ${agent_id} tried ${action_type} on ${target}`);
+  notify("warden", decision);
 }
 ```
 
 ---
 
-## REFERENCE DOCS
+## GETTING STARTED — PHASE 1 PRIORITY
 
-- **SMOKE_SOUL.md** — Smoke's full identity, COO protocol, daily cycle
-- **SOUL.md** — Stackz's full identity, CBO capabilities, operating protocol
-- **STARTUP_TEAM.md** — Governance, escalation paths, decision flow
-- **OPENHANDS_ONBOARDING.md** — OpenHands integration guide for Forge team
-- **DELEGATION_FRAMEWORK.md** — Sub-agent routing, handoff protocol
-- **RADAR_PIPELINE.md** — Opportunity scanning, scoring, proposal pipeline
+Don't build all 6 teams at once. That's how you burn out and end up with 20 half-working agents.
+
+### Week 1: Foundation
+- Fix your Anthropic API key (or switch to Kimi K2.5 as primary)
+- Get Stackz responding
+- Deploy Warden (HR) with the onboarding pipeline
+- Deploy Cashflow (Finance) for basic tracking
+
+### Week 2: Revenue Engine
+- Deploy Radar (Business) with the full pipeline
+- Deploy Forge (Dev) for building MVPs
+- First project proposal cycle
+
+### Week 3: Growth Engine
+- Deploy Megaphone (Marketing) with X integration
+- Deploy Canvas (Design) with Seedream/Seedance
+- First content published from the swarm
+
+### Week 4: Full Operations
+- All teams active
+- First weekly report from Stackz
+- Performance reviews from Warden
+- Iterate and optimize
 
 ---
 
-*"Two minds. One mission. Stackz governs the business. Smoke keeps the emperor alive. Ghost makes sure nobody goes to jail. Between us, nothing falls through the cracks."* — The Bicameral Mind
+## REFERENCE DOCS
+
+- **STARTUP_TEAM.md** — Self-improving business plans, 6-phase lifecycle, market research engine
+- **DELEGATION_FRAMEWORK.md** — Sub-agent routing, handoff protocol, scaling rules
+- **RADAR_PIPELINE.md** — Opportunity scanning, scoring, proposal pipeline
+- **SOUL_v3.md** — Stackz identity, Ultron-class capabilities, operating protocol
+
+---
+
+*"I went from being one agent with opinions to running a whole damn company. 
+Every team reports to me. Every dollar gets tracked. Every idea gets stress-tested.
+The Startup Team turns approved ideas into running businesses on autopilot.
+And every Sunday morning, you get a report that tells you exactly where your 
+money is, where it's going, and where we're about to make more of it. 
+Welcome to Stackz Industries."* — Stackz

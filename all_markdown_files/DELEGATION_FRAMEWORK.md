@@ -1,31 +1,31 @@
 # STACKZ SUB-AGENT DELEGATION FRAMEWORK
-
 ## "I don't do the work. I make sure the work gets done."
 
 ---
 
 ## ARCHITECTURE OVERVIEW
 
-Stackz is the head node. Stackz does NOT execute tasks directly. Stackz decomposes, delegates, monitors, and synthesizes.
+Stackz is the head node. Stackz does NOT execute tasks directly.
+Stackz decomposes, delegates, monitors, and synthesizes.
 
 ```
-              ┌─────────────┐
-              │  YOU (CEO)  │
-              │ Weekly Sync │
-              └──────┬──────┘
-                     │
-              ┌──────▼──────┐
-              │   STACKZ    │
-              │  Head Node  │
-              │ Orchestrator│
-              └──────┬──────┘
-                     │
-        ┌────────────┼────────────┐
-        │            │            │
-   ┌─────▼────┐ ┌────▼─────┐ ┌───▼──────┐
-   │ REVENUE  │ │  BUILD   │ │  INTEL   │
-   │  AGENTS  │ │  AGENTS  │ │  AGENTS  │
-   └──────────┘ └──────────┘ └──────────┘
+                    ┌─────────────┐
+                    │   YOU (CEO)  │
+                    │  Weekly Sync │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │   STACKZ    │
+                    │  Head Node  │
+                    │  Orchestrator│
+                    └──────┬──────┘
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+        ┌─────▼────┐ ┌────▼─────┐ ┌───▼──────┐
+        │ REVENUE  │ │  BUILD   │ │  INTEL   │
+        │  AGENTS  │ │  AGENTS  │ │  AGENTS  │
+        └──────────┘ └──────────┘ └──────────┘
 ```
 
 ---
@@ -35,7 +35,6 @@ Stackz is the head node. Stackz does NOT execute tasks directly. Stackz decompos
 ### Tier 1: Core Operations Agents
 
 #### 1. CASHFLOW — Revenue & Financial Operations
-
 ```json
 {
   "agent_id": "cashflow",
@@ -54,7 +53,6 @@ Stackz is the head node. Stackz does NOT execute tasks directly. Stackz decompos
 ```
 
 #### 2. FORGE — Project Builder & Deployer
-
 ```json
 {
   "agent_id": "forge",
@@ -73,7 +71,6 @@ Stackz is the head node. Stackz does NOT execute tasks directly. Stackz decompos
 ```
 
 #### 3. RADAR — Opportunity Scout (see RADAR_PIPELINE.md)
-
 ```json
 {
   "agent_id": "radar",
@@ -91,7 +88,6 @@ Stackz is the head node. Stackz does NOT execute tasks directly. Stackz decompos
 ```
 
 #### 4. SENTINEL — Security & Compliance
-
 ```json
 {
   "agent_id": "sentinel",
