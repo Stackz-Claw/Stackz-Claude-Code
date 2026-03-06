@@ -4,25 +4,33 @@ import TopBar from './components/layout/TopBar'
 import Sidebar from './components/layout/Sidebar'
 import Atmosphere from './components/layout/Atmosphere'
 import LoadScreen from './pages/LoadScreen'
-import OfficeWorld from './pages/OfficeWorld'
-import ExecutiveOverview from './pages/ExecutiveOverview'
 import FinancialDashboard from './pages/FinancialDashboard'
 import HealthDashboard from './pages/HealthDashboard'
 import SmartNotes from './pages/SmartNotes'
-import ApprovalsPage from './pages/ApprovalsPage'
+import LaneQueuePage from './pages/LaneQueuePage'
+import ApprovalInboxPage from './pages/ApprovalInboxPage'
+import AgentHealthPage from './pages/AgentHealthPage'
+import TokenEconomyPage from './pages/TokenEconomyPage'
+import RadarPage from './pages/RadarPage'
+import BriefingPage from './pages/BriefingPage'
+import TimelinePage from './pages/TimelinePage'
 
 const PAGE_MAP = {
-  office: OfficeWorld,
-  executive: ExecutiveOverview,
+  briefing: BriefingPage,
+  'approval-inbox': ApprovalInboxPage,
+  lanes: LaneQueuePage,
+  agents: AgentHealthPage,
+  tokens: TokenEconomyPage,
+  radar: RadarPage,
   financial: FinancialDashboard,
   health: HealthDashboard,
   notes: SmartNotes,
-  approvals: ApprovalsPage,
+  timeline: TimelinePage,
 }
 
 function MainApp() {
   const activeView = useUIStore((s) => s.activeView)
-  const ActivePage = PAGE_MAP[activeView] || OfficeWorld
+  const ActivePage = PAGE_MAP[activeView] || BriefingPage
 
   return (
     <div className="flex flex-col h-screen bg-hq-dark overflow-hidden">

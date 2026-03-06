@@ -6,12 +6,19 @@ import { useApprovalStore } from '../../store/approvalStore'
 import { AGENT_PERSONALITIES } from '../../data/personalities'
 
 const NAV_ITEMS = [
-  { id: 'office', label: 'Office World', icon: '🏢', shortcut: '1' },
-  { id: 'executive', label: 'Executive View', icon: '⚡', shortcut: '2' },
-  { id: 'financial', label: 'Financial', icon: '💰', shortcut: '3' },
-  { id: 'health', label: 'Health & Life', icon: '🧬', shortcut: '4' },
-  { id: 'notes', label: 'Smart Notes', icon: '🔗', shortcut: '5' },
-  { id: 'approvals', label: 'Approvals', icon: '✅', shortcut: '6' },
+  // — Command —
+  { id: 'briefing', label: 'The Briefing', icon: '📋', shortcut: '1' },
+  { id: 'approval-inbox', label: 'Approval Inbox', icon: '🛡️', shortcut: '2', badge: true },
+  { id: 'lanes', label: 'Lane Queue', icon: '📥', shortcut: '3' },
+  // — Monitor —
+  { id: 'agents', label: 'Agents', icon: '🤖', shortcut: '4' },
+  { id: 'tokens', label: 'Token Economy', icon: '⚡', shortcut: '5' },
+  { id: 'radar', label: 'Radar', icon: '📡', shortcut: '6' },
+  // — Data —
+  { id: 'financial', label: 'Financial', icon: '💰', shortcut: '7' },
+  { id: 'health', label: 'Health & Life', icon: '🧬', shortcut: '8' },
+  { id: 'notes', label: 'Smart Notes', icon: '🔗', shortcut: '9' },
+  { id: 'timeline', label: 'Timeline', icon: '🕐', shortcut: '0' },
 ]
 
 const DOMAIN_LEADS = [

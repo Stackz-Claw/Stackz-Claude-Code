@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 export const useUIStore = create((set) => ({
-  activeView: 'office',  // office | executive | financial | health | notes | approvals
+  activeView: 'briefing',
   isChatOpen: true,
   isApprovalOpen: false,
   soundEnabled: false,
