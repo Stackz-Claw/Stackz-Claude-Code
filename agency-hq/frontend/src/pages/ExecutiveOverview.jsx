@@ -1,18 +1,16 @@
+import PageHeader from '../components/layout/PageHeader'
 import AgentStatusCard from '../components/executive/AgentStatusCard'
 import OfficeChatFeed from '../components/chat/OfficeChatFeed'
 
 export default function ExecutiveOverview() {
   return (
     <div className="h-full flex flex-col p-4 gap-4">
-      {/* Header */}
-      <div className="flex-shrink-0">
-        <h2 className="text-xl font-display font-bold text-white">
-          Executive <span className="neon-text-blue">Overview</span>
-        </h2>
-        <p className="text-xs text-white/30 font-mono mt-0.5">
-          Direct access to Smoke & Stackz · Click cards to open menu
-        </p>
-      </div>
+      <PageHeader
+        title="Executive"
+        accent="Overview"
+        accentColor="neon-text-blue"
+        subtitle="Direct access to Smoke & Stackz · Click cards to open menu"
+      />
 
       {/* Split layout */}
       <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-4">

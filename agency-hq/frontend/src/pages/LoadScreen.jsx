@@ -16,18 +16,44 @@ export default function LoadScreen() {
   }, [])
 
   return (
-    <div className="fixed inset-0 bg-hq-dark flex items-center justify-center z-50 scanlines">
-      {/* Background grid */}
+    <div className="fixed inset-0 bg-[#060910] flex items-center justify-center z-50 overflow-hidden">
+      {/* Gradient mesh background — replaces flat grid */}
       <div
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0"
+        style={{
+          background: `
+            radial-gradient(ellipse 80% 60% at 20% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 70%),
+            radial-gradient(ellipse 60% 80% at 80% 20%, rgba(16, 185, 129, 0.06) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 50% at 50% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 40% at 70% 70%, rgba(245, 158, 11, 0.03) 0%, transparent 50%)
+          `,
+        }}
+      />
+
+      {/* Subtle grid overlay */}
+      <div
+        className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(14,165,233,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(14,165,233,0.3) 1px, transparent 1px)
+            linear-gradient(rgba(14,165,233,0.4) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(14,165,233,0.4) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px',
         }}
       />
+
+      {/* Noise grain */}
+      <div
+        className="absolute inset-0"
+        style={{
+          opacity: 0.03,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: '256px 256px',
+        }}
+      />
+
+      {/* Scanlines */}
+      <div className="absolute inset-0 scanlines" />
 
       <div className="relative text-center">
         {/* Logo animation */}
@@ -47,9 +73,9 @@ export default function LoadScreen() {
                 padding: '2px',
               }}
             >
-              <div className="w-full h-full rounded-2xl bg-hq-dark" />
+              <div className="w-full h-full rounded-2xl bg-[#060910]" />
             </motion.div>
-            <div className="relative w-24 h-24 rounded-2xl bg-hq-dark flex items-center justify-center border border-smoke-blue/30">
+            <div className="relative w-24 h-24 rounded-2xl bg-[#060910] flex items-center justify-center border border-smoke-blue/30">
               <div className="text-center">
                 <div className="text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-br from-smoke-blue to-stackz-green">
                   HQ
@@ -116,22 +142,33 @@ export default function LoadScreen() {
           </div>
         </motion.div>
 
-        {/* Agent dots */}
+        {/* Agent dots with connection effect */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="flex justify-center gap-2 mt-4"
+          className="flex justify-center items-center gap-2 mt-4"
         >
           {AGENT_COLORS.map((color, i) => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 rounded-full"
-              style={{ background: color }}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 1.3 + i * 0.08, type: 'spring' }}
-            />
+            <div key={i} className="flex items-center gap-2">
+              <motion.div
+                className="w-2 h-2 rounded-full"
+                style={{ background: color, boxShadow: `0 0 6px ${color}66` }}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 1.3 + i * 0.08, type: 'spring' }}
+              />
+              {/* Connection line between dots */}
+              {i < AGENT_COLORS.length - 1 && (
+                <motion.div
+                  className="w-3 h-px"
+                  style={{ background: `linear-gradient(90deg, ${color}44, ${AGENT_COLORS[i + 1]}44)` }}
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{ scaleX: 1, opacity: 1 }}
+                  transition={{ delay: 1.5 + i * 0.08, duration: 0.3 }}
+                />
+              )}
+            </div>
           ))}
         </motion.div>
       </div>

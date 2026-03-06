@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useUIStore } from '../../store/uiStore'
 import { useAgentStore } from '../../store/agentStore'
+import AgentAvatar from '../AgentAvatar'
 import { useApprovalStore } from '../../store/approvalStore'
 import { AGENT_PERSONALITIES } from '../../data/personalities'
 
@@ -28,7 +29,7 @@ export default function Sidebar() {
   const teamLeads = agents.filter((a) => !['smoke', 'stackz'].includes(a.id))
 
   return (
-    <div className="w-60 bg-hq-dark/80 backdrop-blur-md border-r border-white/5 flex flex-col flex-shrink-0 h-full">
+    <div className="w-60 bg-hq-dark/80 backdrop-blur-md border-r border-white/5 flex flex-col flex-shrink-0 h-full relative">
       {/* Navigation */}
       <nav className="p-3 space-y-0.5">
         <div className="hq-label px-2 py-2">Navigation</div>
@@ -44,12 +45,21 @@ export default function Sidebar() {
               onClick={() => setActiveView(item.id)}
               className={`
                 w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left
-                transition-all duration-200 group relative
+                transition-all duration-200 group relative overflow-hidden
                 ${activeView === item.id
-                  ? 'bg-smoke-blue/10 border border-smoke-blue/30 text-white'
-                  : 'hover:bg-white/5 text-white/50 hover:text-white/80 border border-transparent'}
+                  ? 'bg-smoke-blue/8 border border-smoke-blue/25 text-white'
+                  : 'hover:bg-white/5 text-white/50 hover:text-white/80 border border-transparent hover:translate-x-0.5'}
               `}
             >
+              {activeView === item.id && (
+                <div
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full"
+                  style={{
+                    background: 'linear-gradient(180deg, #0EA5E9, #10B981)',
+                    boxShadow: '0 0 8px rgba(14, 165, 233, 0.5)',
+                  }}
+                />
+              )}
               <span className="text-sm">{item.icon}</span>
               <span className="font-display text-sm font-medium flex-1">{item.label}</span>
               {isApprovals && totalPending > 0 && (
@@ -83,12 +93,7 @@ export default function Sidebar() {
           const p = AGENT_PERSONALITIES[agent.id]
           return (
             <div key={agent.id} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer">
-              <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
-                style={{ background: `${p?.color}22`, border: `1px solid ${p?.color}44`, color: p?.color }}
-              >
-                {agent.avatar}
-              </div>
+              <AgentAvatar agentId={agent.id} size="7" />
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-medium text-white/80 truncate">{agent.name}</div>
                 <div className="text-[10px] truncate" style={{ color: `${p?.color}99` }}>{agent.title}</div>
@@ -102,7 +107,7 @@ export default function Sidebar() {
       <div className="mx-3 border-t border-white/5 my-1" />
 
       {/* Team Leads */}
-      <div className="flex-1 overflow-y-auto px-3 pb-2">
+      <div className="flex-1 overflow-y-auto px-3 pb-2 relative">
         <div className="hq-label px-2 py-2">Team Leads</div>
         <div className="space-y-0.5">
           {teamLeads.map((agent) => {
@@ -112,12 +117,7 @@ export default function Sidebar() {
                 key={agent.id}
                 className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors"
               >
-                <div
-                  className="w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold flex-shrink-0"
-                  style={{ background: `${p?.color}22`, border: `1px solid ${p?.color}44`, color: p?.color }}
-                >
-                  {agent.avatar}
-                </div>
+                <AgentAvatar agentId={agent.id} size="6" />
                 <div className="flex-1 min-w-0">
                   <div className="text-xs font-medium text-white/70 truncate">{agent.name}</div>
                   <div className="text-[10px] text-white/25 truncate">{agent.title}</div>
@@ -130,6 +130,7 @@ export default function Sidebar() {
             )
           })}
         </div>
+        <div className="sticky bottom-0 h-6 pointer-events-none" style={{ background: 'linear-gradient(transparent, rgba(10, 14, 26, 0.9))' }} />
       </div>
 
       {/* Footer */}

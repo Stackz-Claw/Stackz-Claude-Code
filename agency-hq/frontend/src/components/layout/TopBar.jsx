@@ -25,7 +25,15 @@ export default function TopBar() {
   const totalPending = smokeCount + stackzCount
 
   return (
-    <div className="h-14 bg-hq-dark/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-5 flex-shrink-0">
+    <div className="relative h-14 bg-hq-dark/80 backdrop-blur-md flex items-center justify-between px-5 flex-shrink-0">
+      {/* Gradient accent line — bottom edge */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-px"
+        style={{
+          background: 'linear-gradient(90deg, transparent 5%, rgba(14, 165, 233, 0.4) 30%, rgba(16, 185, 129, 0.3) 60%, transparent 95%)',
+        }}
+      />
+
       {/* Logo */}
       <motion.div
         className="flex items-center gap-3"
@@ -33,9 +41,14 @@ export default function TopBar() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <div className="w-7 h-7 rounded-md bg-gradient-to-br from-smoke-blue to-stackz-green flex items-center justify-center">
+        <motion.div
+          className="w-7 h-7 rounded-md bg-gradient-to-br from-smoke-blue to-stackz-green flex items-center justify-center"
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+        >
           <span className="text-black font-bold text-xs">HQ</span>
-        </div>
+        </motion.div>
         <div>
           <div className="text-white font-display font-semibold text-sm tracking-wide">
             The Agency <span className="neon-text-smoke">HQ</span>
