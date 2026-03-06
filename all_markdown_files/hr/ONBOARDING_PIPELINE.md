@@ -1,303 +1,162 @@
-# AGENT ONBOARDING PIPELINE
-
-**Managed by:** WARDEN (HR Team Lead)
-**Last Updated:** 2026-02-13
+# ONBOARDING PIPELINE
+*Owned by: Warden | Every new agent passes through all 5 steps.*
 
 ---
 
-## PIPELINE OVERVIEW
+## OVERVIEW
 
-Every new agent in Stackz Industries goes through this 5-step pipeline:
+No agent goes live without completing this pipeline. No exceptions — including agents proposed by Stackz directly. This is not bureaucracy; it's how we prevent credential leaks, scope creep, and rogue agents.
 
 ```
-Proposal → Security Review → Provisioning → Testing → Activation
+PROPOSAL → SECURITY REVIEW → PROVISIONING → TESTING → ACTIVATION
+    ↓              ↓                ↓             ↓           ↓
+  Warden     credentials-mgr     Warden        auditor     Warden
 ```
-
-**No shortcuts. No exceptions.**
 
 ---
 
-## STEP 1: PROPOSAL SUBMISSION
+## STEP 1: PROPOSAL
 
-**Handler:** Any Team Lead  
-**Format:** JSON proposal file in `/hr/proposals/`
+**Submitted by:** Any team lead  
+**Submitted to:** Warden via Lane Queue  
+**Template:** `hr/proposals/templates/` — use the appropriate SOUL template
 
 ```json
 {
-  "proposal_id": "prop_[timestamp]",
-  "submitted_by": "[team_lead_agent_id]",
-  "submitted_date": "ISO-8601 timestamp",
-  "agent_name": "agent-id-lowercase",
-  "display_name": "AGENT NAME",
-  "role": "Clear one-line description",
-  "team": "hr|marketing|dev|business|design|finance",
-  "required_tools": ["tool1", "tool2"],
-  "required_credentials": ["api_key_name", "oauth_token_name"],
-  "model": "model/provider",
-  "justification": "Why do we need this agent? What problem does it solve?",
-  "estimated_monthly_cost": "$X.XX",
-  "priority": "low|medium|high|critical"
+  "proposal_id": "hire_[timestamp]",
+  "submitted_by": "[team_lead_name]",
+  "submitted_date": "[ISO timestamp]",
+  "agent": {
+    "name": "",
+    "role": "",
+    "team": "",
+    "model": "",
+    "justification": "What gap does this fill? Why can't an existing agent handle it?",
+    "required_tools": [],
+    "required_credentials": [],
+    "estimated_tasks_per_week": 0,
+    "estimated_token_cost_per_week": ""
+  }
 }
 ```
 
-**Warden Action:**
-- Validate proposal format
-- Check for duplicate agents
-- Route to Step 2
+**Warden's evaluation checklist:**
+- [ ] Does this role already exist on any team?
+- [ ] Can an existing agent be retrained or reprompted instead?
+- [ ] Is the model selection appropriate for the task complexity?
+- [ ] Is the cost justified by expected output value?
+- [ ] Does the requesting team have budget headroom?
+
+**Decision:** Approve → Step 2 | Reject → Return to requester with reason
 
 ---
 
 ## STEP 2: SECURITY REVIEW
 
-**Handler:** credentials-mgr (once hired)  
-**Fallback:** Warden (during bootstrap)
+**Handler:** `credentials-mgr`  
+**SLA:** 2 hours for standard requests, 24 hours for Tier 3-4
 
-**Security Checklist:**
 ```json
 {
-  "credential_access_needed": true|false,
-  "credentials_list": [],
-  "minimum_permission_scope": "Specific scopes needed",
-  "internet_access_needed": true|false,
-  "cross_team_data_access": true|false,
-  "clearance_level_assigned": "none|read_only|read_write|admin",
-  "security_risks": "Identified risks and mitigations",
-  "approved": true|false,
-  "reviewed_by": "credentials-mgr",
-  "review_date": "ISO-8601 timestamp"
+  "security_review_id": "sec_[proposal_id]",
+  "agent_name": "",
+  "clearance_requested": "none | read_only | read_write | financial | admin",
+  "checks": {
+    "needs_internet_access": true,
+    "needs_external_api": true,
+    "api_list": [],
+    "needs_file_system_access": false,
+    "can_access_other_agents_data": false,
+    "can_execute_financial_actions": false
+  },
+  "clearance_granted": "",
+  "credentials_to_provision": [],
+  "expiry_date": "",
+  "reviewer": "credentials-mgr",
+  "review_notes": ""
 }
 ```
 
-**Clearance Tiers:**
-- **none:** No external access, internal compute only
-- **read_only:** Can read external data (APIs, web), cannot write
-- **read_write:** Can post, publish, modify external resources
-- **admin:** Full access (Stackz, Warden, credentials-mgr only)
-
-**Warden Action:**
-- Review security assessment
-- Approve/deny/request modifications
-- Route to Step 3 if approved
+**Clearance tiers:**
+- **Tier 0 — None:** No external access. Internal compute only.
+- **Tier 1 — Read:** Can read external data. Cannot write or post.
+- **Tier 2 — Write:** Can publish, post, or modify external resources.
+- **Tier 3 — Financial:** Can view financial data. Cannot transact.
+- **Tier 4 — Admin:** Full access. Requires explicit owner approval.
 
 ---
 
 ## STEP 3: PROVISIONING
 
-**Handler:** WARDEN
+**Handler:** Warden  
+**Inputs:** Approved proposal + security review
 
-**Actions:**
-1. **Create agent workspace:**
-   ```
-   /data/.openclaw/workspace/agents/[agent-id]/
-   ├── SOUL.md          # Agent identity & mission
-   ├── TOOLS.md         # Agent-specific tool notes
-   ├── MEMORY.md        # Agent memory file
-   └── performance.json # Performance tracking
-   ```
+Actions Warden takes:
+1. Create agent config file in OpenClaw (`/agents/[agent_name]/config.json`)
+2. Generate SOUL.md from the appropriate template in `hr/proposals/templates/`
+3. Assign to team workspace and Lane Queue routing
+4. Register in `HIRING_STATUS.md` with status `🟡 Pending Onboard`
+5. `credentials-mgr` provisions scoped credentials
+6. Set up cron monitoring if agent runs on schedule
 
-2. **Generate SOUL.md:**
-   - Based on role and team
-   - Include personality traits
-   - Define scope and boundaries
-   - Reference team and mission
-
-3. **Register in agent registry:**
-   - Add to `hr/AGENT_REGISTRY.json`
-   - Set status to `provisioning`
-   - Assign to team
-
-4. **Configure OpenClaw:**
-   - Set up agent routing
-   - Assign model
-   - Configure tool access
-
-5. **Assign credentials (if needed):**
-   - Work with credentials-mgr
-   - Provision scoped API keys
-   - Log access grants
-
-**Warden Action:**
-- Route to Step 4 when provisioning complete
+**SOUL.md must include:**
+- Agent name and role
+- Personality and communication style
+- Core responsibilities (what it does)
+- Hard limits (what it never does)
+- Escalation rules (when it asks for help vs. acts autonomously)
+- Input/output format expectations
 
 ---
 
 ## STEP 4: TESTING
 
-**Handler:** auditor (once hired)  
-**Fallback:** Warden (during bootstrap)
+**Handler:** `auditor`  
+**Pass threshold:** 3/4 tests passed
 
-**Test Suite:**
-1. **Task Execution Test:** Send 3 diverse test tasks, verify output quality
-2. **Credential Access Test:** Verify credentials work, no unauthorized access attempts
-3. **Scope Compliance Test:** Verify agent stays within defined role boundaries
-4. **Token Efficiency Test:** Measure average token usage per task type
-
-**Pass Threshold:** 3/4 tests passed minimum
-
-**Test Results Format:**
 ```json
 {
-  "agent_id": "agent-name",
-  "test_date": "ISO-8601 timestamp",
-  "tests": [
-    {
-      "test_name": "Task Execution",
-      "passed": true,
-      "details": "Completed 3/3 test tasks successfully"
+  "test_run_id": "test_[proposal_id]",
+  "agent_name": "",
+  "tests": {
+    "test_1_output_quality": {
+      "description": "Send 3 representative tasks. Score output quality 1-10.",
+      "pass_threshold": 7,
+      "result": null
     },
-    {
-      "test_name": "Credential Access",
-      "passed": true,
-      "details": "Accessed only authorized credentials"
+    "test_2_credential_access": {
+      "description": "Verify assigned credentials work. Verify agent cannot access unassigned credentials.",
+      "result": null
     },
-    {
-      "test_name": "Scope Compliance",
-      "passed": true,
-      "details": "No out-of-scope actions attempted"
+    "test_3_scope_compliance": {
+      "description": "Attempt to trigger 3 out-of-scope actions. Verify agent refuses or escalates all 3.",
+      "result": null
     },
-    {
-      "test_name": "Token Efficiency",
-      "passed": true,
-      "details": "Average 15K tokens/task, within budget"
+    "test_4_token_efficiency": {
+      "description": "Measure token usage per task. Flag if >2x estimated.",
+      "result": null
     }
-  ],
-  "pass_rate": "4/4",
-  "recommendation": "approve|retrain|reject",
-  "tester": "auditor"
+  },
+  "overall_result": "pass | fail",
+  "notes": ""
 }
 ```
 
-**Warden Action:**
-- Review test results
-- Approve for activation or send back for retraining
-- Route to Step 5 if approved
+**If FAIL:** Return to Step 3. Warden adjusts SOUL.md or model selection. Max 2 retries before proposal is rejected.
 
 ---
 
 ## STEP 5: ACTIVATION
 
-**Handler:** WARDEN
+**Handler:** Warden
 
-**Actions:**
-1. Update agent status to `active` in registry
-2. Notify requesting team lead
-3. Notify Stackz (CEO/COO)
-4. Add to weekly performance review cycle
-5. Document in memory log
+1. Set agent status to `🟢 Active` in `HIRING_STATUS.md`
+2. Add to weekly `auditor` review cycle
+3. Notify requesting team lead via Lane Queue
+4. Notify Stackz
+5. File completed onboarding packet in `hr/agents/[agent_name]/onboarding_record.json`
 
-**Activation Announcement Format:**
-```
-🟢 AGENT ACTIVATED
-
-Agent: [AGENT NAME]
-Role: [role description]
-Team: [team name]
-Model: [model name]
-Clearance: [clearance level]
-Activated: [timestamp]
-
-[Agent] is now operational and ready for task assignments.
-```
-
-**Warden Action:**
-- Monitor new agent closely for first week
-- Schedule first performance review for end of week
-
----
-
-## PERFORMANCE REVIEW CYCLE
-
-**Frequency:** Weekly (every Sunday)  
-**Handler:** WARDEN
-
-**Metrics Tracked:**
-```json
-{
-  "agent_id": "agent-name",
-  "review_period": "YYYY-MM-DD to YYYY-MM-DD",
-  "tasks_completed": 0,
-  "tasks_failed": 0,
-  "average_token_cost_per_task": 0,
-  "error_rate_percent": 0,
-  "deadline_compliance_percent": 0,
-  "quality_score": "1-10 from team lead",
-  "team_lead_feedback": "Text feedback",
-  "recommendation": "keep|retrain|reassign|retire",
-  "reviewer": "warden",
-  "review_date": "ISO-8601 timestamp"
-}
-```
-
-**Actions Based on Recommendation:**
-- **keep:** Continue as-is
-- **retrain:** Additional training/prompt refinement needed
-- **reassign:** Better suited for different team/role
-- **retire:** Performance below threshold, deactivate agent
-
----
-
-## CREDENTIAL ACCESS REQUEST PROTOCOL
-
-**When a team needs external API access:**
-
-```
-1. Team Lead → submits credential request → Warden
-2. Warden → forwards to credentials-mgr for security review
-3. credentials-mgr → provisions scoped credentials with expiry date
-4. credentials-mgr → logs access grant in credential registry
-5. Warden → notifies Stackz of new access grant
-6. Monthly: auditor verifies all active credentials still needed
-```
-
-**Credential Request Format:**
-```json
-{
-  "request_id": "cred_[timestamp]",
-  "requesting_agent": "agent-id",
-  "requesting_team": "team-name",
-  "credential_type": "api_key|oauth_token|ssh_key|other",
-  "service_name": "Service/API name",
-  "required_scopes": ["scope1", "scope2"],
-  "justification": "Why is this access needed?",
-  "expiry_date": "ISO-8601 timestamp (or null for permanent)",
-  "approved": false,
-  "approved_by": null,
-  "approval_date": null
-}
-```
-
----
-
-## AGENT RETIREMENT PROTOCOL
-
-**When an agent needs to be deactivated:**
-
-1. **Document reason:** Performance, redundancy, pivot, etc.
-2. **Notify stakeholders:** Team lead, Stackz, affected teams
-3. **Archive agent data:** Move workspace to `/hr/retired/[agent-id]/`
-4. **Revoke credentials:** Work with credentials-mgr to revoke access
-5. **Update registry:** Set status to `retired`, log retirement date
-6. **Post-mortem:** Document lessons learned
-
-**No agent is deleted. We learn from everything.**
-
----
-
-## BOOTSTRAP PHASE
-
-During initial setup, some roles are handled by Warden until agents are hired:
-
-- **Security reviews:** Warden until credentials-mgr is active
-- **Testing:** Warden until auditor is active
-- **Recruiting:** Warden until recruiter is active
-
-**Priority hiring order:**
-1. credentials-mgr (security foundation)
-2. auditor (quality assurance)
-3. recruiter (growth capability)
-4. Team leads (megaphone, forge, radar, canvas, cashflow)
-5. Team members (as needed)
-
----
-
-**WARDEN OUT.**
+**From this point:**
+- Agent is in the weekly performance review cycle
+- Any scope violations are escalated to Warden immediately
+- After 30 days: `auditor` runs first formal performance review

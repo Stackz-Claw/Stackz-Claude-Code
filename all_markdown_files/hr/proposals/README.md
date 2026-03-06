@@ -1,31 +1,55 @@
 # AGENT PROPOSALS
+*How to request a new agent hire*
 
-This directory contains all agent hiring proposals, both pending and processed.
+---
 
-## Structure
+## HOW TO SUBMIT
 
-```
-proposals/
-├── pending/        # Awaiting review
-├── approved/       # Approved, provisioning in progress
-├── active/         # Completed and activated
-└── rejected/       # Not approved (with reasons)
-```
+Any team lead can submit a new agent proposal to Warden via the Lane Queue:
 
-## Submitting a Proposal
-
-Team leads: Create a JSON file in `pending/` following the template in `ONBOARDING_PIPELINE.md`.
-
-**Naming convention:** `prop_[timestamp]_[agent-name].json`
-
-Example: `prop_20260213_recruiter.json`
-
-## Process Flow
-
-```
-pending/ → (review) → approved/ → (provision & test) → active/
-                  ↓
-               rejected/
+```json
+{
+  "to_team": "hr",
+  "to_agent": "warden",
+  "type": "request",
+  "subject": "New Agent Proposal: [agent_name]",
+  "payload": "[completed proposal form]"
+}
 ```
 
-All proposals are tracked in `AGENT_REGISTRY.json`.
+---
+
+## PROPOSAL NAMING
+
+File your proposal as: `proposals/[YYYY-MM-DD]-[agent_name]-proposal.md`
+
+---
+
+## TEMPLATES
+
+Use the template that matches the agent type:
+
+| Template | Use for |
+|----------|---------|
+| `templates/SOUL_team-lead.md` | Any agent that leads a team or sub-team |
+| `templates/SOUL_recruiter.md` | Research, scouting, or discovery agents |
+| `templates/SOUL_auditor.md` | Monitoring, QA, review, or compliance agents |
+| `templates/SOUL_credentials-mgr.md` | Any agent that handles sensitive credentials or access |
+
+For agent types not covered above, use `SOUL_team-lead.md` as a base and adapt.
+
+---
+
+## CURRENT PIPELINE
+
+| Agent | Submitted By | Date | Status |
+|-------|-------------|------|--------|
+| — | — | — | — |
+
+---
+
+## APPROVAL HISTORY
+
+| Agent | Approved/Rejected | Reason | Date |
+|-------|------------------|--------|------|
+| — | — | — | — |
