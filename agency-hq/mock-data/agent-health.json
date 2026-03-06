@@ -1,0 +1,97 @@
+{
+  "teams": {
+    "executive": {
+      "name": "Executive Suite",
+      "color": "#0EA5E9",
+      "budget": { "allocated": 10, "used": 6.40 },
+      "agents": [
+        { "id": "smoke", "uptime": 99.8, "tasks_7d": 52, "avg_completion_ms": 480000, "error_rate": 0.2, "token_efficiency": 94, "last_active": "2026-03-06T08:14:00Z", "status": "active" },
+        { "id": "stackz", "uptime": 99.9, "tasks_7d": 91, "avg_completion_ms": 180000, "error_rate": 0.4, "token_efficiency": 88, "last_active": "2026-03-06T08:15:00Z", "status": "active" }
+      ]
+    },
+    "hr": {
+      "name": "HR Wing",
+      "color": "#F59E0B",
+      "budget": { "allocated": 10, "used": 5.80 },
+      "agents": [
+        { "id": "warden", "uptime": 98.5, "tasks_7d": 34, "avg_completion_ms": 900000, "error_rate": 0.0, "token_efficiency": 92, "last_active": "2026-03-06T08:10:00Z", "status": "active" },
+        { "id": "recruiter", "uptime": 97.2, "tasks_7d": 18, "avg_completion_ms": 1200000, "error_rate": 1.1, "token_efficiency": 78, "last_active": "2026-03-06T07:45:00Z", "status": "active" },
+        { "id": "auditor", "uptime": 96.8, "tasks_7d": 12, "avg_completion_ms": 1800000, "error_rate": 0.5, "token_efficiency": 85, "last_active": "2026-03-06T06:30:00Z", "status": "idle" },
+        { "id": "credentials-mgr", "uptime": 99.1, "tasks_7d": 22, "avg_completion_ms": 300000, "error_rate": 0.0, "token_efficiency": 91, "last_active": "2026-03-06T08:00:00Z", "status": "active" }
+      ]
+    },
+    "marketing": {
+      "name": "Marketing Floor",
+      "color": "#EC4899",
+      "budget": { "allocated": 18, "used": 16.20 },
+      "agents": [
+        { "id": "megaphone", "uptime": 99.5, "tasks_7d": 67, "avg_completion_ms": 360000, "error_rate": 1.8, "token_efficiency": 76, "last_active": "2026-03-06T08:15:00Z", "status": "active" },
+        { "id": "ghost", "uptime": 98.0, "tasks_7d": 28, "avg_completion_ms": 720000, "error_rate": 2.1, "token_efficiency": 72, "last_active": "2026-03-06T08:12:00Z", "status": "active" },
+        { "id": "lens", "uptime": 97.5, "tasks_7d": 15, "avg_completion_ms": 1500000, "error_rate": 0.8, "token_efficiency": 80, "last_active": "2026-03-06T07:50:00Z", "status": "active" },
+        { "id": "director", "uptime": 96.2, "tasks_7d": 9, "avg_completion_ms": 2400000, "error_rate": 0.3, "token_efficiency": 83, "last_active": "2026-03-06T06:00:00Z", "status": "idle" },
+        { "id": "scout", "uptime": 98.8, "tasks_7d": 21, "avg_completion_ms": 600000, "error_rate": 1.5, "token_efficiency": 74, "last_active": "2026-03-06T08:05:00Z", "status": "active" },
+        { "id": "scheduler", "uptime": 99.2, "tasks_7d": 42, "avg_completion_ms": 120000, "error_rate": 0.2, "token_efficiency": 95, "last_active": "2026-03-06T08:14:00Z", "status": "active" }
+      ]
+    },
+    "dev": {
+      "name": "Dev Floor",
+      "color": "#6366F1",
+      "budget": { "allocated": 20, "used": 17.60 },
+      "agents": [
+        { "id": "forge", "uptime": 99.7, "tasks_7d": 88, "avg_completion_ms": 1320000, "error_rate": 0.5, "token_efficiency": 90, "last_active": "2026-03-06T08:15:00Z", "status": "active" },
+        { "id": "smith", "uptime": 98.9, "tasks_7d": 34, "avg_completion_ms": 1800000, "error_rate": 0.8, "token_efficiency": 86, "last_active": "2026-03-06T08:10:00Z", "status": "active" },
+        { "id": "pixel", "uptime": 97.5, "tasks_7d": 45, "avg_completion_ms": 600000, "error_rate": 2.3, "token_efficiency": 71, "last_active": "2026-03-06T08:13:00Z", "status": "active" },
+        { "id": "tester", "uptime": 99.0, "tasks_7d": 56, "avg_completion_ms": 480000, "error_rate": 0.1, "token_efficiency": 93, "last_active": "2026-03-06T08:14:00Z", "status": "active" },
+        { "id": "devops", "uptime": 99.9, "tasks_7d": 19, "avg_completion_ms": 240000, "error_rate": 0.0, "token_efficiency": 97, "last_active": "2026-03-06T08:15:00Z", "status": "active" },
+        { "id": "integrator", "uptime": 96.8, "tasks_7d": 12, "avg_completion_ms": 2100000, "error_rate": 3.2, "token_efficiency": 65, "last_active": "2026-03-06T07:30:00Z", "status": "error" }
+      ]
+    },
+    "strategy": {
+      "name": "Strategy Zone",
+      "color": "#14B8A6",
+      "budget": { "allocated": 10, "used": 7.30 },
+      "agents": [
+        { "id": "radar", "uptime": 99.2, "tasks_7d": 41, "avg_completion_ms": 1080000, "error_rate": 0.6, "token_efficiency": 87, "last_active": "2026-03-06T08:12:00Z", "status": "active" },
+        { "id": "analyst", "uptime": 98.4, "tasks_7d": 22, "avg_completion_ms": 1440000, "error_rate": 0.4, "token_efficiency": 84, "last_active": "2026-03-06T08:00:00Z", "status": "active" },
+        { "id": "validator", "uptime": 97.8, "tasks_7d": 16, "avg_completion_ms": 1800000, "error_rate": 0.9, "token_efficiency": 81, "last_active": "2026-03-06T07:55:00Z", "status": "active" },
+        { "id": "pitch", "uptime": 96.5, "tasks_7d": 8, "avg_completion_ms": 2700000, "error_rate": 1.2, "token_efficiency": 79, "last_active": "2026-03-06T06:45:00Z", "status": "idle" }
+      ]
+    },
+    "design": {
+      "name": "Design Studio",
+      "color": "#A78BFA",
+      "budget": { "allocated": 14, "used": 9.80 },
+      "agents": [
+        { "id": "canvas", "uptime": 98.8, "tasks_7d": 29, "avg_completion_ms": 2100000, "error_rate": 0.3, "token_efficiency": 89, "last_active": "2026-03-06T08:08:00Z", "status": "active" },
+        { "id": "palette", "uptime": 97.5, "tasks_7d": 18, "avg_completion_ms": 1500000, "error_rate": 0.5, "token_efficiency": 82, "last_active": "2026-03-06T07:40:00Z", "status": "active" },
+        { "id": "illustrator", "uptime": 96.2, "tasks_7d": 14, "avg_completion_ms": 2400000, "error_rate": 1.0, "token_efficiency": 77, "last_active": "2026-03-06T07:20:00Z", "status": "idle" },
+        { "id": "animator", "uptime": 95.8, "tasks_7d": 10, "avg_completion_ms": 3600000, "error_rate": 1.5, "token_efficiency": 73, "last_active": "2026-03-06T06:15:00Z", "status": "idle" },
+        { "id": "brand-guard", "uptime": 99.5, "tasks_7d": 35, "avg_completion_ms": 300000, "error_rate": 0.0, "token_efficiency": 96, "last_active": "2026-03-06T08:14:00Z", "status": "active" }
+      ]
+    },
+    "finance": {
+      "name": "Finance War Room",
+      "color": "#22C55E",
+      "budget": { "allocated": 8, "used": 5.20 },
+      "agents": [
+        { "id": "cashflow", "uptime": 99.6, "tasks_7d": 56, "avg_completion_ms": 660000, "error_rate": 0.1, "token_efficiency": 95, "last_active": "2026-03-06T08:14:00Z", "status": "active" },
+        { "id": "ledger", "uptime": 99.0, "tasks_7d": 38, "avg_completion_ms": 480000, "error_rate": 0.0, "token_efficiency": 93, "last_active": "2026-03-06T08:10:00Z", "status": "active" },
+        { "id": "forecaster", "uptime": 98.2, "tasks_7d": 14, "avg_completion_ms": 1800000, "error_rate": 0.7, "token_efficiency": 86, "last_active": "2026-03-06T07:35:00Z", "status": "active" },
+        { "id": "billing", "uptime": 97.5, "tasks_7d": 24, "avg_completion_ms": 420000, "error_rate": 0.3, "token_efficiency": 90, "last_active": "2026-03-06T08:00:00Z", "status": "active" }
+      ]
+    },
+    "startup": {
+      "name": "Startup War Room",
+      "color": "#F97316",
+      "budget": { "allocated": 10, "used": 8.90 },
+      "agents": [
+        { "id": "founder", "uptime": 99.4, "tasks_7d": 38, "avg_completion_ms": 1500000, "error_rate": 0.8, "token_efficiency": 84, "last_active": "2026-03-06T08:11:00Z", "status": "active" },
+        { "id": "strategist", "uptime": 98.0, "tasks_7d": 15, "avg_completion_ms": 2100000, "error_rate": 1.0, "token_efficiency": 80, "last_active": "2026-03-06T07:50:00Z", "status": "active" },
+        { "id": "researcher", "uptime": 97.2, "tasks_7d": 20, "avg_completion_ms": 1800000, "error_rate": 0.5, "token_efficiency": 82, "last_active": "2026-03-06T07:30:00Z", "status": "active" },
+        { "id": "warplanner", "uptime": 96.8, "tasks_7d": 11, "avg_completion_ms": 2400000, "error_rate": 0.9, "token_efficiency": 78, "last_active": "2026-03-06T06:20:00Z", "status": "idle" },
+        { "id": "growth-engine", "uptime": 97.5, "tasks_7d": 17, "avg_completion_ms": 1200000, "error_rate": 1.3, "token_efficiency": 75, "last_active": "2026-03-06T07:00:00Z", "status": "active" },
+        { "id": "postmortem", "uptime": 98.5, "tasks_7d": 6, "avg_completion_ms": 3000000, "error_rate": 0.2, "token_efficiency": 88, "last_active": "2026-03-06T05:30:00Z", "status": "idle" }
+      ]
+    }
+  }
+}
