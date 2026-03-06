@@ -1,19 +1,27 @@
+import PageHeader from '../components/layout/PageHeader'
 import HealthMetrics from '../components/health/HealthMetrics'
 import SuggestionCard from '../components/health/SuggestionCard'
 import SmokeInsights from '../components/health/SmokeInsights'
 import LifeTimeline from '../components/health/LifeTimeline'
 import healthData from '@mock/health.json'
 
-// Smoke character reactor
+// Smoke character reactor — aligned to design system (smoke-blue, not purple)
 function SmokeReactor({ avgScore }) {
   const isGood = avgScore >= 75
   return (
-    <div className="flex items-center gap-3 p-4 rounded-xl bg-purple-500/5 border border-purple-500/20">
-      <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-lg font-bold text-purple-400">
+    <div className="relative flex items-center gap-3 p-4 rounded-xl bg-smoke-blue/5 border border-smoke-blue/20 overflow-hidden">
+      {/* Ambient glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at 20% 50%, rgba(14, 165, 233, 0.06), transparent 70%)',
+        }}
+      />
+      <div className="relative w-12 h-12 rounded-xl bg-smoke-blue/10 border border-smoke-blue/30 flex items-center justify-center text-lg font-bold text-smoke-blue">
         S
       </div>
-      <div>
-        <div className="text-xs font-mono text-purple-400 font-bold">SMOKE IS MONITORING</div>
+      <div className="relative">
+        <div className="text-xs font-mono text-smoke-blue font-bold tracking-wider">SMOKE IS MONITORING</div>
         <div className="text-xs text-white/50 mt-0.5">
           {isGood
             ? '"Metrics are solid this week. Keep the consistency."'
@@ -27,22 +35,17 @@ function SmokeReactor({ avgScore }) {
 export default function HealthDashboard() {
   const { suggestions, metrics } = healthData
   const avgScore = Math.round(
-    (metrics.sleep.score + metrics.activity.score + metrics.nutrition.score + metrics.mentalWellness.score) / 4
+    (metrics.sleep.score + metrics.activity.score + metrics.recovery.score + metrics.hrv.score) / 4
   )
 
   return (
     <div className="h-full overflow-y-auto p-4 space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-display font-bold text-white">
-            Smoke <span style={{ color: '#9d4edd' }}>Life & Health</span>
-          </h2>
-          <p className="text-xs text-white/30 font-mono mt-0.5">
-            Overall score: <span style={{ color: '#9d4edd' }}>{avgScore}/100</span>
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        title="Smoke"
+        accent="Life & Health"
+        accentColor="neon-text-smoke"
+        subtitle={<>Overall score: <span className="text-smoke-blue">{avgScore}/100</span></>}
+      />
 
       {/* Smoke reactor */}
       <SmokeReactor avgScore={avgScore} />

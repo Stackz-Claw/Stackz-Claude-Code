@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useUIStore } from './store/uiStore'
 import TopBar from './components/layout/TopBar'
 import Sidebar from './components/layout/Sidebar'
+import Atmosphere from './components/layout/Atmosphere'
 import LoadScreen from './pages/LoadScreen'
 import OfficeWorld from './pages/OfficeWorld'
 import ExecutiveOverview from './pages/ExecutiveOverview'
@@ -25,6 +26,7 @@ function MainApp() {
 
   return (
     <div className="flex flex-col h-screen bg-hq-dark overflow-hidden">
+      <Atmosphere />
       <TopBar />
       <div className="flex flex-1 min-h-0">
         <Sidebar />

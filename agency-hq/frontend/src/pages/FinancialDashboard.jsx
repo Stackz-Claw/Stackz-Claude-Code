@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import PageHeader from '../components/layout/PageHeader'
 import RevenueOverview from '../components/financial/RevenueOverview'
 import BusinessUnitCard from '../components/financial/BusinessUnitCard'
 import { RevenueAreaChart } from '../components/financial/RevenueChart'
@@ -8,12 +9,19 @@ import financialData from '@mock/financial.json'
 // Stackz character reactor
 function StackzReactor({ isPositive }) {
   return (
-    <div className="flex items-center gap-3 p-4 rounded-xl bg-neon-green/5 border border-neon-green/20">
-      <div className="w-12 h-12 rounded-xl bg-neon-green/10 border border-neon-green/30 flex items-center justify-center text-2xl font-bold text-neon-green">
+    <div className="relative flex items-center gap-3 p-4 rounded-xl bg-neon-green/5 border border-neon-green/20 overflow-hidden">
+      {/* Ambient glow behind reactor */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.08), transparent 70%)',
+        }}
+      />
+      <div className="relative w-12 h-12 rounded-xl bg-neon-green/10 border border-neon-green/30 flex items-center justify-center text-2xl font-bold text-neon-green">
         $
       </div>
-      <div>
-        <div className="text-xs font-mono text-neon-green font-bold">STACKZ IS WATCHING</div>
+      <div className="relative flex-1">
+        <div className="text-xs font-mono text-neon-green font-bold tracking-wider">STACKZ IS WATCHING</div>
         <div className="text-xs text-white/50 mt-0.5">
           {isPositive
             ? '"Revenue trending up. WE EAT. 📈 Keep this energy."'
@@ -23,7 +31,7 @@ function StackzReactor({ isPositive }) {
       <motion.div
         animate={{ scale: [1, 1.15, 1] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="ml-auto text-2xl"
+        className="relative ml-auto text-2xl"
       >
         {isPositive ? '💰' : '😤'}
       </motion.div>
@@ -36,18 +44,17 @@ export default function FinancialDashboard() {
 
   return (
     <div className="h-full overflow-y-auto p-4 space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-display font-bold text-white">
-            Stackz <span className="neon-text-green">Financial HQ</span>
-          </h2>
-          <p className="text-xs text-white/30 font-mono mt-0.5">Revenue intelligence · Updated live</p>
-        </div>
-        <button className="btn-primary text-xs">
-          Export Report ↓
-        </button>
-      </div>
+      <PageHeader
+        title="Stackz"
+        accent="Financial HQ"
+        accentColor="neon-text-green"
+        subtitle="Revenue intelligence · Updated live"
+        actions={
+          <button className="btn-primary text-xs">
+            Export Report ↓
+          </button>
+        }
+      />
 
       {/* Stackz reactor */}
       <StackzReactor isPositive={overview.targetHit} />
@@ -56,7 +63,7 @@ export default function FinancialDashboard() {
       <RevenueOverview />
 
       {/* Revenue timeline chart */}
-      <GlassPanel className="p-4" neonAccent="green">
+      <GlassPanel className="p-4" neonAccent="green" hover>
         <div className="hq-label mb-3">Revenue Timeline — 7 Months</div>
         <div style={{ height: 220 }}>
           <RevenueAreaChart data={revenueTimeline} />

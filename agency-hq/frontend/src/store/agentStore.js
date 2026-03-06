@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import agentsData from '@mock/agents.json'
 
 export const useAgentStore = create((set, get) => ({
-  agents: agentsData.agents,
+  agents: agentsData.agents.map(a => ({ ...a, state: a.state ?? 'idle' })),
   subAgents: agentsData.subAgents,
   selectedAgent: null,
   agentPositions: {},
@@ -20,6 +20,10 @@ export const useAgentStore = create((set, get) => ({
   updateAgentPosition: (agentId, position) =>
     set((state) => ({
       agentPositions: { ...state.agentPositions, [agentId]: position },
+    })),
+  updateAgentState: (agentId, newState) =>
+    set((state) => ({
+      agents: state.agents.map((a) => a.id === agentId ? { ...a, state: newState } : a),
     })),
 
   getAgent: (agentId) => get().agents.find((a) => a.id === agentId),
