@@ -29,13 +29,14 @@ export default function Sidebar() {
   const teamLeads = agents.filter((a) => !['smoke', 'stackz'].includes(a.id))
 
   return (
-    <div className="w-60 bg-hq-dark/80 backdrop-blur-md border-r border-white/5 flex flex-col flex-shrink-0 h-full relative">
+    <div className="w-60 bg-black/40 backdrop-blur-xl border-r border-white/5 flex flex-col flex-shrink-0 h-full relative">
       {/* Navigation */}
       <nav className="p-3 space-y-0.5">
         <div className="hq-label px-2 py-2">Navigation</div>
         {NAV_ITEMS.map((item, i) => {
           const isApprovals = item.id === 'approvals'
           const totalPending = smokeCount + stackzCount
+          const isActive = activeView === item.id
           return (
             <motion.button
               key={item.id}
@@ -46,17 +47,20 @@ export default function Sidebar() {
               className={`
                 w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left
                 transition-all duration-200 group relative overflow-hidden
-                ${activeView === item.id
-                  ? 'bg-smoke-blue/8 border border-smoke-blue/25 text-white'
-                  : 'hover:bg-white/5 text-white/50 hover:text-white/80 border border-transparent hover:translate-x-0.5'}
+                ${isActive
+                  ? 'text-white border border-smoke-blue/20'
+                  : 'hover:bg-white/4 text-white/45 hover:text-white/80 border border-transparent hover:translate-x-0.5'}
               `}
+              style={isActive ? {
+                background: 'linear-gradient(90deg, rgba(14, 165, 233, 0.08), transparent)',
+              } : undefined}
             >
-              {activeView === item.id && (
+              {isActive && (
                 <div
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r-full"
                   style={{
-                    background: 'linear-gradient(180deg, #0EA5E9, #10B981)',
-                    boxShadow: '0 0 8px rgba(14, 165, 233, 0.5)',
+                    background: 'linear-gradient(180deg, #0EA5E9, #7C3AED)',
+                    boxShadow: '0 0 12px rgba(14, 165, 233, 0.5), 0 0 24px rgba(124, 58, 237, 0.2)',
                   }}
                 />
               )}
@@ -65,26 +69,27 @@ export default function Sidebar() {
               {isApprovals && totalPending > 0 && (
                 <span className="flex items-center gap-1">
                   {smokeCount > 0 && (
-                    <span className="w-4 h-4 rounded-full bg-smoke-blue/20 border border-smoke-blue/40 text-sky-400 text-[9px] font-bold flex items-center justify-center">
+                    <span className="w-4 h-4 rounded-full bg-smoke-blue/15 border border-smoke-blue/30 text-sky-400 text-[9px] font-bold flex items-center justify-center">
                       {smokeCount}
                     </span>
                   )}
                   {stackzCount > 0 && (
-                    <span className="w-4 h-4 rounded-full bg-stackz-green/20 border border-stackz-green/40 text-emerald-400 text-[9px] font-bold flex items-center justify-center">
+                    <span className="w-4 h-4 rounded-full bg-stackz-green/15 border border-stackz-green/30 text-emerald-400 text-[9px] font-bold flex items-center justify-center">
                       {stackzCount}
                     </span>
                   )}
                 </span>
               )}
               {!isApprovals && (
-                <span className="text-[10px] font-mono text-white/20 group-hover:text-white/40">{item.shortcut}</span>
+                <span className="text-[10px] font-mono text-white/15 group-hover:text-white/30 transition-colors">{item.shortcut}</span>
               )}
             </motion.button>
           )
         })}
       </nav>
 
-      <div className="mx-3 border-t border-white/5 my-1" />
+      {/* Gradient divider */}
+      <div className="mx-4 h-px my-1" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
 
       {/* Executive Suite leads */}
       <div className="px-3 pb-1">
@@ -92,19 +97,33 @@ export default function Sidebar() {
         {leads.map((agent) => {
           const p = AGENT_PERSONALITIES[agent.id]
           return (
-            <div key={agent.id} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer">
-              <AgentAvatar agentId={agent.id} size="7" />
+            <div
+              key={agent.id}
+              className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/4 cursor-pointer transition-all duration-200 group"
+            >
+              <div className="relative">
+                <AgentAvatar agentId={agent.id} size="7" />
+                {/* Glow ring */}
+                <div
+                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ boxShadow: `0 0 10px ${p?.color || '#0EA5E9'}40` }}
+                />
+              </div>
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-medium text-white/80 truncate">{agent.name}</div>
-                <div className="text-[10px] truncate" style={{ color: `${p?.color}99` }}>{agent.title}</div>
+                <div className="text-[10px] truncate" style={{ color: `${p?.color}80` }}>{agent.title}</div>
               </div>
-              <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-400" />
+              <div
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-400"
+                style={{ boxShadow: '0 0 6px rgba(16, 185, 129, 0.4)' }}
+              />
             </div>
           )
         })}
       </div>
 
-      <div className="mx-3 border-t border-white/5 my-1" />
+      {/* Gradient divider */}
+      <div className="mx-4 h-px my-1" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
 
       {/* Team Leads */}
       <div className="flex-1 overflow-y-auto px-3 pb-2 relative">
@@ -115,35 +134,46 @@ export default function Sidebar() {
             return (
               <div
                 key={agent.id}
-                className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors"
+                className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/4 cursor-pointer transition-all duration-200"
               >
                 <AgentAvatar agentId={agent.id} size="6" />
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-medium text-white/70 truncate">{agent.name}</div>
-                  <div className="text-[10px] text-white/25 truncate">{agent.title}</div>
+                  <div className="text-xs font-medium text-white/65 truncate">{agent.name}</div>
+                  <div className="text-[10px] text-white/20 truncate">{agent.title}</div>
                 </div>
                 <div
                   className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: agent.status === 'active' ? '#10B981' : '#F59E0B' }}
+                  style={{
+                    backgroundColor: agent.status === 'active' ? '#10B981' : '#F59E0B',
+                    boxShadow: agent.status === 'active'
+                      ? '0 0 6px rgba(16, 185, 129, 0.3)'
+                      : '0 0 6px rgba(245, 158, 11, 0.3)',
+                  }}
                 />
               </div>
             )
           })}
         </div>
-        <div className="sticky bottom-0 h-6 pointer-events-none" style={{ background: 'linear-gradient(transparent, rgba(10, 14, 26, 0.9))' }} />
+        <div className="sticky bottom-0 h-8 pointer-events-none" style={{ background: 'linear-gradient(transparent, rgba(6, 9, 16, 0.95))' }} />
       </div>
 
       {/* Footer */}
       <div className="p-3 border-t border-white/5">
         <div className="flex items-center gap-2 px-2 py-1.5">
-          <div className="w-7 h-7 rounded-lg bg-warden-amber/10 border border-warden-amber/30 flex items-center justify-center">
+          <div
+            className="w-7 h-7 rounded-lg bg-warden-amber/8 border border-warden-amber/25 flex items-center justify-center"
+            style={{ boxShadow: '0 0 10px rgba(245, 158, 11, 0.1)' }}
+          >
             <span className="text-warden-amber text-xs font-bold">B</span>
           </div>
           <div>
             <div className="text-xs font-medium text-white/80">The Boss</div>
-            <div className="text-[10px] text-warden-amber/60">You</div>
+            <div className="text-[10px] text-warden-amber/50">You</div>
           </div>
-          <div className="ml-auto w-1.5 h-1.5 rounded-full bg-stackz-green" />
+          <div
+            className="ml-auto w-1.5 h-1.5 rounded-full bg-stackz-green"
+            style={{ boxShadow: '0 0 6px rgba(16, 185, 129, 0.4)' }}
+          />
         </div>
       </div>
     </div>

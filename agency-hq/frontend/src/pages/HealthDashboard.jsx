@@ -9,7 +9,7 @@ import healthData from '@mock/health.json'
 function SmokeReactor({ avgScore }) {
   const isGood = avgScore >= 75
   return (
-    <div className="relative flex items-center gap-3 p-4 rounded-xl bg-smoke-blue/5 border border-smoke-blue/20 overflow-hidden">
+    <div className="relative flex items-center gap-3 p-4 rounded-xl bg-smoke-blue/4 border border-smoke-blue/15 overflow-hidden" style={{ boxShadow: '0 0 30px rgba(14, 165, 233, 0.06)' }}>
       {/* Ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -17,7 +17,7 @@ function SmokeReactor({ avgScore }) {
           background: 'radial-gradient(ellipse at 20% 50%, rgba(14, 165, 233, 0.06), transparent 70%)',
         }}
       />
-      <div className="relative w-12 h-12 rounded-xl bg-smoke-blue/10 border border-smoke-blue/30 flex items-center justify-center text-lg font-bold text-smoke-blue">
+      <div className="relative w-12 h-12 rounded-xl bg-smoke-blue/8 border border-smoke-blue/25 flex items-center justify-center text-lg font-bold text-smoke-blue" style={{ boxShadow: '0 0 15px rgba(14, 165, 233, 0.15)' }}>
         S
       </div>
       <div className="relative">
@@ -39,7 +39,7 @@ export default function HealthDashboard() {
   )
 
   return (
-    <div className="h-full overflow-y-auto p-4 space-y-4">
+    <div className="h-full overflow-y-auto p-6 space-y-5">
       <PageHeader
         title="Smoke"
         accent="Life & Health"

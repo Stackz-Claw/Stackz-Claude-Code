@@ -3,7 +3,7 @@ import SmartNotesGraph from '../components/notes/SmartNotesGraph'
 
 export default function SmartNotes() {
   return (
-    <div className="h-full flex flex-col p-4 gap-4">
+    <div className="h-full flex flex-col p-6 gap-5">
       <PageHeader
         title="Smart"
         accent="Notes Graph"
