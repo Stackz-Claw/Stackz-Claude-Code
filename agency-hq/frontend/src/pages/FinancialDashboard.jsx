@@ -9,7 +9,7 @@ import financialData from '@mock/financial.json'
 // Stackz character reactor
 function StackzReactor({ isPositive }) {
   return (
-    <div className="relative flex items-center gap-3 p-4 rounded-xl bg-neon-green/5 border border-neon-green/20 overflow-hidden">
+    <div className="relative flex items-center gap-3 p-4 rounded-xl bg-neon-green/4 border border-neon-green/15 overflow-hidden" style={{ boxShadow: '0 0 30px rgba(16, 185, 129, 0.06)' }}>
       {/* Ambient glow behind reactor */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -17,7 +17,7 @@ function StackzReactor({ isPositive }) {
           background: 'radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.08), transparent 70%)',
         }}
       />
-      <div className="relative w-12 h-12 rounded-xl bg-neon-green/10 border border-neon-green/30 flex items-center justify-center text-2xl font-bold text-neon-green">
+      <div className="relative w-12 h-12 rounded-xl bg-neon-green/8 border border-neon-green/25 flex items-center justify-center text-2xl font-bold text-neon-green" style={{ boxShadow: '0 0 15px rgba(16, 185, 129, 0.15)' }}>
         $
       </div>
       <div className="relative flex-1">
@@ -43,7 +43,7 @@ export default function FinancialDashboard() {
   const { businessUnits, revenueTimeline, overview } = financialData
 
   return (
-    <div className="h-full overflow-y-auto p-4 space-y-4">
+    <div className="h-full overflow-y-auto p-6 space-y-5">
       <PageHeader
         title="Stackz"
         accent="Financial HQ"

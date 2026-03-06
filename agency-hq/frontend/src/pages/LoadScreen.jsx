@@ -17,26 +17,58 @@ export default function LoadScreen() {
 
   return (
     <div className="fixed inset-0 bg-[#060910] flex items-center justify-center z-50 overflow-hidden">
-      {/* Gradient mesh background — replaces flat grid */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `
-            radial-gradient(ellipse 80% 60% at 20% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 70%),
-            radial-gradient(ellipse 60% 80% at 80% 20%, rgba(16, 185, 129, 0.06) 0%, transparent 70%),
-            radial-gradient(ellipse 50% 50% at 50% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 60%),
-            radial-gradient(ellipse 40% 40% at 70% 70%, rgba(245, 158, 11, 0.03) 0%, transparent 50%)
-          `,
-        }}
-      />
+      {/* Fluid blob background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Blob 1 — Blue */}
+        <div
+          className="absolute animate-fluid-1"
+          style={{
+            width: '600px',
+            height: '600px',
+            left: '10%',
+            top: '20%',
+            borderRadius: '40% 60% 55% 45% / 55% 40% 60% 45%',
+            background: 'radial-gradient(circle at 40% 40%, rgba(14, 165, 233, 0.2), transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        {/* Blob 2 — Purple */}
+        <div
+          className="absolute animate-fluid-2"
+          style={{
+            width: '500px',
+            height: '500px',
+            right: '10%',
+            top: '10%',
+            borderRadius: '55% 45% 40% 60% / 45% 55% 45% 55%',
+            background: 'radial-gradient(circle at 60% 40%, rgba(124, 58, 237, 0.18), transparent 70%)',
+            filter: 'blur(90px)',
+            animationDelay: '-5s',
+          }}
+        />
+        {/* Blob 3 — Emerald */}
+        <div
+          className="absolute animate-fluid-3"
+          style={{
+            width: '450px',
+            height: '450px',
+            left: '35%',
+            bottom: '0%',
+            borderRadius: '45% 55% 60% 40% / 60% 45% 55% 45%',
+            background: 'radial-gradient(circle at 50% 60%, rgba(16, 185, 129, 0.15), transparent 70%)',
+            filter: 'blur(80px)',
+            animationDelay: '-10s',
+          }}
+        />
+      </div>
 
       {/* Subtle grid overlay */}
       <div
-        className="absolute inset-0 opacity-5"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(14,165,233,0.4) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(14,165,233,0.4) 1px, transparent 1px)
+            linear-gradient(rgba(14,165,233,0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(14,165,233,0.5) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px',
         }}
@@ -52,9 +84,6 @@ export default function LoadScreen() {
         }}
       />
 
-      {/* Scanlines */}
-      <div className="absolute inset-0 scanlines" />
-
       <div className="relative text-center">
         {/* Logo animation */}
         <motion.div
@@ -64,20 +93,33 @@ export default function LoadScreen() {
           className="mb-6"
         >
           <div className="relative inline-block">
+            {/* Spinning conic gradient border */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
               className="absolute inset-0 rounded-2xl"
               style={{
-                background: 'conic-gradient(from 0deg, #0EA5E9, #10B981, #A78BFA, #F97316, #0EA5E9)',
+                background: 'conic-gradient(from 0deg, #0EA5E9, #7C3AED, #10B981, #A78BFA, #0EA5E9)',
                 padding: '2px',
               }}
             >
               <div className="w-full h-full rounded-2xl bg-[#060910]" />
             </motion.div>
-            <div className="relative w-24 h-24 rounded-2xl bg-[#060910] flex items-center justify-center border border-smoke-blue/30">
+            {/* Logo glow halo */}
+            <div
+              className="absolute inset-0 rounded-2xl"
+              style={{
+                boxShadow: '0 0 60px rgba(14, 165, 233, 0.2), 0 0 120px rgba(124, 58, 237, 0.1)',
+              }}
+            />
+            <div className="relative w-24 h-24 rounded-2xl bg-[#060910] flex items-center justify-center border border-smoke-blue/20">
               <div className="text-center">
-                <div className="text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-br from-smoke-blue to-stackz-green">
+                <div
+                  className="text-4xl font-display font-black text-transparent bg-clip-text"
+                  style={{
+                    backgroundImage: 'linear-gradient(135deg, #0EA5E9, #7C3AED, #10B981)',
+                  }}
+                >
                   HQ
                 </div>
               </div>
@@ -92,9 +134,9 @@ export default function LoadScreen() {
           transition={{ delay: 0.4, duration: 0.5 }}
         >
           <h1 className="text-3xl font-display font-bold tracking-tight">
-            The Agency <span className="neon-text-smoke animate-glow">HQ</span>
+            The Agency <span className="neon-text-smoke">HQ</span>
           </h1>
-          <p className="text-white/30 font-mono text-xs mt-2 tracking-widest uppercase">
+          <p className="text-white/25 font-mono text-xs mt-2 tracking-widest uppercase">
             AI Operations Center — v2.0
           </p>
         </motion.div>
@@ -106,10 +148,10 @@ export default function LoadScreen() {
           transition={{ delay: 0.7 }}
           className="flex justify-center gap-3 mt-4"
         >
-          <span className="text-[10px] font-mono px-2 py-1 rounded bg-smoke-blue/10 border border-smoke-blue/20 text-sky-400">
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-smoke-blue/8 border border-smoke-blue/20 text-sky-400/90">
             Sheldon — Chief of Staff
           </span>
-          <span className="text-[10px] font-mono px-2 py-1 rounded bg-stackz-green/10 border border-stackz-green/20 text-emerald-400">
+          <span className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-stackz-green/8 border border-stackz-green/20 text-emerald-400/90">
             Stackz — Chief of Biz Ops
           </span>
         </motion.div>
@@ -121,10 +163,10 @@ export default function LoadScreen() {
           transition={{ delay: 0.8 }}
           className="mt-6 w-64 mx-auto"
         >
-          <div className="h-px bg-white/10 rounded-full overflow-hidden">
+          <div className="h-px bg-white/8 rounded-full overflow-hidden">
             <motion.div
-              className="h-full rounded-full"
-              style={{ background: 'linear-gradient(90deg, #0EA5E9, #10B981)' }}
+              className="h-full rounded-full shimmer-overlay"
+              style={{ background: 'linear-gradient(90deg, #0EA5E9, #7C3AED, #10B981)' }}
               initial={{ width: '0%' }}
               animate={{ width: '100%' }}
               transition={{ duration: 1.8, ease: 'easeInOut', delay: 0.9 }}
@@ -132,13 +174,13 @@ export default function LoadScreen() {
           </div>
           <div className="flex items-center justify-between mt-2">
             <motion.span
-              className="font-mono text-[10px] text-white/30"
-              animate={{ opacity: [0.3, 0.8, 0.3] }}
+              className="font-mono text-[10px] text-white/25"
+              animate={{ opacity: [0.25, 0.7, 0.25] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
               Initializing agents...
             </motion.span>
-            <span className="font-mono text-[10px] text-smoke-blue">9 online</span>
+            <span className="font-mono text-[10px] text-smoke-blue/80">9 online</span>
           </div>
         </motion.div>
 
@@ -153,7 +195,7 @@ export default function LoadScreen() {
             <div key={i} className="flex items-center gap-2">
               <motion.div
                 className="w-2 h-2 rounded-full"
-                style={{ background: color, boxShadow: `0 0 6px ${color}66` }}
+                style={{ background: color, boxShadow: `0 0 8px ${color}55` }}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 1.3 + i * 0.08, type: 'spring' }}
@@ -162,7 +204,7 @@ export default function LoadScreen() {
               {i < AGENT_COLORS.length - 1 && (
                 <motion.div
                   className="w-3 h-px"
-                  style={{ background: `linear-gradient(90deg, ${color}44, ${AGENT_COLORS[i + 1]}44)` }}
+                  style={{ background: `linear-gradient(90deg, ${color}33, ${AGENT_COLORS[i + 1]}33)` }}
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{ scaleX: 1, opacity: 1 }}
                   transition={{ delay: 1.5 + i * 0.08, duration: 0.3 }}
