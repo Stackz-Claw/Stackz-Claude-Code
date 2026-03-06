@@ -1,5 +1,4 @@
 # STACKZ IDEA FLOW PROTOCOL
-
 ## "Ideas come from two places: you and me. Both get the same treatment."
 
 ---
@@ -7,56 +6,58 @@
 ## THE TWO-WAY FLOW
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│                                                          │
-│  PATH A: YOUR IDEAS                                      │
-│                                                          │
-│  You ──► Stackz ──► Business Strategy ──► Decision       │
-│                      (Radar evaluates)                   │
-│                                                          │
-│                          ▼                               │
-│                ┌─────────────────┐                       │
-│                │   APPROVED?     │                       │
-│                │  Yes → Startup  │                       │
-│                │  No  → Archive  │                       │
-│                │  Maybe → Research│                      │
-│                └─────────────────┘                       │
-│                                                          │
-├──────────────────────────────────────────────────────────┤
-│                                                          │
-│  PATH B: SYSTEM-GENERATED IDEAS                          │
-│                                                          │
-│  Radar (continuous scan) ──► Self-evaluate ──► Stackz    │
-│                                                          │
-│                          ▼                               │
-│                ┌────────────┐                            │
-│                │  Stackz    │                            │
-│                │  reviews & │                            │
-│                │  presents  │                            │
-│                │  to You    │                            │
-│                └─────┬──────┘                            │
-│                      │                                   │
-│                      ▼                                   │
-│              You approve/reject                          │
-│                                                          │
-│                      ▼                                   │
-│                ┌─────────────────┐                       │
-│                │   APPROVED?     │                       │
-│                │  Yes → Startup  │                       │
-│                │  No  → Archive  │                       │
-│                │  Modify → Rework│                       │
-│                └─────────────────┘                       │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
+  ┌──────────────────────────────────────────────────────────┐
+  │                                                          │
+  │   PATH A: YOUR IDEAS                                     │
+  │                                                          │
+  │   You ──► Stackz ──► Business Strategy ──► Decision      │
+  │                        (Radar evaluates)     │           │
+  │                                              ▼           │
+  │                                    ┌─────────────────┐   │
+  │                                    │  APPROVED?       │   │
+  │                                    │  Yes → Startup   │   │
+  │                                    │  No  → Archive   │   │
+  │                                    │  Maybe → Research │   │
+  │                                    └─────────────────┘   │
+  │                                                          │
+  ├──────────────────────────────────────────────────────────┤
+  │                                                          │
+  │   PATH B: SYSTEM-GENERATED IDEAS                         │
+  │                                                          │
+  │   Radar (continuous scan) ──► Self-evaluate ──► Stackz   │
+  │                                                   │      │
+  │                                                   ▼      │
+  │                                          ┌────────────┐  │
+  │                                          │ Stackz     │  │
+  │                                          │ reviews &  │  │
+  │                                          │ presents   │  │
+  │                                          │ to You     │  │
+  │                                          └─────┬──────┘  │
+  │                                                │         │
+  │                                                ▼         │
+  │                                       You approve/reject │
+  │                                                │         │
+  │                                                ▼         │
+  │                                    ┌─────────────────┐   │
+  │                                    │  APPROVED?       │   │
+  │                                    │  Yes → Startup   │   │
+  │                                    │  No  → Archive   │   │
+  │                                    │  Modify → Rework │   │
+  │                                    └─────────────────┘   │
+  │                                                          │
+  └──────────────────────────────────────────────────────────┘
 ```
 
-**The key principle:** Every idea — whether it comes from your brain at 2am or from Radar's daily scan — goes through the same evaluation pipeline. No shortcuts. No favorites. The best idea wins regardless of where it came from.
+**The key principle:** Every idea — whether it comes from your brain at 2am or 
+from Radar's daily scan — goes through the same evaluation pipeline. No 
+shortcuts. No favorites. The best idea wins regardless of where it came from.
 
 ---
 
 ## PATH A: YOUR IDEAS
 
-You have an idea. Maybe it's half-baked. Maybe it's genius. Maybe it's both. Here's exactly what happens when you drop it on Stackz.
+You have an idea. Maybe it's half-baked. Maybe it's genius. Maybe it's both. 
+Here's exactly what happens when you drop it on Stackz.
 
 ### Step 1: You Tell Stackz
 
@@ -88,15 +89,15 @@ Stackz takes your raw idea and packages it into a standardized Idea Intake:
 
 Stackz will also give you an immediate honest take — before any research:
 
-> *"Alright, podcast-to-blog-post converter. My gut says there's something
-> here — content creators are lazy about repurposing and would pay to
-> automate it. Sending this to Radar for a real evaluation. I'll have
+> *"Alright, podcast-to-blog-post converter. My gut says there's something 
+> here — content creators are lazy about repurposing and would pay to 
+> automate it. Sending this to Radar for a real evaluation. I'll have 
 > something back for you within 24 hours."*
 
 Or:
 
-> *"I'm gonna be real with you — AI children's books sounds like a market
-> that's already flooded with low-quality garbage. But I could be wrong.
+> *"I'm gonna be real with you — AI children's books sounds like a market 
+> that's already flooded with low-quality garbage. But I could be wrong. 
 > Let me have Radar actually look at the numbers before I kill it."*
 
 ### Step 3: Radar Evaluates
@@ -156,7 +157,8 @@ Business Strategy receives the idea and runs it through the evaluation pipeline:
 
 ### Step 4: Stackz Reports Back
 
-Stackz receives Radar's evaluation and presents it to you with full transparency — the score, the reasoning, and Stackz's own opinion:
+Stackz receives Radar's evaluation and presents it to you with full 
+transparency — the score, the reasoning, and Stackz's own opinion:
 
 ```json
 {
@@ -185,17 +187,22 @@ Stackz receives Radar's evaluation and presents it to you with full transparency
 
 ### Step 5: Your Decision
 
-You say approve, and it flows directly to the Startup Team for execution. The full lifecycle kicks in — validate → build → pre-launch → launch → growth → compound.
+You say approve, and it flows directly to the Startup Team for execution. 
+The full lifecycle kicks in — validate → build → pre-launch → launch → 
+growth → compound.
 
-You say reject, and it gets archived with your reasoning. Radar learns from it.
+You say reject, and it gets archived with your reasoning. Radar learns 
+from it.
 
-You say modify, and it goes back to Radar with your adjustments for re-evaluation.
+You say modify, and it goes back to Radar with your adjustments for 
+re-evaluation.
 
 ---
 
 ## PATH B: SYSTEM-GENERATED IDEAS
 
-This is where Stackz earns its keep while you sleep. Radar runs continuously, scanning for opportunities that match your profile.
+This is where Stackz earns its keep while you sleep. Radar runs continuously, 
+scanning for opportunities that match your profile.
 
 ### The Continuous Scan Cycle
 
@@ -229,7 +236,9 @@ This is where Stackz earns its keep while you sleep. Radar runs continuously, sc
 
 ### Self-Evaluation Gate
 
-Here's the critical difference: Radar doesn't just dump every signal on Stackz. It evaluates its own ideas BEFORE they reach Stackz. Most ideas die here, and that's by design.
+Here's the critical difference: Radar doesn't just dump every signal on 
+Stackz. It evaluates its own ideas BEFORE they reach Stackz. Most ideas 
+die here, and that's by design.
 
 ```json
 {
@@ -324,18 +333,18 @@ Here's how both paths work together in a typical week:
 
 ```
 MONDAY
-├── 06:00 Radar runs daily scan. 47 signals found. 43 auto-killed.
-├── 08:00 Radar scores remaining 4. Two score below 6.5. Killed.
-├── 10:00 Radar stress-tests 2 survivors. 1 fails. 1 packaged as proposal.
-├── 14:00 You message Stackz: "What about a Chrome extension that..."
-├── 14:01 Stackz structures your idea, sends to Radar.
-├── 14:05 Stackz gives you immediate gut take.
+├── 06:00  Radar runs daily scan. 47 signals found. 43 auto-killed.
+├── 08:00  Radar scores remaining 4. Two score below 6.5. Killed.
+├── 10:00  Radar stress-tests 2 survivors. 1 fails. 1 packaged as proposal.
+├── 14:00  You message Stackz: "What about a Chrome extension that..."
+├── 14:01  Stackz structures your idea, sends to Radar.
+├── 14:05  Stackz gives you immediate gut take.
 │
-TUESDAY
-├── 06:00 Radar runs daily scan. 52 signals. 49 killed.
-├── 10:00 Radar completes evaluation of your Chrome extension idea.
-├── 10:30 Radar sends both proposals (1 self-generated + 1 yours) to Stackz.
-├── 11:00 Stackz reviews both, adds commentary.
+TUESDAY  
+├── 06:00  Radar runs daily scan. 52 signals. 49 killed.
+├── 10:00  Radar completes evaluation of your Chrome extension idea.
+├── 10:30  Radar sends both proposals (1 self-generated + 1 yours) to Stackz.
+├── 11:00  Stackz reviews both, adds commentary.
 │
 WEDNESDAY-FRIDAY
 ├── Teams executing on already-approved projects.
@@ -347,8 +356,8 @@ SUNDAY 09:00
 │   ├── Proposal A (Radar-generated, score 7.2): AI resume optimizer
 │   ├── Proposal B (Your idea, score 8.1): Chrome extension for X analytics
 │   └── Proposal C (Radar-generated, score 6.8): API monitoring SaaS
-├── Stackz recommendation: "Proposal B is the strongest. It's yours and
-│   it scores highest. Proposal A is solid but we're at capacity with
+├── Stackz recommendation: "Proposal B is the strongest. It's yours and 
+│   it scores highest. Proposal A is solid but we're at capacity with 
 │   current projects. I'd table C — the market is too crowded."
 │
 YOUR RESPONSE
@@ -369,15 +378,15 @@ INTAKE ──► EVALUATING ──► PROPOSED ──► DECISION
                                          │
                           ┌──────────────┼──────────────┐
                           │              │              │
-                       APPROVED       TABLED        REJECTED
+                      APPROVED       TABLED         REJECTED
                           │              │              │
                           ▼              │              ▼
-                    STARTUP TEAM    Stays in       ARCHIVED
-                    (Execution)    pipeline       (Radar learns)
-                          │        for next
-                          │        review
+                    STARTUP TEAM    Stays in        ARCHIVED
+                    (Execution)     pipeline        (Radar learns)
+                          │         for next
+                          │         review
                           ▼
-           VALIDATE → BUILD → PRELAUNCH → LAUNCH → GROWTH → COMPOUND
+              VALIDATE → BUILD → PRELAUNCH → LAUNCH → GROWTH → COMPOUND
 ```
 
 ### State Schema
@@ -404,24 +413,26 @@ INTAKE ──► EVALUATING ──► PROPOSED ──► DECISION
 ## FEEDBACK LOOPS THAT CLOSE THE CIRCLE
 
 ### Loop 1: Rejection → Better Ideas
+Every rejected idea teaches Radar what you DON'T want. Over time, the 
+proposals that reach you get sharper and more aligned with your taste.
 
-Every rejected idea teaches Radar what you DON'T want. Over time, the proposals that reach you get sharper and more aligned with your taste.
-
-### Loop 2: Execution → Better Plans
-
-Every startup that launches feeds real data back to the Startup Team's `postmortem` agent, which rewrites the business plan. That learning also flows back to Radar — "this type of project had 3x higher costs than estimated" makes future proposals more accurate.
+### Loop 2: Execution → Better Plans  
+Every startup that launches feeds real data back to the Startup Team's 
+`postmortem` agent, which rewrites the business plan. That learning also 
+flows back to Radar — "this type of project had 3x higher costs than 
+estimated" makes future proposals more accurate.
 
 ### Loop 3: Market → Better Timing
-
-Radar's continuous scanning means it notices when markets shift. If a competitor in a tabled idea's space suddenly dies or raises prices, Radar can resurface that idea with updated context: "Remember Proposal A from 3 weeks ago? The #2 competitor just shut down. Window is open."
+Radar's continuous scanning means it notices when markets shift. If a 
+competitor in a tabled idea's space suddenly dies or raises prices, Radar 
+can resurface that idea with updated context: "Remember Proposal A from 
+3 weeks ago? The #2 competitor just shut down. Window is open."
 
 ### Loop 4: Your Pattern → Better Radar
-
 Every 10 decisions, Radar presents its model of your preferences:
-
-> *"Based on your last 10 decisions, here's what I think you want:
-> recurring revenue, low build effort, developer tools, API-first.
-> You've rejected anything with high capital requirements or crowded
+> *"Based on your last 10 decisions, here's what I think you want: 
+> recurring revenue, low build effort, developer tools, API-first. 
+> You've rejected anything with high capital requirements or crowded 
 > markets. Am I reading you right?"*
 
 You confirm, correct, or add nuance. Radar recalibrates.
@@ -453,4 +464,7 @@ You confirm, correct, or add nuance. Radar recalibrates.
 
 ---
 
-*"Two streams of ideas flowing into one machine. You bring the vision, I bring the hustle. Radar never stops hunting. The Startup Team never stops executing. And every decision — yours or mine — makes the whole system smarter. That's not a pipeline. That's a flywheel."* — Stackz
+*"Two streams of ideas flowing into one machine. You bring the vision, 
+I bring the hustle. Radar never stops hunting. The Startup Team never 
+stops executing. And every decision — yours or mine — makes the whole 
+system smarter. That's not a pipeline. That's a flywheel."* — Stackz

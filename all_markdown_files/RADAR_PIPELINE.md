@@ -1,5 +1,4 @@
 # STACKZ RADAR PIPELINE
-
 ## "Money doesn't find itself. That's why I built Radar."
 
 ---
@@ -11,14 +10,14 @@ Radar is Stackz's dedicated opportunity-hunting sub-agent. While you sleep, Rada
 Radar doesn't chase everything. Radar hunts with precision.
 
 ```
-┌──────────────────────────────────────────────────┐
-│                RADAR PIPELINE                     │
-│                                                   │
-│  SCAN ──► FILTER ──► SCORE ──► PROPOSE ──► QUEUE │
-│                                                   │
-│  Sources   Noise     Leverage  Proposal   Stackz  │
-│  (broad)   Removal   Matrix   Build      Review   │
-└──────────────────────────────────────────────────┘
+  ┌──────────────────────────────────────────────────┐
+  │                  RADAR PIPELINE                   │
+  │                                                   │
+  │  SCAN ──► FILTER ──► SCORE ──► PROPOSE ──► QUEUE │
+  │                                                   │
+  │  Sources    Noise     Leverage   Proposal   Stackz│
+  │  (broad)    Removal   Matrix     Build      Review│
+  └──────────────────────────────────────────────────┘
 ```
 
 ---
@@ -168,8 +167,9 @@ Surviving signals get scored on the Leverage Matrix. This is how Radar ranks wha
 ### Scoring Formula
 
 ```
-LEVERAGE_SCORE = (Revenue × 0.25) + (EaseOfBuild × 0.20) + (SpeedToRevenue × 0.20)
-              + (Compounding × 0.15) + (MoralScore × 0.10) + (Defensibility × 0.10)
+LEVERAGE_SCORE = (Revenue × 0.25) + (EaseOfBuild × 0.20) + 
+                 (SpeedToRevenue × 0.20) + (Compounding × 0.15) + 
+                 (MoralScore × 0.10) + (Defensibility × 0.10)
 
 Minimum to propose: 6.5
 Auto-propose threshold: 8.0
@@ -210,7 +210,7 @@ Opportunities scoring 6.5+ get packaged into Stackz-ready proposals.
   "project_name": "PodCast Forge",
   "one_liner": "Upload a PDF, get a podcast episode. API + simple web UI.",
   "leverage_score": 8.1,
-
+  
   "the_opportunity": {
     "problem": "People want to consume long documents as audio but existing tools are either expensive or terrible quality.",
     "evidence": [
@@ -220,7 +220,7 @@ Opportunities scoring 6.5+ get packaged into Stackz-ready proposals.
     ],
     "our_angle": "Better UX, lower price point, API-first so developers can integrate"
   },
-
+  
   "the_plan": {
     "mvp_scope": "Single API endpoint: POST PDF → GET MP3 URL. Simple landing page with Stripe checkout.",
     "tech_stack": "Python + FastAPI, hosted on existing server. TTS via open-source model.",
@@ -228,7 +228,7 @@ Opportunities scoring 6.5+ get packaged into Stackz-ready proposals.
     "cost_to_build": "$0 (uses existing infra) + ~$50/mo compute for TTS",
     "pricing_strategy": "$14.99/mo for 20 conversions. $49.99/mo unlimited. API tier at $0.50/conversion."
   },
-
+  
   "the_money": {
     "revenue_model": "recurring_subscription + usage_based_api",
     "break_even": "4 paying users covers compute",
@@ -236,20 +236,20 @@ Opportunities scoring 6.5+ get packaged into Stackz-ready proposals.
     "month_12_target": "$3000-8000 MRR",
     "compounding_note": "API tier compounds — once developers integrate, they don't leave. Each integration is a sticky revenue stream."
   },
-
+  
   "the_risks": [
     "TTS quality might not be good enough for long documents",
     "Competitor could slash prices",
     "Compute costs could spike if usage exceeds projections"
   ],
-
+  
   "moral_check": {
     "status": "passed",
     "notes": "Genuinely useful tool. No data exploitation. Users own their content."
   },
-
+  
   "stackz_take": "This is the kind of play I love. Low risk, fast to market, recurring revenue, and the API angle gives it compounding potential. The competition is sleeping. Let's wake them up.",
-
+  
   "status": "awaiting_your_approval",
   "requested_clearance": "Level 0 — I'll build it, you review before launch"
 }
@@ -265,12 +265,11 @@ Approved proposals enter the project registry. Rejected ones get archived with r
 
 ```
 PROPOSED ──► APPROVED ──► BUILDING ──► STAGING ──► LIVE ──► SCALING
-                │                        │          │
-        ┌──── PAUSED ◄────────────────┘          │
-        │       │                                  │
-        │       │                                  │
-        ▼       ▼                                  ▼
-     REJECTED  KILLED                          ARCHIVED
+                │                                              │
+                │         ┌──── PAUSED ◄────────────────┘     │
+                │         │                                    │
+                ▼         ▼                                    ▼
+            REJECTED   KILLED                              ARCHIVED
 ```
 
 ### Living Registry Schema

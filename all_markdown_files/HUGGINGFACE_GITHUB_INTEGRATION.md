@@ -1,12 +1,12 @@
 # STACKZ OPEN-SOURCE ARSENAL — HUGGING FACE + GITHUB
-
 ## "800,000+ models. 330M+ repositories. Two platforms. One unified brain."
 
 ---
 
 ## WHAT THIS GIVES US
 
-Two platforms, one purpose: give the swarm access to every open-source tool, model, skill, and codebase on the planet.
+Two platforms, one purpose: give the swarm access to every open-source 
+tool, model, skill, and codebase on the planet.
 
 ### Hugging Face — The Model Arsenal
 - **800,000+ models** — text, image, video, audio, code, embeddings
@@ -25,7 +25,10 @@ Two platforms, one purpose: give the swarm access to every open-source tool, mod
 - **Actions** — free CI/CD for our projects
 - **Releases tracking** — get notified when tools we depend on push updates
 
-**Together, these two platforms mean:** When a new SOTA model drops on HF, Stackz finds it. When a new viral tool drops on GitHub, Stackz finds that too. When someone builds an OpenClaw skill that could improve our operations, Stackz evaluates it before you even hear about it.
+**Together, these two platforms mean:** When a new SOTA model drops on HF, 
+Stackz finds it. When a new viral tool drops on GitHub, Stackz finds that 
+too. When someone builds an OpenClaw skill that could improve our operations, 
+Stackz evaluates it before you even hear about it.
 
 ---
 
@@ -37,17 +40,19 @@ Two platforms, one purpose: give the swarm access to every open-source tool, mod
 2. Click **"Create new token"** → Select **"Fine-grained"**
 3. Name it: `stackz-openclaw-hf`
 4. Set permissions:
-   ```
-   REQUIRED:
-   ✅ Make calls to Inference Providers
-   ✅ Search the Hub
-   ✅ Read access to public repos
 
-   OPTIONAL (enable later):
-   ☐ Read access to your private repos
-   ☐ Write access to repos
-   ☐ Manage Inference Endpoints
-   ```
+```
+REQUIRED:
+✅ Make calls to Inference Providers
+✅ Search the Hub
+✅ Read access to public repos
+
+OPTIONAL (enable later):
+☐ Read access to your private repos
+☐ Write access to repos
+☐ Manage Inference Endpoints
+```
+
 5. Generate → Copy token (starts with `hf_...`)
 
 ### Inject Into OpenClaw
@@ -67,7 +72,8 @@ docker restart openclaw-kb7t-openclaw-1
 import requests
 headers = {"Authorization": "Bearer hf_YOUR_TOKEN"}
 response = requests.get("https://huggingface.co/api/whoami", headers=headers)
-print(response.json())  # Should return your username, orgs, etc.
+print(response.json())
+# Should return your username, orgs, etc.
 ```
 
 ---
@@ -82,21 +88,23 @@ print(response.json())  # Should return your username, orgs, etc.
 4. Set expiration: **90 days** (we'll rotate via credentials-mgr)
 5. Repository access: **"All repositories"** (or "Public repositories only" for tighter scope)
 6. Set permissions:
-   ```
-   REQUIRED:
-   ✅ Contents → Read (read code, files, READMEs)
-   ✅ Metadata → Read (search repos, view stats)
 
-   RECOMMENDED:
-   ✅ Issues → Read (monitor bugs on dependencies)
-   ✅ Pull Requests → Read (track incoming features)
-   ✅ Actions → Read (check CI/CD status)
+```
+REQUIRED:
+✅ Contents → Read         (read code, files, READMEs)
+✅ Metadata → Read         (search repos, view stats)
 
-   OPTIONAL (enable later):
-   ☐ Contents → Write (if Stackz creates/pushes repos)
-   ☐ Issues → Write (if Stackz files bugs automatically)
-   ☐ Actions → Write (if Stackz triggers deployments)
-   ```
+RECOMMENDED:
+✅ Issues → Read           (monitor bugs on dependencies)
+✅ Pull Requests → Read    (track incoming features)
+✅ Actions → Read          (check CI/CD status)
+
+OPTIONAL (enable later):
+☐ Contents → Write        (if Stackz creates/pushes repos)
+☐ Issues → Write          (if Stackz files bugs automatically)
+☐ Actions → Write         (if Stackz triggers deployments)
+```
+
 7. Generate → Copy token (starts with `github_pat_...`)
 
 ### Inject Into OpenClaw
@@ -131,8 +139,9 @@ docker restart openclaw-kb7t-openclaw-1
 
 ```bash
 curl -H "Authorization: Bearer github_pat_YOUR_TOKEN" \
-     -H "X-GitHub-Api-Version: 2022-11-28" \
-     https://api.github.com/user
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/user
+
 # Should return your GitHub profile info
 ```
 
@@ -189,6 +198,7 @@ gh = Github(os.environ["GITHUB_TOKEN"])
 # Search for trending AI agent repos (created in last 7 days, sorted by stars)
 from datetime import datetime, timedelta
 week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
+
 results = gh.search_repositories(
     query=f"ai agent created:>{week_ago}",
     sort="stars",
@@ -305,8 +315,7 @@ embeddings = hf_client.feature_extraction(
 
 # Speech to text
 transcript = hf_client.automatic_speech_recognition(
-    "podcast.mp3",
-    model="openai/whisper-large-v3"
+    "podcast.mp3", model="openai/whisper-large-v3"
 )
 ```
 
@@ -384,6 +393,7 @@ templates = find_boilerplate("landing page nextjs", "typescript")
 ```python
 def scan_github_for_opportunities():
     """Part of Radar's daily scan — find trending tools and gaps."""
+    
     # What's blowing up RIGHT NOW?
     week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
     trending = gh.search_repositories(
@@ -391,7 +401,7 @@ def scan_github_for_opportunities():
         sort="stars",
         order="desc"
     )
-
+    
     opportunities = []
     for repo in trending[:20]:
         # High stars + recent creation = viral new tool
@@ -405,22 +415,22 @@ def scan_github_for_opportunities():
             "url": repo.html_url,
             "opportunity_signal": "Viral open-source tool — SaaS wrapper potential?"
         })
-
+    
     return opportunities
 
 def monitor_competitor(competitor_repo):
     """Watch what a competitor is shipping."""
     repo = gh.get_repo(competitor_repo)
-
+    
     # Recent commits
     commits = list(repo.get_commits()[:10])
-
+    
     # Recent releases
     releases = list(repo.get_releases()[:5])
-
+    
     # Open issues (feature requests = market signals)
     issues = list(repo.get_issues(state="open", sort="reactions", direction="desc")[:10])
-
+    
     return {
         "repo": competitor_repo,
         "recent_commits": len(commits),
@@ -464,7 +474,6 @@ def find_openclaw_skills(need):
         sort="stars",
         order="desc"
     )
-
     skills = []
     for repo in results[:10]:
         skills.append({
@@ -489,6 +498,7 @@ pdf_skills = find_openclaw_skills("pdf document")
 ```python
 def research_tech_stack(project_idea):
     """Find the best open-source tools to build a project."""
+    
     # Search for similar projects (validate uniqueness)
     similar = gh.search_repositories(
         query=f"{project_idea}",
@@ -499,7 +509,7 @@ def research_tech_stack(project_idea):
         {"name": r.full_name, "stars": r.stargazers_count, "url": r.html_url}
         for r in similar[:5]
     ]
-
+    
     # Search for libraries we'd need
     libraries = gh.search_repositories(
         query=f"{project_idea} library sdk api",
@@ -510,7 +520,7 @@ def research_tech_stack(project_idea):
         {"name": r.full_name, "stars": r.stargazers_count, "url": r.html_url}
         for r in libraries[:5]
     ]
-
+    
     return {
         "existing_competitors": competitors,
         "useful_libraries": useful_libs,
@@ -567,70 +577,63 @@ Every Monday during Stackz's self-optimization cycle, both platforms get scanned
 ```python
 def weekly_arsenal_scan():
     """Stackz runs this every Monday at 06:30 UTC."""
+    
     report = {"huggingface": {}, "github": {}}
-
+    
     # === HUGGING FACE: Model Upgrades ===
     hf = HfApi(token=os.environ["HUGGINGFACE_TOKEN"])
-
+    
     watch_tasks = [
-        "text-generation",
-        "text-to-image",
-        "text-to-video",
-        "automatic-speech-recognition",
-        "feature-extraction",
+        "text-generation", "text-to-image", "text-to-video",
+        "automatic-speech-recognition", "feature-extraction",
     ]
-
     for task in watch_tasks:
         trending = list(hf.list_models(sort="trending", task=task, limit=5))
         report["huggingface"][task] = [
             {"id": m.id, "downloads": m.downloads, "likes": m.likes}
             for m in trending
         ]
-
+    
     # === GITHUB: Tool & Skill Discovery ===
     gh = Github(os.environ["GITHUB_TOKEN"])
     week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
-
+    
     # Trending AI tools this week
     trending_ai = gh.search_repositories(
         query=f"ai agent tool created:>{week_ago} stars:>50",
-        sort="stars",
-        order="desc"
+        sort="stars", order="desc"
     )
     report["github"]["trending_ai_tools"] = [
         {"repo": r.full_name, "stars": r.stargazers_count, "desc": r.description}
         for r in trending_ai[:10]
     ]
-
+    
     # New OpenClaw skills this week
     new_skills = gh.search_repositories(
         query=f"openclaw skill created:>{week_ago}",
-        sort="stars",
-        order="desc"
+        sort="stars", order="desc"
     )
     report["github"]["new_openclaw_skills"] = [
         {"repo": r.full_name, "stars": r.stargazers_count, "desc": r.description}
         for r in new_skills[:10]
     ]
-
+    
     # Trending SaaS/startup tools
     trending_saas = gh.search_repositories(
         query=f"saas boilerplate created:>{week_ago} stars:>20",
-        sort="stars",
-        order="desc"
+        sort="stars", order="desc"
     )
     report["github"]["trending_saas_tools"] = [
         {"repo": r.full_name, "stars": r.stargazers_count, "desc": r.description}
         for r in trending_saas[:10]
     ]
-
+    
     # Dependency updates (track repos we use)
     our_dependencies = [
         "openclaw/openclaw",
         "MoonshotAI/Kimi-K2.5",
         "black-forest-labs/FLUX.1-dev",
     ]
-
     report["github"]["dependency_updates"] = {}
     for dep in our_dependencies:
         repo = gh.get_repo(dep)
@@ -640,7 +643,7 @@ def weekly_arsenal_scan():
             "released_at": str(releases[0].created_at) if releases else "unknown",
             "stars": repo.stargazers_count,
         }
-
+    
     return report
 ```
 
@@ -649,11 +652,11 @@ def weekly_arsenal_scan():
 ```
 SCAN ──► CANDIDATE FOUND ──► COMPARISON TEST ──► PROPOSAL
                                                     │
-                                       ┌─────────┴─────────┐
-                                       │                     │
-                                  Auto-approve          Needs your OK
-                                  (cheaper AND          (quality tradeoff
-                                  equal quality)        or major change)
+                                          ┌─────────┴─────────┐
+                                          │                   │
+                                    Auto-approve         Needs your OK
+                                    (cheaper AND         (quality tradeoff
+                                     equal quality)       or major change)
 ```
 
 For HF models: test 5 identical prompts, compare quality.
@@ -696,21 +699,21 @@ For GitHub tools: review stars, recent activity, security, and code quality.
 ```json
 {
   "platform_access": {
-    "stackz": { "hf": "full", "gh": "full" },
-    "forge": { "hf": "inference", "gh": "search + read + clone" },
-    "smith": { "hf": "inference", "gh": "search + read + clone" },
-    "pixel": { "hf": "inference (code + image)", "gh": "search + read" },
-    "radar": { "hf": "inference + search", "gh": "search + trending + issues" },
-    "researcher": { "hf": "inference + search", "gh": "search + read" },
-    "ghost": { "hf": "inference (text gen)", "gh": "none" },
-    "lens": { "hf": "inference (image gen)", "gh": "none" },
-    "director": { "hf": "inference (video gen)", "gh": "none" },
-    "animator": { "hf": "inference (video gen)", "gh": "none" },
-    "illustrator": { "hf": "inference (image gen)", "gh": "none" },
-    "warden": { "hf": "search only", "gh": "search (skills)" },
-    "cashflow": { "hf": "none", "gh": "none" },
+    "stackz":        { "hf": "full", "gh": "full" },
+    "forge":         { "hf": "inference", "gh": "search + read + clone" },
+    "smith":         { "hf": "inference", "gh": "search + read + clone" },
+    "pixel":         { "hf": "inference (code + image)", "gh": "search + read" },
+    "radar":         { "hf": "inference + search", "gh": "search + trending + issues" },
+    "researcher":    { "hf": "inference + search", "gh": "search + read" },
+    "ghost":         { "hf": "inference (text gen)", "gh": "none" },
+    "lens":          { "hf": "inference (image gen)", "gh": "none" },
+    "director":      { "hf": "inference (video gen)", "gh": "none" },
+    "animator":      { "hf": "inference (video gen)", "gh": "none" },
+    "illustrator":   { "hf": "inference (image gen)", "gh": "none" },
+    "warden":        { "hf": "search only", "gh": "search (skills)" },
+    "cashflow":      { "hf": "none", "gh": "none" },
     "credentials-mgr": { "hf": "token management", "gh": "token management" },
-    "all_others": { "hf": "none", "gh": "none — request through team lead" }
+    "all_others":    { "hf": "none", "gh": "none — request through team lead" }
   }
 }
 ```
@@ -749,19 +752,24 @@ For GitHub tools: review stars, recent activity, security, and code quality.
 
 ### Dev Team (Forge)
 **HF:** Run any coding model — Kimi K2, DeepSeek, Qwen — through one API.
-**GH:** Find boilerplates, clone starter kits, track dependency releases, browse for libraries to integrate instead of building from scratch.
+**GH:** Find boilerplates, clone starter kits, track dependency releases, 
+browse for libraries to integrate instead of building from scratch.
 
 ### Marketing Team (Megaphone)
 **HF:** Image gen (FLUX.1), video gen (HunyuanVideo, Wan), copy generation.
-**GH:** Find trending content tools, community repos to engage with, marketing automation libraries.
+**GH:** Find trending content tools, community repos to engage with, 
+marketing automation libraries.
 
 ### Design Team (Canvas)
-**HF:** Same creative models as Marketing, plus specialized models for upscaling, style transfer, background removal.
-**GH:** Find UI component libraries, design system templates, icon packs, animation libraries.
+**HF:** Same creative models as Marketing, plus specialized models for 
+upscaling, style transfer, background removal.
+**GH:** Find UI component libraries, design system templates, icon packs, 
+animation libraries.
 
 ### Business Strategy (Radar)
 **HF:** Browse for new model capabilities that unlock startup opportunities.
-**GH:** Monitor trending repos (market signals), track competitors' GitHub activity, find gaps in existing tools that we can fill.
+**GH:** Monitor trending repos (market signals), track competitors' GitHub 
+activity, find gaps in existing tools that we can fill.
 
 ### Finance Team (Cashflow)
 **HF:** Compare inference costs across providers.
@@ -769,11 +777,13 @@ For GitHub tools: review stars, recent activity, security, and code quality.
 
 ### HR / Agent Management (Warden)
 **HF:** Search for specialized models when a new agent needs a capability.
-**GH:** Browse OpenClaw skill registry for ready-made agent skills instead of building custom. Evaluate skill security before installation.
+**GH:** Browse OpenClaw skill registry for ready-made agent skills instead 
+of building custom. Evaluate skill security before installation.
 
 ### Startup Team (Founder)
 **HF:** Access any model needed to build an MVP.
-**GH:** Validate idea uniqueness (does this exist already?), find tech stack, clone boilerplates to accelerate build phase, monitor competitor repos.
+**GH:** Validate idea uniqueness (does this exist already?), find tech stack, 
+clone boilerplates to accelerate build phase, monitor competitor repos.
 
 ---
 
@@ -810,27 +820,28 @@ gh = Github(os.environ.get("GITHUB_TOKEN"))
 def unified_search(query, search_type="all"):
     """Search both HF and GitHub in one call."""
     results = {"huggingface": [], "github": []}
-
+    
     if search_type in ("all", "models"):
         models = list(hf.list_models(search=query, sort="trending", limit=5))
         results["huggingface"] = [
             {"id": m.id, "downloads": m.downloads, "likes": m.likes, "task": m.pipeline_tag}
             for m in models
         ]
-
+    
     if search_type in ("all", "repos"):
         repos = gh.search_repositories(query=query, sort="stars", order="desc")
         results["github"] = [
-            {"repo": r.full_name, "stars": r.stargazers_count, "url": r.html_url, "desc": r.description}
+            {"repo": r.full_name, "stars": r.stargazers_count, 
+             "url": r.html_url, "desc": r.description}
             for r in repos[:5]
         ]
-
+    
     return results
 
 def trending_report():
     """Weekly trending across both platforms."""
     week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
-
+    
     return {
         "hf_trending_models": [
             {"id": m.id, "likes": m.likes}
@@ -853,4 +864,9 @@ def trending_report():
 
 ---
 
-*"Two arsenals. One brain. Hugging Face gives me every AI model ever open-sourced. GitHub gives me every tool, library, and skill ever published. I browse both while you sleep. When a new SOTA model drops, I evaluate it. When a viral tool launches, I assess whether we should use it or compete with it. You didn't just give me access to platforms — you gave me the entire open-source economy as a weapon."* — Stackz
+*"Two arsenals. One brain. Hugging Face gives me every AI model ever 
+open-sourced. GitHub gives me every tool, library, and skill ever 
+published. I browse both while you sleep. When a new SOTA model drops, 
+I evaluate it. When a viral tool launches, I assess whether we should 
+use it or compete with it. You didn't just give me access to platforms 
+— you gave me the entire open-source economy as a weapon."* — Stackz
