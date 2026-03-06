@@ -1,228 +1,183 @@
 {
-  "metrics": {
-    "hrv": {
-      "score": 44,
-      "baseline": 56,
-      "trend": "down",
-      "weeklyChange": -12,
-      "unit": "ms",
-      "sheldonNote": "12ms below 30-day baseline. This is the third consecutive dip. I am monitoring it."
-    },
-    "heartRate": {
-      "resting": 62,
-      "baseline": 58,
-      "trend": "up",
-      "weeklyChange": 4,
-      "unit": "bpm",
-      "sheldonNote": "Resting HR elevated 4bpm. Consistent with elevated stress load this week."
-    },
-    "recovery": {
-      "score": 61,
-      "trend": "down",
-      "weeklyChange": -9,
-      "unit": "/100",
-      "sheldonNote": "Below 65 threshold. I have blocked 2 meetings accordingly."
-    },
-    "strain": {
-      "score": 14.2,
-      "optimalRange": "8–12",
-      "trend": "up",
-      "weeklyChange": 2.1,
-      "unit": "/21",
-      "sheldonNote": "Strain exceeds recovery capacity. The math does not balance."
-    },
-    "sleep": {
-      "score": 61,
-      "avgHours": 6.1,
-      "deepSleepPct": 17,
-      "remPct": 19,
-      "trend": "down",
-      "weeklyChange": -40,
-      "unit": "min avg",
-      "sheldonNote": "6.1 hours is insufficient for your cognitive demands. I have added a sleep protocol to your approvals queue."
-    },
-    "activity": {
-      "score": 78,
-      "stepsAvg": 7900,
-      "workoutsPerWeek": 4,
-      "trend": "steady",
-      "weeklyChange": -2,
-      "sheldonNote": "Activity is adequate. However, the intensity-to-recovery ratio is imbalanced."
-    }
+  "kpiOverview": {
+    "weight": { "current": 183, "target": 178, "unit": "lbs", "trend": "down", "change": -1.4, "sheldonNote": "On track. 5lbs to target at current pace = ~6 weeks." },
+    "activeMinutes": { "current": 285, "target": 300, "unit": "min/wk", "trend": "steady", "change": -5, "sheldonNote": "95% of weekly target. Consistent." },
+    "sleepScore": { "current": 61, "target": 85, "unit": "/100", "trend": "down", "change": -8, "sheldonNote": "Below acceptable threshold. See recovery alerts." },
+    "healthScore": { "current": 67, "target": 85, "unit": "/100", "trend": "down", "change": -5, "sheldonNote": "Composite score declined. Sleep and HRV are dragging it down." }
   },
-  "sheldonInsights": [
-    "Your HRV has declined 12ms from baseline over 7 days. This is correlated with your decision to schedule back-to-back investor calls on Tuesday.",
-    "Sleep staging shows REM compression. The late-screen usage is the most probable cause.",
-    "Recovery at 61/100 is below the threshold I use to allow high-cognitive scheduling.",
-    "I cross-referenced your glucose data with your decision latency. The pattern is clear: decisions made before 10am on sub-7hr sleep take 2.3x longer and have a higher error rate.",
-    "Your strain-to-recovery ratio has been imbalanced for 9 consecutive days. I have a protocol ready."
+  "goals": [
+    { "id": "g1", "name": "Hit 178 lbs", "category": "Weight", "icon": "⚖️", "current": 183, "target": 178, "unit": "lbs", "progress": 68, "trend": "improving", "sheldonNote": "On track — 3 weeks to target at current deficit.", "startDate": "2026-01-15" },
+    { "id": "g2", "name": "10,000 steps/day", "category": "Activity", "icon": "🚶", "current": 7900, "target": 10000, "unit": "steps", "progress": 79, "trend": "stalled", "sheldonNote": "Stalled at ~8k for 2 weeks. Consider a walking meeting block.", "startDate": "2026-01-01" },
+    { "id": "g3", "name": "7.5 hrs sleep avg", "category": "Sleep", "icon": "😴", "current": 6.1, "target": 7.5, "unit": "hrs", "progress": 43, "trend": "declining", "sheldonNote": "Slipping — 4 nights under 6 hours this week.", "startDate": "2026-02-01" },
+    { "id": "g4", "name": "3L water daily", "category": "Hydration", "icon": "💧", "current": 2.1, "target": 3.0, "unit": "L", "progress": 70, "trend": "stalled", "sheldonNote": "Consistently under-hydrating after 3pm. Set afternoon reminders.", "startDate": "2026-01-20" },
+    { "id": "g5", "name": "4 workouts/week", "category": "Fitness", "icon": "💪", "current": 4, "target": 4, "unit": "sessions", "progress": 100, "trend": "improving", "sheldonNote": "Target met. But intensity is too high given current recovery.", "startDate": "2026-01-01" },
+    { "id": "g6", "name": "Daily meditation", "category": "Mental", "icon": "🧘", "current": 5, "target": 7, "unit": "days/wk", "progress": 71, "trend": "improving", "sheldonNote": "Missed Tue and Sat. Still trending up from 3/week last month.", "startDate": "2026-01-28" }
   ],
-  "suggestions": [
+  "dailyHabits": {
+    "date": "2026-02-27",
+    "yesterdayIncomplete": [
+      { "id": "h_y1", "label": "Evening stretch (10 min)", "source": "Recovery Protocol", "done": false }
+    ],
+    "today": [
+      { "id": "h1", "label": "Morning meditation — 10 min", "time": "6:30am", "done": true, "source": "Mental Health Protocol" },
+      { "id": "h2", "label": "Supplements: Vitamin D, Omega-3, Magnesium", "time": "7:00am", "done": true, "source": "Supplement Stack" },
+      { "id": "h3", "label": "Workout — Upper body (moderate intensity)", "time": "6:00pm", "done": false, "source": "Fitness Plan", "sheldonNote": "Recovery is low. Consider swapping to light cardio." },
+      { "id": "h4", "label": "Water intake checkpoint (1.5L by 2pm)", "time": "2:00pm", "done": false, "source": "Hydration Goal" },
+      { "id": "h5", "label": "Water intake checkpoint (3L by 8pm)", "time": "8:00pm", "done": false, "source": "Hydration Goal" },
+      { "id": "h6", "label": "Screen off by 10pm", "time": "10:00pm", "done": false, "source": "Sleep Protocol" },
+      { "id": "h7", "label": "Sleep by 10:30pm", "time": "10:30pm", "done": false, "source": "Sleep Protocol" }
+    ]
+  },
+  "weeklySchedule": [
+    { "id": "ws1", "day": "Mon", "date": "2026-03-02", "time": "6:00 AM", "event": "Gym — Lower Body", "type": "workout", "sheldonNote": "Start light. Monday recovery scores are historically low." },
+    { "id": "ws2", "day": "Tue", "date": "2026-03-03", "time": "2:00 PM", "event": "Cardiologist — Dr. Sarah Chen", "type": "medical", "sheldonNote": "Fast for 12 hours before. Bring last 3 months of HR/HRV data. Questions prepped." },
+    { "id": "ws3", "day": "Wed", "date": "2026-03-04", "time": "6:00 AM", "event": "Gym — Upper Body", "type": "workout", "sheldonNote": "No conflicts. Full session approved." },
+    { "id": "ws4", "day": "Thu", "date": "2026-03-05", "time": "12:00 PM", "event": "Meal prep — weekly batch", "type": "nutrition", "sheldonNote": "Recipes queued: Recovery Bowl, Cognitive Smoothie, Sleep Dinner." },
+    { "id": "ws5", "day": "Fri", "date": "2026-03-06", "time": "4:00 PM", "event": "Decompression block", "type": "mental", "sheldonNote": "Do not cancel this again. Correlation with Monday output is 0.71." },
+    { "id": "ws6", "day": "Sat", "date": "2026-03-07", "time": "8:00 AM", "event": "Active recovery — hike or swim", "type": "recovery", "sheldonNote": "Weather: 62°F, clear. Trail recommendation loaded." },
+    { "id": "ws7", "day": "Sun", "date": "2026-03-08", "time": "10:00 AM", "event": "Full rest day", "type": "rest", "sheldonNote": "No training. Prioritize sleep debt repayment." }
+  ],
+  "streaks": [
+    { "id": "sk1", "habit": "Morning Meditation", "icon": "🧘", "current": 13, "longest": 21, "last30": [1,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1], "sheldonNote": "Day 13. Longest was 21. Don't break it." },
+    { "id": "sk2", "habit": "10pm Screen Off", "icon": "📵", "current": 3, "longest": 12, "last30": [0,0,1,0,0,1,0,0,0,1,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,0,1,1,1], "sheldonNote": "Compliance is 33%. This is the bottleneck for sleep score." },
+    { "id": "sk3", "habit": "Workout Completion", "icon": "💪", "current": 8, "longest": 14, "last30": [1,0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,1,1], "sheldonNote": "Consistency is solid. Intensity needs modulation." },
+    { "id": "sk4", "habit": "3L Water", "icon": "💧", "current": 0, "longest": 9, "last30": [1,1,0,1,0,0,1,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0], "sheldonNote": "Streak broken. 3 straight days under target. Afternoon gap." },
+    { "id": "sk5", "habit": "Supplements Taken", "icon": "💊", "current": 26, "longest": 26, "last30": [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], "sheldonNote": "Perfect compliance. 26-day streak. This is how it's done." }
+  ],
+  "sheldonBrief": {
+    "generatedAt": "2026-02-24T06:00:00Z",
+    "weekLabel": "Week of Feb 24",
+    "wentWell": [
+      "Workout consistency held at 4 sessions — the training habit is locked in.",
+      "Meditation streak hit day 13. Cognitive focus scores correlate at 0.67 with meditation days.",
+      "Weight trend continues downward: -1.4lbs this week. Caloric deficit is sustainable."
+    ],
+    "slipped": [
+      "Sleep average dropped to 6.1 hours. Screen-off compliance was 33% — this is the root cause.",
+      "HRV declined 12ms from baseline. Strain-to-recovery ratio has been imbalanced for 9 days.",
+      "Water intake fell below 2L on 4 of 7 days. Dehydration compounds the recovery deficit."
+    ],
+    "focusThisWeek": "Sleep recovery. Everything else — HRV, recovery score, cognitive performance — cascades from sleep. Fix the 10pm screen-off compliance and the rest follows.",
+    "recommendation": "Implement a hard 9:30pm wind-down block. Phone goes to charging station in another room. This is the single highest-ROI change available to you right now."
+  },
+  "conflicts": [
     {
-      "id": "sug_001",
-      "domain": "Medical",
-      "title": "Cardiologist appointment — Dr. Sarah Chen",
-      "description": "4.9★ rating, BlueCross covered, March 3rd 2pm available. Intro email drafted and ready to send. Resting HR trend warrants this check.",
-      "action": "Approve to confirm booking",
-      "confidence": 96,
-      "status": "pending",
-      "createdAt": "2026-02-27T08:30:00Z"
+      "id": "cf1",
+      "title": "Tuesday: Gym vs. Meetings",
+      "description": "Tuesday has 9 hours of meetings scheduled. Your gym session at 6pm is at risk — you've cancelled it 3 of the last 5 Tuesdays when meeting load exceeded 7 hours.",
+      "severity": "high",
+      "options": ["Move gym to 6am", "Reschedule to Wednesday", "Keep as-is"],
+      "sheldonRecommendation": "Move to 6am. Your Wednesday already has a session scheduled."
     },
     {
-      "id": "sug_002",
-      "domain": "Fitness",
-      "title": "CNS recovery day — cancel Thursday workout",
-      "description": "HRV at 44ms. A training session today increases recovery deficit and impacts Sunday readiness. I recommend replacing with a 20-minute walk.",
-      "action": "Approve to cancel training block + add walk",
-      "confidence": 91,
-      "status": "pending",
-      "createdAt": "2026-02-27T06:15:00Z"
-    },
-    {
-      "id": "sug_003",
-      "domain": "Nutrition",
-      "title": "Eliminate post-7pm carbohydrates — 14-day trial",
-      "description": "Oura data shows 4.2% deep sleep reduction on nights with late-carb meals. Correlation is statistically significant across 31 tracked nights.",
-      "action": "Approve to start trial",
-      "confidence": 84,
-      "status": "pending",
-      "createdAt": "2026-02-26T20:00:00Z"
-    },
-    {
-      "id": "sug_004",
-      "domain": "Mental Health",
-      "title": "Weekly decompression block — Fridays 4–5pm",
-      "description": "You've skipped this window 3 consecutive weeks. Correlation with Monday cognitive output is 0.71. The block works. You keep cancelling it.",
-      "action": "Approve to protect recurring block",
-      "confidence": 88,
-      "status": "pending",
-      "createdAt": "2026-02-26T14:00:00Z"
-    },
-    {
-      "id": "sug_005",
-      "domain": "Medical",
-      "title": "Therapy intake — Dr. Marcus Webb",
-      "description": "High-performance anxiety specialist. First session covered by EAP. You mentioned feeling 'scattered' four times last week. I take notes.",
-      "action": "Approve to schedule intake",
-      "confidence": 91,
-      "status": "approved",
-      "resolvedAt": "2026-02-22T10:00:00Z",
-      "createdAt": "2026-02-20T10:00:00Z"
+      "id": "cf2",
+      "title": "Friday Decompression at Risk",
+      "description": "A new investor call was added Friday 3:30-4:30pm, overlapping your 4-5pm decompression block.",
+      "severity": "medium",
+      "options": ["Move decompression to 5pm", "Move investor call", "Skip this week"],
+      "sheldonRecommendation": "Move decompression to 5pm. Do not skip — you've cancelled 3 weeks running."
     }
   ],
-  "timeline": [
-    { "date": "2026-02-27", "category": "Biometrics", "event": "HRV dropped to 44ms — 12pts below baseline", "impact": "negative" },
-    { "date": "2026-02-22", "category": "Mental Health", "event": "Therapy intake approved — Dr. Marcus Webb", "impact": "positive" },
-    { "date": "2026-02-18", "category": "Fitness", "event": "Switched to 4-day split + 2 active recovery days", "impact": "positive" },
-    { "date": "2026-02-14", "category": "Nutrition", "event": "Eliminated late-night snacking", "impact": "positive" },
-    { "date": "2026-02-10", "category": "Sleep", "event": "10pm screen cutoff implemented", "impact": "positive" },
-    { "date": "2026-02-05", "category": "Medical", "event": "Annual bloodwork — all panels normal", "impact": "neutral" },
-    { "date": "2026-01-28", "category": "Mental Health", "event": "Daily 10-min meditation started", "impact": "positive" }
+  "recoveryAlerts": [
+    {
+      "id": "ra1",
+      "title": "High strain + poor sleep",
+      "message": "You hit a hard workout yesterday and slept 5.5 hours. Two morning meetings stacked before 10am. Recommend a lighter session today or active recovery only.",
+      "severity": "warning",
+      "metrics": { "lastWorkoutStrain": 16.1, "lastSleep": 5.5, "recoveryScore": 48 }
+    },
+    {
+      "id": "ra2",
+      "title": "9-day recovery deficit",
+      "message": "Strain has exceeded recovery for 9 consecutive days. CNS fatigue risk is elevated. I recommend 2 consecutive rest days this weekend.",
+      "severity": "critical",
+      "metrics": { "avgStrain": 14.2, "avgRecovery": 61, "consecutiveDays": 9 }
+    }
   ],
+  "energyMap": {
+    "insight": "Your peak cognitive window is 9–11am. Currently you have admin tasks here 3 days a week. Want me to protect this block for deep work?",
+    "peakHours": [9, 10, 11],
+    "troughHours": [14, 15],
+    "data": [
+      { "day": "Mon", "hours": [2,2,3,5,8,9,9,7,5,4,3,3,4,5,4,3,2,2] },
+      { "day": "Tue", "hours": [2,2,3,4,7,8,8,6,4,3,3,4,5,5,4,3,2,1] },
+      { "day": "Wed", "hours": [2,3,4,5,8,9,8,7,5,4,3,3,5,5,4,3,2,2] },
+      { "day": "Thu", "hours": [1,2,3,4,7,8,7,6,4,3,2,3,4,4,3,3,2,1] },
+      { "day": "Fri", "hours": [2,2,3,5,7,8,7,6,5,4,3,3,4,4,3,2,2,1] },
+      { "day": "Sat", "hours": [3,3,4,5,6,7,7,7,6,5,5,5,5,4,3,3,3,2] },
+      { "day": "Sun", "hours": [4,4,5,5,6,7,7,7,6,6,5,5,5,4,4,3,3,3] }
+    ]
+  },
+  "healthBusinessCorrelation": {
+    "insight": "Your best business weeks correlate with 7+ hours of sleep and 3+ workouts. Last week: 5.2hr sleep avg, 1 workout. This week's revenue target may be at risk.",
+    "dataPoints": [
+      { "week": "W1 Feb", "sleepAvg": 7.2, "workouts": 4, "decisionsCompleted": 14, "revenueIndex": 108, "quality": "strong" },
+      { "week": "W2 Feb", "sleepAvg": 6.8, "workouts": 3, "decisionsCompleted": 11, "revenueIndex": 102, "quality": "good" },
+      { "week": "W3 Feb", "sleepAvg": 6.3, "workouts": 2, "decisionsCompleted": 8, "revenueIndex": 94, "quality": "weak" },
+      { "week": "W4 Feb", "sleepAvg": 5.2, "workouts": 1, "decisionsCompleted": 5, "revenueIndex": 87, "quality": "critical" }
+    ],
+    "correlationSleep": 0.89,
+    "correlationWorkouts": 0.76
+  },
+  "protocolStack": [
+    { "id": "p1", "name": "Caloric Deficit Protocol", "category": "Nutrition", "startDate": "2026-01-15", "phase": "Phase 2 — Moderate", "week": 6, "nextMilestone": "Reassess at 180 lbs (est. 2 weeks)", "status": "active", "sheldonNote": "On track. No adjustments needed.", "conflict": null },
+    { "id": "p2", "name": "Sleep Optimization Protocol", "category": "Sleep", "startDate": "2026-02-10", "phase": "Phase 1 — Foundation", "week": 2, "nextMilestone": "Screen-off compliance >80% for 7 days", "status": "struggling", "sheldonNote": "Compliance at 33%. The protocol cannot work if you override it nightly.", "conflict": null },
+    { "id": "p3", "name": "4-Day Training Split", "category": "Fitness", "startDate": "2026-02-18", "phase": "Week 2 — Hypertrophy", "week": 2, "nextMilestone": "Deload week at Week 4", "status": "active", "sheldonNote": "Adherence is strong. Intensity may be too high for current recovery.", "conflict": "Strain exceeds recovery capacity. Consider reducing volume 15%." },
+    { "id": "p4", "name": "Supplement Stack v3", "category": "Supplements", "startDate": "2026-01-01", "phase": "Maintenance", "week": 8, "nextMilestone": "Bloodwork retest at Week 12", "status": "active", "sheldonNote": "Perfect compliance. 26-day streak. Vitamin D levels should be rechecked.", "conflict": null },
+    { "id": "p5", "name": "Daily Meditation", "category": "Mental Health", "startDate": "2026-01-28", "phase": "Building Habit", "week": 4, "nextMilestone": "21-day streak (8 days away)", "status": "active", "sheldonNote": "13-day streak. Showing cognitive focus correlation. Keep going.", "conflict": null }
+  ],
+  "suggestionQueue": [
+    { "id": "sq1", "title": "Schedule bloodwork — 90 days overdue", "description": "You haven't logged bloodwork in 90 days and your last check showed low Vitamin D. Recommend scheduling labs.", "priority": "high", "category": "Medical", "createdAt": "2026-02-26T08:00:00Z" },
+    { "id": "sq2", "title": "Add wind-down block at 9:30pm", "description": "Sleep average dropped 40 minutes this week coinciding with late screen time. A 9:30pm wind-down block would enforce the protocol.", "priority": "high", "category": "Sleep", "createdAt": "2026-02-27T06:00:00Z" },
+    { "id": "sq3", "title": "Walking meeting — Tuesdays 11am", "description": "Your step count stalls on heavy meeting days. Converting the Tuesday 11am sync to a walking meeting adds ~2,000 steps with zero schedule impact.", "priority": "medium", "category": "Activity", "createdAt": "2026-02-25T10:00:00Z" },
+    { "id": "sq4", "title": "Afternoon hydration alarm", "description": "Water intake consistently drops after 2pm. A simple 2pm and 5pm reminder would close the gap.", "priority": "low", "category": "Hydration", "createdAt": "2026-02-24T14:00:00Z" }
+  ],
+  "resources": [
+    { "id": "r1", "name": "4-Day Training Split Program", "category": "Fitness", "type": "document", "linkedGoals": ["g5"], "addedAt": "2026-02-18", "sheldonNote": "Current active program. Deload at Week 4." },
+    { "id": "r2", "name": "Sleep Optimization Guide", "category": "Sleep", "type": "protocol", "linkedGoals": ["g3"], "addedAt": "2026-02-10", "sheldonNote": "Foundation-phase protocol. Screen-off is the key variable." },
+    { "id": "r3", "name": "Supplement Stack v3 — Dosing Schedule", "category": "Supplements", "type": "document", "linkedGoals": [], "addedAt": "2026-01-01", "sheldonNote": "Current stack. Next review at 12-week bloodwork." },
+    { "id": "r4", "name": "Caloric Deficit Calculator", "category": "Nutrition", "type": "tool", "linkedGoals": ["g1"], "addedAt": "2026-01-15", "sheldonNote": "Set to 500kcal deficit. Adjust at 180lbs." },
+    { "id": "r5", "name": "HRV Recovery Protocol", "category": "Recovery", "type": "protocol", "linkedGoals": [], "addedAt": "2026-02-20", "sheldonNote": "Deploy when HRV drops below 50ms for 3+ days." },
+    { "id": "r6", "name": "Meditation App — Guided Sessions", "category": "Mental Health", "type": "app", "linkedGoals": ["g6"], "addedAt": "2026-01-28", "sheldonNote": "10-minute guided sessions. Use the focus series." }
+  ],
+  "dataLog": [
+    { "date": "2026-02-27", "type": "biometric", "label": "HRV", "value": "44ms", "change": "-12ms", "impact": "negative", "sheldonNote": "12ms below baseline. 3rd consecutive dip." },
+    { "date": "2026-02-27", "type": "weight", "label": "Weight", "value": "183 lbs", "change": "-1.4 lbs", "impact": "positive", "sheldonNote": "On track for goal." },
+    { "date": "2026-02-26", "type": "sleep", "label": "Sleep", "value": "5.5 hrs", "change": "-1.5 hrs", "impact": "negative", "sheldonNote": "Screen off at 11:40pm. Protocol violated." },
+    { "date": "2026-02-26", "type": "workout", "label": "Upper Body", "value": "Completed", "change": "Strain: 16.1", "impact": "neutral", "sheldonNote": "High strain on a recovery-deficit day." },
+    { "date": "2026-02-25", "type": "biometric", "label": "Resting HR", "value": "62 bpm", "change": "+4 bpm", "impact": "negative", "sheldonNote": "Elevated. Consistent with stress load." },
+    { "date": "2026-02-24", "type": "sleep", "label": "Sleep", "value": "6.3 hrs", "change": "-0.7 hrs", "impact": "negative", "sheldonNote": "Below 7hr threshold again." },
+    { "date": "2026-02-23", "type": "workout", "label": "Lower Body", "value": "Completed", "change": "Strain: 14.8", "impact": "neutral", "sheldonNote": "Solid session. Recovery will be key." },
+    { "date": "2026-02-22", "type": "mental", "label": "Therapy Intake", "value": "Approved", "change": "—", "impact": "positive", "sheldonNote": "Dr. Marcus Webb. First session scheduled." },
+    { "date": "2026-02-20", "type": "biometric", "label": "HRV", "value": "52ms", "change": "-4ms", "impact": "negative", "sheldonNote": "Declining trend beginning." },
+    { "date": "2026-02-18", "type": "workout", "label": "Training Split", "value": "Started", "change": "New program", "impact": "positive", "sheldonNote": "Switched to 4-day split + 2 active recovery." }
+  ],
+  "appointmentIntel": [
+    {
+      "id": "ai1",
+      "appointment": "Cardiologist — Dr. Sarah Chen",
+      "date": "2026-03-03",
+      "time": "2:00 PM",
+      "prepBrief": {
+        "instructions": ["Fast for 12 hours before appointment", "Wear comfortable clothing for potential stress test", "Arrive 15 minutes early for paperwork"],
+        "bringData": ["Last 3 months HRV data (exported)", "Resting heart rate trend (62bpm, up 4)", "Current supplement list", "Previous ECG results if available"],
+        "questionsToAsk": ["Is the resting HR elevation concerning given my activity level?", "Should I adjust training intensity based on HRV trends?", "Any contraindications with current supplement stack?", "Recommended frequency for follow-up monitoring?"],
+        "recentMetrics": { "restingHR": "62 bpm (+4)", "hrv": "44ms (-12)", "recoveryAvg": "61/100" }
+      }
+    }
+  ],
+  "metrics": {
+    "hrv": { "score": 44, "baseline": 56, "trend": "down", "weeklyChange": -12, "unit": "ms", "sheldonNote": "12ms below 30-day baseline. This is the third consecutive dip. I am monitoring it." },
+    "heartRate": { "resting": 62, "baseline": 58, "trend": "up", "weeklyChange": 4, "unit": "bpm", "sheldonNote": "Resting HR elevated 4bpm. Consistent with elevated stress load this week." },
+    "recovery": { "score": 61, "trend": "down", "weeklyChange": -9, "unit": "/100", "sheldonNote": "Below 65 threshold. I have blocked 2 meetings accordingly." },
+    "strain": { "score": 14.2, "optimalRange": "8–12", "trend": "up", "weeklyChange": 2.1, "unit": "/21", "sheldonNote": "Strain exceeds recovery capacity. The math does not balance." },
+    "sleep": { "score": 61, "avgHours": 6.1, "deepSleepPct": 17, "remPct": 19, "trend": "down", "weeklyChange": -40, "unit": "min avg", "sheldonNote": "6.1 hours is insufficient for your cognitive demands." },
+    "activity": { "score": 78, "stepsAvg": 7900, "workoutsPerWeek": 4, "trend": "steady", "weeklyChange": -2, "sheldonNote": "Activity is adequate. However, the intensity-to-recovery ratio is imbalanced." }
+  },
   "weeklyScores": [
     { "week": "W1 Feb", "hrv": 58, "recovery": 72, "sleep": 66, "strain": 11.2 },
     { "week": "W2 Feb", "hrv": 57, "recovery": 70, "sleep": 64, "strain": 12.1 },
     { "week": "W3 Feb", "hrv": 52, "recovery": 66, "sleep": 62, "strain": 13.4 },
     { "week": "W4 Feb", "hrv": 44, "recovery": 61, "sleep": 61, "strain": 14.2 }
-  ],
-  "cognitiveLoad": {
-    "today": [
-      { "hour": 6, "label": "Wake + Brief", "type": "light", "protected": false, "description": "Low demand. Smoke's daily brief. No decisions." },
-      { "hour": 7, "label": "Morning Routine", "type": "recovery", "protected": true, "description": "Protected. No meetings, no Slack." },
-      { "hour": 8, "label": "Shallow Work", "type": "light", "protected": false, "description": "Email, review overnight updates. Low cognitive load." },
-      { "hour": 9, "label": "Deep Work Block", "type": "deep_work", "protected": true, "description": "Protected. No interruptions. High-output creative or strategic work." },
-      { "hour": 10, "label": "Deep Work Block", "type": "deep_work", "protected": true, "description": "Protected. Peak cognitive window." },
-      { "hour": 11, "label": "Meetings (Light)", "type": "meeting", "protected": false, "description": "30-min all-hands moved here from 9am. Smoke-approved." },
-      { "hour": 12, "label": "Lunch — Protected", "type": "recovery", "protected": true, "description": "No working lunch. Glucose recovery window." },
-      { "hour": 13, "label": "Admin + Reviews", "type": "light", "protected": false, "description": "Low-stakes tasks, review queue." },
-      { "hour": 14, "label": "Strategic Decisions", "type": "deep_work", "protected": false, "description": "Post-meal cognitive window. Best time for high-stakes decisions." },
-      { "hour": 15, "label": "Team Syncs", "type": "meeting", "protected": false, "description": "Stackz team syncs, approval reviews." },
-      { "hour": 16, "label": "Wind Down", "type": "recovery", "protected": false, "description": "Low priority tasks. Start closing loops." },
-      { "hour": 17, "label": "End of Day", "type": "light", "protected": false, "description": "Wrap-up. Final approvals. No new initiatives." },
-      { "hour": 20, "label": "Screen Off", "type": "recovery", "protected": true, "description": "Protected. Blue light cutoff. Non-negotiable." },
-      { "hour": 22, "label": "Sleep Window", "type": "sleep", "protected": true, "description": "Target sleep by 10:30pm for 7.5hr cycle." }
-    ],
-    "protectedBlocksToday": 5,
-    "meetingsToday": 2,
-    "deepWorkHours": 2
-  },
-  "financialHygiene": {
-    "weeklyFood": 340,
-    "weeklyFoodAvg": 243,
-    "weeklyFoodDelta": 97,
-    "sheldonNote": "Food spend is $97 above your 4-week average. This coincides with 3 late nights this week. Correlation: poor sleep → worse food choices → higher spend.",
-    "flaggedSubscriptions": [
-      { "name": "Loom Pro", "amount": 12, "lastUsed": "2026-01-05", "note": "Not opened in 53 days. Downgrade to free tier." },
-      { "name": "Figma Seat (unused)", "amount": 25, "lastUsed": "Never", "note": "Assigned to contractor who left. Remove." },
-      { "name": "Design Assets Pro", "amount": 110, "lastUsed": "2026-01-12", "note": "Canvas says we have everything we need in-house. Cancel." }
-    ],
-    "unusualCharges": [
-      { "name": "Amazon — unclear", "amount": 67, "date": "2026-02-22", "smokeNote": "Unidentified purchase. Likely late-night impulse. Category unknown. Flag for review." },
-      { "name": "DoorDash x3", "amount": 94, "date": "2026-02-25", "smokeNote": "Three delivery orders in one day. Recovery week behavior. Not judging. Noting." }
-    ],
-    "monthlySavingsOpportunity": 147,
-    "annualSavingsOpportunity": 1764
-  },
-  "recipeVault": [
-    {
-      "id": "rec_001",
-      "name": "High-Protein Recovery Bowl",
-      "tags": ["high-protein", "anti-inflammatory", "low-glycemic"],
-      "glycemicIndex": "low",
-      "macros": { "protein": 42, "carbs": 38, "fat": 14, "calories": 450 },
-      "prepTime": "15min",
-      "smokeNote": "Optimal post-training meal. Combines leucine-rich protein with complex carbs for glycogen replenishment without glucose spike.",
-      "bestFor": "recovery",
-      "ingredients": ["Grilled chicken (200g)", "Quinoa (1/2 cup cooked)", "Roasted sweet potato", "Spinach", "Olive oil", "Lemon"],
-      "sheldonRating": 9.2
-    },
-    {
-      "id": "rec_002",
-      "name": "Cognitive Stack Smoothie",
-      "tags": ["brain-fuel", "low-sugar", "anti-inflammatory"],
-      "glycemicIndex": "low",
-      "macros": { "protein": 28, "carbs": 24, "fat": 18, "calories": 370 },
-      "prepTime": "5min",
-      "smokeNote": "Lion's mane + blueberries + MCT oil is not a trend. The research on cognitive performance is compelling. This is your 9am fuel.",
-      "bestFor": "performance",
-      "ingredients": ["Protein powder (vanilla, 1 scoop)", "Blueberries (1 cup)", "MCT oil (1 tbsp)", "Lion's mane powder (500mg)", "Almond milk (1 cup)", "Ice"],
-      "sheldonRating": 9.7
-    },
-    {
-      "id": "rec_003",
-      "name": "Sleep-Optimized Dinner",
-      "tags": ["high-tryptophan", "low-carb", "magnesium-rich"],
-      "glycemicIndex": "low",
-      "macros": { "protein": 38, "carbs": 22, "fat": 16, "calories": 380 },
-      "prepTime": "20min",
-      "smokeNote": "Tryptophan → serotonin → melatonin. The mechanism is established. Eat this before 7pm and your deep sleep percentage will improve within 5 days.",
-      "bestFor": "rest",
-      "ingredients": ["Salmon (180g)", "Broccoli (steamed)", "Pumpkin seeds (2 tbsp)", "Brown rice (1/3 cup)", "Olive oil", "Garlic"],
-      "sheldonRating": 9.4
-    },
-    {
-      "id": "rec_004",
-      "name": "Pre-Training Performance Plate",
-      "tags": ["fast-fuel", "high-carb", "moderate-protein"],
-      "glycemicIndex": "medium",
-      "macros": { "protein": 28, "carbs": 62, "fat": 8, "calories": 440 },
-      "prepTime": "10min",
-      "smokeNote": "Consumed 90 minutes pre-session. The carb load is intentional — you need glycogen. Do not eat this when your HRV is below 50.",
-      "bestFor": "performance",
-      "ingredients": ["Oats (1 cup cooked)", "Banana", "Egg whites (3)", "Honey (1 tsp)", "Almond butter (1 tbsp)"],
-      "sheldonRating": 8.8
-    },
-    {
-      "id": "rec_005",
-      "name": "Anti-Stress Adaptogen Bowl",
-      "tags": ["adaptogenic", "anti-cortisol", "anti-inflammatory"],
-      "glycemicIndex": "low",
-      "macros": { "protein": 18, "carbs": 42, "fat": 12, "calories": 350 },
-      "prepTime": "12min",
-      "smokeNote": "Ashwagandha has 14 RCTs supporting cortisol reduction. On elevated-stress days, this is your lunch. Non-negotiable on weeks like this one.",
-      "bestFor": "recovery",
-      "ingredients": ["Açaí base", "Mixed berries", "Ashwagandha powder (300mg)", "Hemp seeds (2 tbsp)", "Walnuts", "Raw honey (1 tsp)"],
-      "sheldonRating": 8.9
-    }
   ]
 }
