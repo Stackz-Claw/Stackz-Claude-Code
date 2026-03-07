@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-06T00:00:00Z",
+  "teams": {
+    "hr": {
+      "warden": { "tasks_completed": 45, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "recruiter": { "tasks_completed": 12, "tasks_failed": 1, "error_rate": 8.3, "cost": 0, "status": "active" },
+      "auditor": { "tasks_completed": 28, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "credentials-mgr": { "tasks_completed": 8, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" }
+    },
+    "marketing": {
+      "megaphone": { "tasks_completed": 23, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "ghost": { "tasks_completed": 67, "tasks_failed": 2, "error_rate": 2.9, "cost": 0, "status": "active" },
+      "lens": { "tasks_completed": 45, "tasks_failed": 1, "error_rate": 2.2, "cost": 0, "status": "active" },
+      "director": { "tasks_completed": 8, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "scout": { "tasks_completed": 156, "tasks_failed": 3, "error_rate": 1.9, "cost": 0, "status": "active" },
+      "scheduler": { "tasks_completed": 89, "tasks_failed": 1, "error_rate": 1.1, "cost": 0, "status": "active" }
+    },
+    "dev": {
+      "forge": { "tasks_completed": 18, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "smith": { "tasks_completed": 34, "tasks_failed": 2, "error_rate": 5.8, "cost": 0, "status": "active" },
+      "pixel": { "tasks_completed": 29, "tasks_failed": 1, "error_rate": 3.4, "cost": 0, "status": "active" },
+      "tester": { "tasks_completed": 42, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "devops": { "tasks_completed": 12, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "integrator": { "tasks_completed": 8, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" }
+    },
+    "business": {
+      "radar": { "tasks_completed": 12, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "analyst": { "tasks_completed": 89, "tasks_failed": 4, "error_rate": 4.4, "cost": 0, "status": "active" },
+      "validator": { "tasks_completed": 23, "tasks_failed": 1, "error_rate": 4.3, "cost": 0, "status": "active" },
+      "pitch": { "tasks_completed": 15, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" }
+    },
+    "design": {
+      "canvas": { "tasks_completed": 8, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "palette": { "tasks_completed": 34, "tasks_failed": 1, "error_rate": 2.9, "cost": 0, "status": "active" },
+      "illustrator": { "tasks_completed": 56, "tasks_failed": 2, "error_rate": 3.5, "cost": 0, "status": "active" },
+      "animator": { "tasks_completed": 12, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "brand-guard": { "tasks_completed": 78, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" }
+    },
+    "finance": {
+      "cashflow": { "tasks_completed": 5, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "ledger": { "tasks_completed": 234, "tasks_failed": 1, "error_rate": 0.4, "cost": 0, "status": "active" },
+      "forecaster": { "tasks_completed": 8, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "billing": { "tasks_completed": 45, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" }
+    },
+    "startup": {
+      "founder": { "tasks_completed": 15, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "sprint": { "tasks_completed": 22, "tasks_failed": 1, "error_rate": 4.5, "cost": 0, "status": "active" },
+      "growth": { "tasks_completed": 18, "tasks_failed": 2, "error_rate": 10, "cost": 0, "status": "active" },
+      "retention": { "tasks_completed": 12, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" }
+    },
+    "stability": {
+      "sentinel": { "tasks_completed": 8, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "moat": { "tasks_completed": 12, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" },
+      "intel": { "tasks_completed": 15, "tasks_failed": 1, "error_rate": 6.2, "cost": 0, "status": "active" },
+      "guardian": { "tasks_completed": 45, "tasks_failed": 0, "error_rate": 0, "cost": 0, "status": "active" }
+    }
+  },
+  "summary": {
+    "total_tasks_completed": 1189,
+    "total_tasks_failed": 20,
+    "overall_error_rate": 1.6,
+    "health_score": 87
+  }
+}
