@@ -1,0 +1,14 @@
+{
+  "name": "brave-search-mcp",
+  "version": "1.0.0",
+  "description": "Brave Search MCP server for web search capabilities",
+  "type": "module",
+  "scripts": {
+    "start": "npx mcp-server-brave-search",
+    "dev": "npx mcp-server-brave-search"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server-brave-search": "^0.6.2",
+    "dotenv": "^16.4.5"
+  }
+}

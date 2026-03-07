@@ -4,14 +4,14 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import useVault from '../../hooks/useVault';
-import KnowledgeGraph from './KnowledgeGraph';
-import NoteList from './NoteList';
-import NoteDetail from './NoteDetail';
-import NoteCompose from './NoteCompose';
-import VaultHealthWidget from './VaultHealthWidget';
-import NoteLiveStream from './NoteLiveStream';
-import { NOTE_TYPES } from './NoteTypeConfig';
+import useVault from '../hooks/useVault';
+import KnowledgeGraph from '../components/notes/KnowledgeGraph';
+import NoteList from '../components/notes/NoteList';
+import NoteDetail from '../components/notes/NoteDetail';
+import NoteCompose from '../components/notes/NoteCompose';
+import VaultHealthWidget from '../components/notes/VaultHealthWidget';
+import NoteLiveStream from '../components/notes/NoteLiveStream';
+import { NOTE_TYPES } from '../components/notes/NoteTypeConfig';
 
 // Icons
 import { Search, Plus, Filter, Grid, List, Zap } from 'lucide-react';
@@ -40,6 +40,7 @@ const SmartNotes = () => {
 
   // UI state
   const [showCompose, setShowCompose] = useState(false);
+  const [highlightedTrail, setHighlightedTrail] = useState({ nodes: [], edges: [] });
   const [linkedFromNote, setLinkedFromNote] = useState(null);
   const [leftPanelVisible, setLeftPanelVisible] = useState(true);
   const [rightPanelVisible, setRightPanelVisible] = useState(true);
@@ -348,7 +349,6 @@ const SmartNotes = () => {
         style={{
           flex: 1,
           display: 'grid',
-          gridTemplateColumns: leftPanelVisible ? '280px 1fr' : '1fr',
           gridTemplateColumns: rightPanelVisible
             ? leftPanelVisible ? '280px 1fr 360px' : '1fr 360px'
             : leftPanelVisible ? '280px 1fr' : '1fr',
@@ -375,6 +375,8 @@ const SmartNotes = () => {
           notes={notes}
           onNodeClick={handleNoteSelect}
           selectedNodeId={selectedNote?.id}
+          highlightedNodeIds={highlightedTrail.nodes}
+          highlightedEdgeIds={highlightedTrail.edges}
         />
 
         {/* RIGHT PANEL - Note Detail */}
@@ -386,6 +388,7 @@ const SmartNotes = () => {
             onLinkClick={handleLinkClick}
             onNewLinkedNote={handleNewLinkedNote}
             allNotes={allNotes}
+            onHighlightTrail={setHighlightedTrail}
           />
         )}
       </div>
