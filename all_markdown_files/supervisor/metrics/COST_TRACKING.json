@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-06T00:00:00Z",
+  "current_period": {
+    "date": "2026-03-06",
+    "total_spend": 0,
+    "projected_monthly": 0
+  },
+  "by_team": {
+    "hr": { "spend": 0, "percentage": 0, "tasks": 93 },
+    "marketing": { "spend": 0, "percentage": 0, "tasks": 388 },
+    "dev": { "spend": 0, "percentage": 0, "tasks": 143 },
+    "business": { "spend": 0, "percentage": 0, "tasks": 139 },
+    "design": { "spend": 0, "percentage": 0, "tasks": 188 },
+    "finance": { "spend": 0, "percentage": 0, "tasks": 292 },
+    "startup": { "spend": 0, "percentage": 0, "tasks": 67 },
+    "stability": { "spend": 0, "percentage": 0, "tasks": 80 }
+  },
+  "by_model": {
+    "kimi_k2.5": { "spend": 0, "tasks": 0 },
+    "seedream_3.0": { "spend": 0, "tasks": 0 },
+    "seedance_2.0": { "spend": 0, "tasks": 0 },
+    "claude": { "spend": 0, "tasks": 0 }
+  },
+  "trends": {
+    "daily": [],
+    "weekly": [],
+    "monthly": []
+  },
+  "optimization_opportunities": []
+}
