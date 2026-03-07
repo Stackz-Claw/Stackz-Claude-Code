@@ -1,0 +1,167 @@
+# MCP Configuration for Stackz Launch Operations
+# File: .antigravity/mcp.json (place in your Antigravity workspace root)
+# OR: Configure via Antigravity → Settings → MCP Servers
+
+{
+  "mcpServers": {
+
+    // ─────────────────────────────────────────────
+    // WEB BROWSING — Required for platform scanning
+    // ─────────────────────────────────────────────
+
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "description": "Headless browser for scraping Product Hunt, BetaList, HN, Uneed, etc. Required for launch-radar daily scans.",
+      "use_for": ["launch-radar daily scan", "competitive research", "platform monitoring"]
+    },
+
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "description": "HTTP fetch for APIs — HN Algolia API, BetaList API, public endpoints. Lighter than Puppeteer for JSON endpoints.",
+      "use_for": ["HN Algolia search", "public API calls", "RSS feeds"]
+    },
+
+    // ─────────────────────────────────────────────
+    // X / TWITTER — Social launch execution
+    // ─────────────────────────────────────────────
+
+    "twitter": {
+      "command": "npx",
+      "args": ["-y", "@enescinar/twitter-mcp"],
+      "env": {
+        "TWITTER_API_KEY": "${TWITTER_API_KEY}",
+        "TWITTER_API_SECRET": "${TWITTER_API_SECRET}",
+        "TWITTER_ACCESS_TOKEN": "${TWITTER_ACCESS_TOKEN}",
+        "TWITTER_ACCESS_TOKEN_SECRET": "${TWITTER_ACCESS_TOKEN_SECRET}"
+      },
+      "description": "Post tweets, read timeline, search tweets, monitor the 20 launch accounts. Required for social-launch skill.",
+      "use_for": ["launch thread posting", "monitoring @IndieHackers @ProductHunt etc.", "engagement tracking"],
+      "note": "Requires X Developer account. Basic tier ($100/mo) supports reading + posting."
+    },
+
+    // ─────────────────────────────────────────────
+    // FILE SYSTEM — Skills, logs, venture docs
+    // ─────────────────────────────────────────────
+
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/path/to/stackz-industries"
+      ],
+      "description": "Read/write access to the Stackz Industries folder structure — venture briefs, SOUL files, sprint logs, platform trackers.",
+      "use_for": ["reading venture state", "updating submission trackers", "writing launch reports", "skill access"]
+    },
+
+    // ─────────────────────────────────────────────
+    // MEMORY — Persistent agent state across sessions
+    // ─────────────────────────────────────────────
+
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "description": "Knowledge graph memory for Stackz. Stores venture state, owner preferences, Radar learning data, and launch history across sessions.",
+      "use_for": ["venture status persistence", "Radar preference learning", "cross-session context", "decision log"]
+    },
+
+    // ─────────────────────────────────────────────
+    // SEARCH — Market research and opportunity scanning
+    // ─────────────────────────────────────────────
+
+    "brave-search": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      },
+      "description": "Web search for Radar opportunity scanning, competitive research, and market analysis. Use instead of Google to avoid rate limits.",
+      "use_for": ["Radar market scans", "competitor research", "trend detection"],
+      "cost": "Free tier: 2,000 queries/mo. Paid: $3/1000 queries"
+    },
+
+    // ─────────────────────────────────────────────
+    // GITHUB — Code research and open-source scouting
+    // ─────────────────────────────────────────────
+
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "description": "Search GitHub for trending repos, existing implementations, and open-source tools. Radar uses this to check if a venture idea already exists as OSS.",
+      "use_for": ["Radar opportunity research", "Forge finding starter templates", "Warden finding community skills"]
+    },
+
+    // ─────────────────────────────────────────────
+    // GOOGLE CALENDAR — Launch scheduling
+    // ─────────────────────────────────────────────
+
+    "google-calendar": {
+      "url": "https://gcal.mcp.claude.com/mcp",
+      "description": "Schedule launch events, heartbeat reminders, weekly report delivery, and platform submission deadlines.",
+      "use_for": ["launch day scheduling", "weekly report reminders", "platform submission deadlines", "sprint planning"]
+    },
+
+    // ─────────────────────────────────────────────
+    // GMAIL — Waitlist management, customer comms
+    // ─────────────────────────────────────────────
+
+    "gmail": {
+      "url": "https://gmail.mcp.claude.com/mcp",
+      "description": "Send launch day emails to waitlist, monitor for customer support emails, forward critical issues to Stackz.",
+      "use_for": ["waitlist email blasts on launch day", "customer support monitoring", "platform confirmation emails"]
+    }
+
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SETUP INSTRUCTIONS
+// ─────────────────────────────────────────────────────────────────────────────
+
+/*
+STEP 1 — Install MCP servers
+Run in your terminal:
+
+  npx -y @modelcontextprotocol/server-puppeteer
+  npx -y @modelcontextprotocol/server-fetch
+  npx -y @modelcontextprotocol/server-filesystem /path/to/stackz-industries
+  npx -y @modelcontextprotocol/server-memory
+  npx -y @modelcontextprotocol/server-brave-search
+  npx -y @modelcontextprotocol/server-github
+  npx -y @enescinar/twitter-mcp
+
+STEP 2 — Set environment variables
+In your .env file (never commit this):
+
+  TWITTER_API_KEY=...
+  TWITTER_API_SECRET=...
+  TWITTER_ACCESS_TOKEN=...
+  TWITTER_ACCESS_TOKEN_SECRET=...
+  BRAVE_API_KEY=...
+  GITHUB_TOKEN=...
+
+STEP 3 — Update filesystem path
+Change "/path/to/stackz-industries" to your actual Stackz Industries directory.
+
+STEP 4 — In Antigravity
+Go to Settings → MCP Servers → Add Server
+Point to this file OR paste each server config manually.
+
+STEP 5 — Google Calendar + Gmail
+These are already connected in your Claude account.
+In Antigravity: Settings → MCP → Add URL-based server → paste the URLs above.
+
+PRIORITY ORDER (install these first):
+1. filesystem — Stackz needs this to read all venture docs
+2. memory — Persistent state across sessions
+3. brave-search — Radar's research capability
+4. fetch — HN Algolia and lightweight API calls
+5. puppeteer — Full platform scanning (Product Hunt etc.)
+6. twitter — Social launch execution (needs X Dev account)
+7. github — Optional but high-value for Forge + Radar
+*/
