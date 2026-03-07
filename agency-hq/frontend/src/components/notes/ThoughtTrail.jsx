@@ -80,6 +80,16 @@ const ThoughtTrail = ({
 
     setTrail(categorizedTrail);
     setIsCalculating(false);
+
+    // Auto-highlight the full trail on the graph
+    if (categorizedTrail.length > 0) {
+      const nodes = categorizedTrail.map(t => t.id);
+      const edges = [];
+      for (let i = 0; i < categorizedTrail.length - 1; i++) {
+        edges.push({ source: categorizedTrail[i].id, target: categorizedTrail[i + 1].id });
+      }
+      onHighlightPath({ nodes, edges });
+    }
   };
 
   // Get stage label
@@ -98,12 +108,23 @@ const ThoughtTrail = ({
   const playTrail = () => {
     if (trail.length === 0) return;
 
-    // Highlight each note in sequence on the graph
+    // Animate each node sequentially
     trail.forEach((note, index) => {
       setTimeout(() => {
-        onHighlightPath(note.id);
+        // Highlight nodes up to current index
+        const currentNodes = trail.slice(0, index + 1).map(t => t.id);
+        const currentEdges = [];
+        for (let i = 0; i < index; i++) {
+          currentEdges.push({ source: trail[i].id, target: trail[i + 1].id });
+        }
+        onHighlightPath({ nodes: currentNodes, edges: currentEdges });
       }, index * 800);
     });
+
+    // Clear highlights after playback completes
+    setTimeout(() => {
+      onHighlightPath({ nodes: [], edges: [] });
+    }, trail.length * 800 + 500);
   };
 
   // Navigate to a specific note in the trail
@@ -118,6 +139,10 @@ const ThoughtTrail = ({
       {/* Thought Trail Button */}
       <button
         onClick={() => {
+          if (isOpen) {
+            // Clear highlights when closing
+            onHighlightPath({ nodes: [], edges: [] });
+          }
           setIsOpen(!isOpen);
           if (!isOpen) calculateTrail();
         }}

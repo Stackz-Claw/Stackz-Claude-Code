@@ -1,3 +1,36 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__ide__getDiagnostics",
+      "Bash(for f in /Users/jaleeljenkins/Desktop/Stackz/.agent/workflows/*.md)",
+      "Bash(do echo \"=== $f ===\")",
+      "Read(//Users/jaleeljenkins/Desktop/Stackz/**)",
+      "Bash(done)",
+      "Bash(cd /Users/jaleeljenkins/Desktop/Stackz/agency-hq && npm run dev)",
+      "Bash(lsof -ti:4001 | xargs kill -9 2>/dev/null; cd /Users/jaleeljenkins/Desktop/Stackz/agency-hq && npm run dev)",
+      "Bash(lsof -ti:4001 | xargs kill -9 2>/dev/null; lsof -ti:5173 | xargs kill -9 2>/dev/null; lsof -ti:5174 | xargs kill -9 2>/dev/null; lsof -ti:5175 | xargs kill -9 2>/dev/null; echo \"Ports cleared\")",
+      "Bash(lsof -i :4001)",
+      "Bash(pkill -f \"node.*server.js\" 2>/dev/null; sleep 1; lsof -i :4001)",
+      "Bash(lsof -nP -iTCP:4001 -sTCP:LISTEN)",
+      "Bash(sudo lsof -i :4001)",
+      "Bash(cd /Users/jaleeljenkins/Desktop/Stackz/agency-hq/frontend && npm run dev)",
+      "Bash(fuser 4001/tcp 2>/dev/null || echo \"fuser not available, trying netstat\"; netstat -an | grep 4001)",
+      "Bash(kill -9 59570)",
+      "Bash(kill -9 59911 && sleep 1 && lsof -i :4001)",
+      "Bash(kill -9 59911)",
+      "Bash(cd /Users/jaleeljenkins/Desktop/Stackz/agency-hq/frontend && npm install lucide-react d3)",
+      "Bash(npm install lucide-react d3)",
+      "Bash(lsof -ti:5173,5174,4001 | xargs kill -9 2>/dev/null; sleep 1)",
+      "Bash(pkill -9 -f \"node.*server.js\" 2>/dev/null; pkill -9 -f \"vite\" 2>/dev/null; sleep 2)",
+      "Bash(pkill -f \"vite|node.*server.js\" 2>/dev/null; sleep 2)",
+      "Bash(lsof -i :4001 -t | xargs kill -9 2>/dev/null; sleep 1; lsof -i :4001)",
+      "Bash(xargs kill -9)",
+      "Bash(lsof -i :4001 -i :5173 -i :5174 2>/dev/null | head -20)",
+      "Bash(npm view @modelcontextprotocol/server-brave-search 2>&1 || echo \"Package not found, will use direct API approach\")",
+      "Bash(cd /Users/jaleeljenkins/Desktop/Stackz/agency-hq/backend/mcp-servers/brave-search && npm install 2>&1)",
+      "Bash(npm install 2>&1)",
+      "WebSearch"
+    ]
+  },
   "enableAllProjectMcpServers": false
 }

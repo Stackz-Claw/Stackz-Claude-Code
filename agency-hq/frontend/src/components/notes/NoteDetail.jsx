@@ -5,6 +5,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { NOTE_TYPES, NOTE_STATUS, getNoteType, getNoteStatus } from './NoteTypeConfig';
+import ThoughtTrail from './ThoughtTrail';
 
 // Icons
 import { Edit3, Link2, Archive, Clock, Tag, Plus, X, Sparkles } from 'lucide-react';
@@ -16,7 +17,8 @@ const NoteDetail = ({
   onTagClick = () => {},
   onLinkClick = () => {},
   onNewLinkedNote = () => {},
-  allNotes = []
+  allNotes = [],
+  onHighlightTrail = () => {}
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
@@ -440,6 +442,17 @@ const NoteDetail = ({
         )}
       </div>
 
+      {/* Thought Trail */}
+      <ThoughtTrail
+        currentNote={note}
+        allNotes={allNotes}
+        onNavigateToNote={(n) => onLinkClick(n.id)}
+        onHighlightPath={(result) => {
+          // result now comes pre-formatted from ThoughtTrail with { nodes, edges }
+          onHighlightTrail(result);
+        }}
+      />
+
       {/* Backlinks section */}
       {note.backlinks?.length > 0 && (
         <div
@@ -500,6 +513,50 @@ const NoteDetail = ({
           )}
         </div>
       )}
+
+      {/* Thought Trail */}
+      <div style={{ padding: '0 16px 16px' }}>
+        <ThoughtTrail
+          currentNote={note}
+          allNotes={allNotes}
+          onNavigateToNote={(n) => onLinkClick(n.id)}
+          onHighlightPath={(nodeId) => {
+            // Build trail from current highlight state
+            const currentNodes = [];
+            const currentEdges = [];
+
+            // Get all notes in current trail if any
+            if (note.backlinks?.length > 0) {
+              const trailNotes = [];
+              const visited = new Set();
+              const queue = [note.id];
+
+              while (queue.length > 0 && trailNotes.length < 10) {
+                const nid = queue.shift();
+                if (visited.has(nid)) continue;
+                visited.add(nid);
+
+                const n = allNotes.find(x => x.id === nid);
+                if (n) {
+                  trailNotes.unshift(n);
+                  for (const bl of n.backlinks || []) {
+                    if (!visited.has(bl)) queue.push(bl);
+                  }
+                }
+              }
+
+              trailNotes.forEach((tn, idx) => {
+                currentNodes.push(tn.id);
+                if (idx < trailNotes.length - 1) {
+                  currentEdges.push({ source: tn.id, target: trailNotes[idx + 1].id });
+                }
+              });
+            }
+
+            onHighlightTrail({ nodes: currentNodes, edges: currentEdges });
+          }}
+        />
+      </div>
 
       {/* New Linked Note button */}
       <div

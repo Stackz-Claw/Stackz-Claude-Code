@@ -30,6 +30,8 @@ const KnowledgeGraph = ({
   onNodeClick,
   onNodeDoubleClick,
   selectedNodeId = null,
+  highlightedNodeIds = [],
+  highlightedEdgeIds = [],
   width = 800,
   height = 600
 }) => {
@@ -168,13 +170,43 @@ const KnowledgeGraph = ({
     simulationRef.current = simulation;
 
     // Create links
+    const hasHighlights = highlightedNodeIds.length > 0;
     const link = linkGroup.selectAll('line')
       .data(graphData.links)
       .join('line')
       .attr('class', 'link')
-      .attr('stroke', 'rgba(255,255,255,0.15)')
-      .attr('stroke-width', 2)
-      .attr('marker-end', 'url(#arrowhead)');
+      .attr('stroke', d => {
+        const sourceId = d.source.id || d.source;
+        const targetId = d.target.id || d.target;
+        const isHighlighted = highlightedEdgeIds.some(
+          e => (e.source === sourceId && e.target === targetId) ||
+               (e.source === targetId && e.target === sourceId)
+        );
+        if (isHighlighted) return '#7c3aed';
+        if (hasHighlights) return 'rgba(255,255,255,0.05)';
+        return 'rgba(255,255,255,0.15)';
+      })
+      .attr('stroke-width', d => {
+        const sourceId = d.source.id || d.source;
+        const targetId = d.target.id || d.target;
+        const isHighlighted = highlightedEdgeIds.some(
+          e => (e.source === sourceId && e.target === targetId) ||
+               (e.source === targetId && e.target === sourceId)
+        );
+        return isHighlighted ? 4 : 2;
+      })
+      .attr('marker-end', 'url(#arrowhead)')
+      .style('opacity', d => {
+        const sourceId = d.source.id || d.source;
+        const targetId = d.target.id || d.target;
+        const isHighlighted = highlightedEdgeIds.some(
+          e => (e.source === sourceId && e.target === targetId) ||
+               (e.source === targetId && e.target === sourceId)
+        );
+        if (hasHighlights && !isHighlighted) return 0.1;
+        return 1;
+      })
+      .style('transition', 'all 0.3s ease');
 
     // Create node groups
     const node = nodeGroup.selectAll('.node')
@@ -206,10 +238,25 @@ const KnowledgeGraph = ({
     node.append('circle')
       .attr('r', d => Math.min(8 + Math.sqrt(d.backlinks || 1) * 3, 28))
       .attr('fill', d => getNoteType(d.type).color)
-      .attr('stroke', d => selectedNodeId === d.id ? '#fff' : 'transparent')
-      .attr('stroke-width', 3)
-      .attr('filter', d => d.status === 'evergreen' ? `url(#glow-${d.id})` : 'none')
-      .style('transition', 'all 0.2s ease');
+      .attr('stroke', d => {
+        if (selectedNodeId === d.id) return '#fff';
+        if (highlightedNodeIds.includes(d.id)) return '#00ffcc';
+        return 'transparent';
+      })
+      .attr('stroke-width', d => highlightedNodeIds.includes(d.id) ? 4 : 3)
+      .attr('filter', d => {
+        if (d.status === 'evergreen' || highlightedNodeIds.includes(d.id)) {
+          return `url(#glow-${d.id})`;
+        }
+        return 'none';
+      })
+      .style('transition', 'all 0.2s ease')
+      .style('opacity', d => {
+        if (highlightedNodeIds.length > 0 && !highlightedNodeIds.includes(d.id)) {
+          return 0.15;
+        }
+        return 1;
+      });
 
     // Add icons inside nodes
     node.append('text')
@@ -322,7 +369,7 @@ const KnowledgeGraph = ({
     return () => {
       simulation.stop();
     };
-  }, [graphData, dimensions, selectedNodeId, filter]);
+  }, [graphData, dimensions, selectedNodeId, filter, highlightedNodeIds, highlightedEdgeIds]);
 
   // Handle node click from parent
   const handleNodeClick = useCallback((node) => {
