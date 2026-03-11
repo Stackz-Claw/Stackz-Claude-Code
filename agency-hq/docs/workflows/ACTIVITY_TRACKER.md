@@ -174,6 +174,8 @@ Obsidian note where it originated. You tap a link, you're in the note.
 | **SOURCE 5** | SELF_BUILD Morning Brief | Read `Agency HQ/Self-Build/morning-brief-<today>.md` wholesale |
 | **SOURCE 6** | Socket.io Event Log | Read backend socket logs for last 24h |
 | **SOURCE 7** | Idea Thread Activity | For each note in Agency HQ/Ideas/ modified in last 24h: last speaker, message, status |
+| **SOURCE 8** | X Daily Activity | Read: Agency HQ/X/daily/<YYYY-MM-DD>.md - posts, impressions, engagements, best tweet |
+| **SOURCE 9** | X Post Logs | Read: Agency HQ/X/posts/<last 7 days>-*.md - recent tweet performance |
 
 **Normalization Format:**
 
@@ -182,7 +184,7 @@ Obsidian note where it originated. You tap a link, you're in the note.
   "id": "<uuid>",
   "timestamp": "<ISO 8601>",
   "agent": "stackz | smoke | system | jaleel",
-  "category": "build | review | conversation | memory | approval | health | vault | cron | lane | financial | skill_eval",
+  "category": "build | review | conversation | memory | approval | health | vault | cron | lane | financial | skill_eval | x_posting",
   "action": "built | reviewed | replied | wrote | approved | rejected | flagged | archived | committed | failed",
   "title": "<plain English title of what happened>",
   "summary": "<1-2 sentences describing the event>",
@@ -261,7 +263,11 @@ Content-Type: application/json
     "cron_jobs_failed": 0,
     "files_changed_in_codebase": 0,
     "lines_added": 0,
-    "lines_removed": 0
+    "lines_removed": 0,
+    "x_posts_published": 0,
+    "x_total_impressions": 0,
+    "x_total_engagements": 0,
+    "x_best_engagement_rate": 0
   },
   "activity_feed": [],
   "by_agent": {
@@ -271,7 +277,16 @@ Content-Type: application/json
   "by_category": {},
   "pending_for_jaleel": [],
   "idea_threads": [],
-  "obsidian_notes_touched": []
+  "obsidian_notes_touched": [],
+  "x_activity": {
+    "posts_published": 0,
+    "sessions_run": 0,
+    "total_impressions": 0,
+    "total_engagements": 0,
+    "best_engagement_rate": 0,
+    "best_tweet": null,
+    "posts": []
+  }
 }
 ```
 
@@ -285,12 +300,13 @@ Content-Type: application/json
 |---------|-------------|
 | **HEADER** | Good morning message, date, refresh button |
 | **HIGHLIGHTS** | 3 cards max, ranked by significance, color-coded by outcome |
-| **STATS ROW** | Metric cards: Tasks Completed/Failed, Commits, Notes, Memory, Approvals, Threads, Cron |
+| **STATS ROW** | Metric cards: Tasks Completed/Failed, Commits, Notes, Memory, Approvals, Threads, Cron, **X Posts** |
+| **X ACTIVITY** | Megaphone's posts, impressions, engagements, best tweet of the day (link to X) |
 | **PENDING FOR YOU** | Yellow banner with items needing Jaleel's attention |
 | **IDEA THREADS** | Active conversations with status, last speaker, preview |
 | **ACTIVITY FEED** | Full chronological feed with filters (agent, category, outcome, date, search) |
 | **OBSIDIAN NOTES** | Collapsible table of notes touched |
-| **AGENT TABS** | Stackz / Smoke individual views |
+| **AGENT TABS** | Stackz / Smoke / Megaphone (X) individual views |
 
 ### Phase 5: Backend API Routes
 

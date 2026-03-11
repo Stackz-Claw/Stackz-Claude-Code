@@ -1,34 +1,23 @@
 import { TwitterApi } from 'twitter-api-v2';
-import 'dotenv/config';
 
-const twitter = new TwitterApi({
-  appKey: 'b67kndrucchHzngbfr4X5xLta',
-  appSecret: '4sWkw69ecfJysY2QycbphGthsTjKwmmVVFt5g7kUADjq2DqOrN',
-  accessToken: '2725226953-1IwHSJnFLoTbbFenmFr8d8pBZTvSAYvAf4gTPPU',
-  accessSecret: 'token',
-});
-
-const tweetText = `I gave our AI agent access to our Stripe account
-
-My reasoning: Cashflow should handle money
-
-The agent's first action: flagged THREE of our own subscriptions as "suspicious activity"
-
-It's not wrong
-
-I'm not sure how I feel about this`;
-
-async function postTweet() {
+async function verify() {
   try {
-    const tweet = await twitter.v2.tweet(tweetText);
-    console.log('Tweet posted successfully!');
-    console.log('Tweet ID:', tweet.data.id);
-    console.log('Tweet URL: https://twitter.com/Stackz_Claw/status/' + tweet.data.id);
-    return tweet.data.id;
+    const twitter = new TwitterApi({
+      appKey: 'Yz4LzEmkC9GH2Q4X5bliryc6R',
+      appSecret: '3cHmLHmZoxm3ESXIemtpNqKbqlMCNU8xmqq5sv1a1yy3Qa9xbf',
+      accessToken: '2021913052577447936-kWWpf5JFNm5O6cChpHs7KvW2qgtbyd',
+      accessSecret: 'mDRv2DvbjEMdcPKCsBXbsamMnXmC1RZ4mZ6zICRG0iv8A',
+    });
+
+    const me = await twitter.v2.me();
+    const tweets = await twitter.v2.userTimeline(me.data.id, { max_results: 5 });
+    console.log('Remaining tweets:', tweets.data?.length || 0);
+    if (tweets.data) {
+      console.log('Tweet:', tweets.data[0].text);
+    }
   } catch (error) {
-    console.error('Error posting tweet:', error);
-    throw error;
+    console.error('Error:', error.data || error.message);
   }
 }
 
-postTweet();
+verify();

@@ -232,7 +232,7 @@ REPLY STRATEGY (other accounts):
 
 ---
 
-## PHASE 6: LOGGING
+## PHASE 6: LOGGING & ENGAGEMENT TRACKING
 *Time: 5 minutes*
 
 ```
@@ -249,6 +249,54 @@ Include:
 - Tweet ID (from x-mcp-server response)
 
 Set a reminder to update performance metrics 24 hours later.
+```
+
+---
+
+## PHASE 7: OBSIDIAN ENGAGEMENT TRACKING
+*Time: 5 minutes*
+
+```
+After posting and 2-hour engagement window, fetch engagement metrics:
+
+1. Get tweet metrics via X API:
+   - impressions
+   - engagements (total)
+   - retweets
+   - replies
+   - likes
+   - bookmarks
+
+2. Update the post log file with metrics:
+   ```
+   ## Performance (updated)
+   impressions: <number>
+   engagements: <number>
+   replies: <number>
+   retweets: <number>
+   bookmarks: <number>
+   likes: <number>
+   engagement_rate: <engagements/impressions * 100>%
+   ```
+
+3. Write engagement summary to daily activity log:
+   File: Agency HQ/X/daily/<YYYY-MM-DD>.md
+
+   ```yaml
+   ---
+   date: <YYYY-MM-DD>
+   ---
+
+   ## X Activity Summary
+
+   | Time | Tweet | Mode | Score | Impressions | Engagements | Eng. Rate |
+   |------|-------|------|-------|-------------|-------------|-----------|
+   | 9:07 AM | "..." | honest_witness | 16/18 | 1,234 | 89 | 7.2% |
+   ```
+
+4. Emit socket event for real-time UI update:
+   - Event: `x:engagement`
+   - Payload: { tweet_id, impressions, engagements, retweets, replies, likes, bookmarks }
 ```
 
 ---

@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useEffect } from 'react'
 import PageHeader from '../components/layout/PageHeader'
 import { useApprovalStore } from '../store/approvalStore'
 import ApprovalBoard from '../components/approvals/ApprovalBoard'
@@ -12,13 +11,6 @@ export default function ApprovalsPage() {
   const fetchApprovals = useApprovalStore((s) => s.fetchApprovals)
 
   // Load real data from Obsidian vault on mount
-  useEffect(() => {
-    fetchApprovals()
-  }, [fetchApprovals])
-  const loading = useApprovalStore((s) => s.loading)
-  const fetchApprovals = useApprovalStore((s) => s.fetchApprovals)
-
-  // Fetch real data from Obsidian vault on mount
   useEffect(() => {
     fetchApprovals()
   }, [fetchApprovals])
