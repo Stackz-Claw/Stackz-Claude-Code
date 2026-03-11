@@ -368,6 +368,130 @@
           ]
         }
       }
+    },
+    {
+      "id": "proj_004",
+      "name": "Agentic Threads",
+      "tagline": "AI-designed, human-approved streetwear — launched in days, not months",
+      "phase": 1,
+      "phaseStatus": "green",
+      "mrr": 0,
+      "mrrTrend": "up",
+      "runway": "12 months",
+      "nextMilestone": "Launch first brand (Street Essentials) with 3-5 SKUs",
+      "planVersion": "1.0.0",
+      "lastUpdated": "2026-03-10T12:00:00Z",
+      "lead": "founder",
+      "businessPlan": {
+        "section1_vision": {
+          "oneLiner": "The first AI-native clothing brand — agentic pipeline from Pinterest/X inspiration to DTC delivery in days.",
+          "problem": "Traditional apparel: 6-12 month design cycles. Independent designers: no access to professional tools + supply chain. Existing POD: generic designs, slow, no AI.",
+          "solution": "Agentic pipeline: Pinterest/X bookmarks → AI design generation → Human approval → POD/Bulk production → Agentic ads. Multi-brand strategy: test fast, scale winners, kill losers.",
+          "whyNow": "AI design tools (Tessella: 15min) just crossed usability threshold. Agentic ad management hitting mainstream. No dominant AI-native clothing brand yet. Window: NOW."
+        },
+        "section2_market": {
+          "tam": "$400B+ — global apparel market",
+          "sam": "$50-80B — streetwear segment",
+          "som": "$5-10M — reachable in 24 months",
+          "competitors": [
+            { "name": "Printful/Printify", "gap": "POD infrastructure only, no AI design" },
+            { "name": "Represent", "gap": "DTC but not AI-native" },
+            { "name": "Threadless", "gap": "Design community, not agentic" },
+            { "name": "Culture Kings", "gap": "Traditional hype brand" }
+          ]
+        },
+        "section3_model": {
+          "revenueModel": "DTC e-commerce + affiliate partnerships + creator commissions",
+          "pricing": {
+            "streetEssentials": { "priceRange": "25-45", "type": "basic tees/hoodies" },
+            "trendAlert": { "priceRange": "35-65", "type": "trend-driven" },
+            "cultureDrop": { "priceRange": "50-120", "type": "limited drops" },
+            "luxeStreet": { "priceRange": "65-150", "type": "premium" }
+          },
+          "unitEconomics": {
+            "cac": 12,
+            "ltv": 180,
+            "ltvCacRatio": 15,
+            "paybackMonths": 1,
+            "grossMargin": "65-77%"
+          }
+        },
+        "section4_execution": {
+          "phases": [
+            {
+              "phase": 1,
+              "name": "Pipeline Build",
+              "status": "in_progress",
+              "steps": [
+                { "step": "Set up Shopify + Printful", "done": false },
+                { "step": "Configure n8n + Claude design pipeline", "done": false },
+                { "step": "Launch Street Essentials (3-5 SKUs)", "done": false },
+                { "step": "Test $500-1000 ads", "done": false },
+                { "step": "Validate unit economics", "done": false }
+              ]
+            },
+            {
+              "phase": 2,
+              "name": "Multi-Brand Scale",
+              "status": "pending",
+              "steps": [
+                { "step": "Launch TrendAlert brand", "done": false },
+                { "step": "Scale ad spend to $5K/mo", "done": false },
+                { "step": "Add creator partnerships", "done": false },
+                { "step": "Hit $10K MRR", "done": false }
+              ]
+            },
+            {
+              "phase": 3,
+              "name": "Brand Portfolio",
+              "status": "pending",
+              "steps": [
+                { "step": "Launch CultureDrop (hype)", "done": false },
+                { "step": "Launch LuxeStreet (premium)", "done": false },
+                { "step": "Wholesale to boutiques", "done": false },
+                { "step": "Explore B2B", "done": false }
+              ]
+            }
+          ]
+        },
+        "section5_winStrategy": {
+          "moats": [
+            "First-mover on full agentic pipeline (Pinterest → design → production → ads)",
+            "Proprietary design system trained on trend data",
+            "Speed: days from concept to live product vs months for traditional",
+            "Multi-brand = de-risked, not tied to one aesthetic"
+          ],
+          "distribution": [
+            "Meta + TikTok ads with agentic optimization",
+            "Creator partnerships (10-15% revenue share)",
+            "UGC content at scale via AI",
+            "TikTok Creator Marketplace"
+          ],
+          "unfairAdvantage": "Full-stack agentic workflow — competitors can buy tools but can't replicate the pipeline integration speed"
+        },
+        "section6_selfImprovement": {
+          "currentVersion": "1.0.0",
+          "revisions": [],
+          "experiments": [
+            {
+              "id": "exp_004",
+              "hypothesis": "AI-generated designs will have comparable conversion rates to human-designed after 3 iterations",
+              "status": "pending",
+              "startDate": "2026-04-01"
+            },
+            {
+              "id": "exp_005",
+              "hypothesis": "Multi-brand strategy will reduce risk vs single-brand by 60%",
+              "status": "pending",
+              "startDate": "2026-05-01"
+            }
+          ],
+          "lessons": []
+        }
+      },
+      "leverageScore": 7.4,
+      "evaluationDate": "2026-03-10",
+      "evaluationStatus": "approved"
     }
   ]
 }

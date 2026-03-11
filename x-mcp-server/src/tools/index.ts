@@ -171,6 +171,28 @@ const tools: Tool[] = [
       type: 'object',
       properties: {}
     }
+  },
+  {
+    name: 'get_bookmarks',
+    description: 'Get your saved tweets (bookmarks) from X. Returns tweets you have bookmarked for later reading. Use this to sync your X bookmarks into the idea brainstorm workflow.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        accountId: {
+          type: 'number',
+          description: 'Account index (1, 2, or 3)'
+        },
+        maxResults: {
+          type: 'number',
+          description: 'Maximum number of bookmarks to fetch (1-100, default: 25)'
+        },
+        includeMedia: {
+          type: 'boolean',
+          description: 'Include media attachments in response (default: true)'
+        }
+      },
+      required: []
+    }
   }
 ];
 
@@ -434,6 +456,53 @@ export function registerTools(server: McpServer): void {
         error: {
           code: error.code || 'ERROR',
           message: error.message || 'Failed to get account info'
+        }
+      };
+    }
+  });
+
+  server.tool('get_bookmarks', async (args: any) => {
+    try {
+      const maxResults = args.maxResults || 25;
+      const includeMedia = args.includeMedia !== false;
+
+      let result;
+      if (includeMedia) {
+        result = await twitterClient.getBookmarksWithMedia(args.accountId, maxResults);
+      } else {
+        result = await twitterClient.getBookmarks(args.accountId, maxResults);
+      }
+
+      // Extract tweet URLs and format response
+      const tweets = (result.data || []).map((tweet: any) => {
+        const urls = tweet.entities?.urls?.map((u: any) => u.expanded_url) || [];
+        return {
+          id: tweet.id,
+          text: tweet.text,
+          created_at: tweet.created_at,
+          author_id: tweet.author_id,
+          public_metrics: tweet.public_metrics,
+          urls: urls,
+          has_urls: urls.length > 0,
+          has_media: tweet.attachments?.media_keys?.length > 0
+        };
+      });
+
+      return {
+        success: true,
+        data: {
+          tweets: tweets,
+          count: tweets.length,
+          includes: result.includes || null
+        }
+      };
+    } catch (error: any) {
+      logger.error('get_bookmarks error:', error);
+      return {
+        success: false,
+        error: {
+          code: error.code || 'ERROR',
+          message: error.message || 'Failed to get bookmarks'
         }
       };
     }

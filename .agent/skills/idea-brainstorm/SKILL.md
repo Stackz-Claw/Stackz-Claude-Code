@@ -1,13 +1,15 @@
 ---
 name: idea-brainstorm
 description: >
-  Autonomously searches the web and X to discover market signals, ingests 
-  saved bookmarks and Obsidian vault notepad entries as seeds, brainstorms 
-  business ideas, iterates until conviction, then hands off to the Stackz 
-  intake protocol for formal evaluation. Use when asked to "find a new 
-  business idea", "brainstorm an idea", "run the brainstorm workflow", or 
-  "what should we build next". Requires brave-search, x-research, and 
-  bookmarks MCP servers. Reads from ~/.stackz/vault/Radar/Idea Notepad.md.
+  Autonomously searches the web and X to discover market signals, ingests
+  saved bookmarks and Obsidian vault notepad entries as seeds, brainstorms
+  business ideas, iterates until conviction, then hands off to the Stackz
+  intake protocol for formal evaluation. Use when asked to "find a new
+  business idea", "brainstorm an idea", "run the brainstorm workflow", or
+  "what should we build next". Requires brave-search, x-research, and
+  bookmarks MCP servers. Reads from ~/Documents/Agents/Radar/Idea Notepad.md.
+  Writes full session to ~/Documents/Agents/Radar/Sessions/ and updates
+  ~/Documents/Agents/Stackz/Ventures/Active Ventures.md to prevent duplicates.
 disable-model-invocation: false
 ---
 
@@ -38,11 +40,41 @@ Check availability:
 - [ ] brave-search MCP — available?
 - [ ] x-research MCP — available?  
 - [ ] bookmarks MCP — available?
-- [ ] Vault notepad — readable at ~/.stackz/vault/Radar/Idea Notepad.md?
+- [ ] Vault notepad — readable at ~/Documents/Agents/Radar/Idea Notepad.md?
 
-Print status for each. If brave-search or x-research are missing, stop 
-and tell the user what to fix. Bookmarks and vault are optional — proceed 
+Print status for each. If brave-search or x-research are missing, stop
+and tell the user what to fix. Bookmarks and vault are optional — proceed
 without them if unavailable, but note it.
+
+---
+
+## PHASE 0B — ACTIVE VENTURES REVIEW (CRITICAL)
+
+Before generating any ideas, you MUST check the Active Ventures Log to avoid duplicates:
+
+1. Read `~/Documents/Agents/Stackz/Ventures/Active Ventures.md`
+2. Check for:
+   - Any active ventures in the same vertical
+   - Recently evaluated ideas in the same space
+   - Competitors already tracked
+3. If a similar venture exists:
+   - Note it in your session
+   - Either pivot to a different vertical/market OR
+   - Proceed only if you have a clear differentiation angle
+
+Print:
+```
+ACTIVE VENTURES CHECK
+=====================
+Checking ~/Documents/Agents/Stackz/Ventures/Active Ventures.md...
+
+Active ventures in same vertical: [list or "None"]
+Recently evaluated: [list or "None"]
+Competitors tracked: [list]
+Conflict detected: [YES/NO]
+→ If YES: [note how you'll differentiate or pivot]
+→ If NO: Clear to proceed
+```
 
 ---
 
@@ -52,7 +84,7 @@ Before any web search, pull in what you already know.
 
 ### Step 1A — Read Vault Notepad
 
-Use the vault-notepad skill to read `~/.stackz/vault/Radar/Idea Notepad.md`.
+Use the vault-notepad skill to read `~/Documents/Agents/Radar/Idea Notepad.md`.
 
 Extract and categorize all content:
 - Raw ideas
@@ -406,21 +438,37 @@ That is a valid and valuable output.
 
 Before handing to intake:
 
-1. **Mark bookmarks used:** Call `bookmark_mark_used` for every 
+1. **Mark bookmarks used:** Call `bookmark_mark_used` for every
    bookmark that contributed to this session. Pass `session_id`.
 
-2. **Write session to vault:** Use vault-notepad skill to write 
-   `~/.stackz/vault/Radar/Sessions/brainstorm_[DATE].md` with 
-   the full session output.
+2. **Write FULL session to vault:** Use vault-notepad skill to write
+   `~/Documents/Agents/Radar/Sessions/brainstorm_[DATE].md` with the
+   COMPLETE session including:
+   - Session ID and timestamp
+   - All seeds from vault + bookmarks
+   - All raw signals collected
+   - Candidate analysis
+   - Deep dive findings
+   - Kill attempt results
+   - Final conviction statement
+   - Full intake handoff
 
-3. **Clear used seeds:** Remove consumed items from the 
+3. **Update Active Ventures Log** (if approved):
+   - Read current `~/Documents/Agents/Stackz/Ventures/Active Ventures.md`
+   - Add the idea to "Recently Evaluated" table with:
+     - idea_id, name, score, verdict, date
+   - If APPROVED, add to active ventures
+   - Update competitor watch if new competitors found
+
+4. **Clear used seeds:** Remove consumed items from the
    "Seeds for Next Session" section of the Idea Notepad.
 
-4. **Print confirmation:**
+5. **Print confirmation:**
 ```
 SESSION SAVED
 =============
-✓ Vault note: Radar/Sessions/brainstorm_[DATE].md
+✓ Full session: Radar/Sessions/brainstorm_[DATE].md
+✓ Active Ventures Log: Updated
 ✓ Bookmarks marked used: [N]
 ✓ Notepad seeds cleared: [N items]
 ```

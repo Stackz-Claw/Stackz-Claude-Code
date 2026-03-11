@@ -1,0 +1,12 @@
+{
+  "name": "bookmarks-mcp",
+  "version": "1.0.0",
+  "description": "Bookmarks MCP server for Stackz",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1"
+  }
+}

@@ -2,7 +2,7 @@
  * Twitter API Client - Multi-account management
  */
 
-import { TwitterApi, TwitterApiReadWrite v2 } from 'twitter-api-v2';
+import TwitterApi, { v2 } from 'twitter-api-v2';
 import { logger } from '../utils/logger.js';
 import { Account, TwitterCredentials } from '../types/index.js';
 
@@ -183,6 +183,32 @@ export class TwitterClient {
     }
 
     return await client.v2.userByUsername(username);
+  }
+
+  async getBookmarks(accountId?: number, maxResults: number = 25): Promise<any> {
+    const client = this.getClient(accountId);
+
+    // Get bookmarks (saved tweets)
+    const result = await client.v2.bookmarks({
+      max_results: maxResults
+    });
+
+    return result;
+  }
+
+  async getBookmarksWithMedia(accountId?: number, maxResults: number = 25): Promise<any> {
+    const client = this.getClient(accountId);
+
+    // Get bookmarks with expansions for included data
+    const result = await client.v2.bookmarks({
+      max_results: maxResults,
+      expansions: ['attachments.media_keys', 'author_id'],
+      'tweet.fields': ['created_at', 'public_metrics', 'entities'],
+      'user.fields': ['username', 'name', 'profile_image_url'],
+      'media.fields': ['url', 'preview_image_url', 'type']
+    });
+
+    return result;
   }
 
   getActiveAccounts(): number[] {

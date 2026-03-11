@@ -2,6 +2,7 @@
   "name": "x-mcp-server",
   "version": "1.0.0",
   "description": "Multi-account Twitter/X MCP server for STACKZ agent swarm",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
