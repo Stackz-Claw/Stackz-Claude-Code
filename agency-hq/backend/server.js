@@ -31,6 +31,8 @@ app.use('/api/bevel', require('./routes/bevel'))
 app.use('/api/notes', require('./routes/notes'))
 app.use('/api/chat', require('./routes/chat'))
 app.use('/api/zettelkasten', require('./routes/zettelkasten'))
+app.use('/api/timeline', require('./routes/timeline'))
+app.use('/api/browser', require('./routes/browser'))
 
 // Health check
 app.get('/api/ping', (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }))

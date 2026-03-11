@@ -1,22 +1,23 @@
 /**
  * useVault - Custom React hook for vault API integration
- * Handles data fetching, caching, and real-time updates
+ * Handles data fetching from the Agency HQ backend (Obsidian Zettelkasten)
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { mockVaultData, generateGraphData } from '../data/mockVaultData';
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { mockVaultData, generateGraphData } from '../data/mockVaultData'
 
-const VAULT_API_BASE = 'http://localhost:8765/vault';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api'
 
 export const useVault = () => {
   // State
-  const [notes, setNotes] = useState([]);
-  const [graph, setGraph] = useState({ nodes: [], links: [] });
-  const [selectedNote, setSelectedNote] = useState(null);
-  const [vaultHealth, setVaultHealth] = useState(null);
-  const [isLive, setIsLive] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [notes, setNotes] = useState([])
+  const [allNotes, setAllNotes] = useState([])
+  const [graph, setGraph] = useState({ nodes: [], links: [] })
+  const [selectedNote, setSelectedNote] = useState(null)
+  const [vaultHealth, setVaultHealth] = useState(null)
+  const [isLive, setIsLive] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   // Filters
   const [filter, setFilter] = useState({
@@ -24,54 +25,101 @@ export const useVault = () => {
     status: 'all',
     author: 'all',
     search: ''
-  });
-  const [sortBy, setSortBy] = useState('recent');
+  })
+  const [sortBy, setSortBy] = useState('recent')
 
   // SSE connection ref
-  const eventSourceRef = useRef(null);
+  const eventSourceRef = useRef(null)
+  const socketRef = useRef(null)
 
-  // Fetch notes from API
+  // Fetch notes from Zettelkasten API
   const fetchNotes = useCallback(async () => {
     try {
-      const response = await fetch(`${VAULT_API_BASE}/notes`);
-      if (!response.ok) throw new Error('Failed to fetch notes');
-      const data = await response.json();
-      setNotes(data.notes || []);
-      return data.notes || [];
+      const response = await fetch(`${API_BASE}/zettelkasten/recent?limit=100`)
+      if (!response.ok) throw new Error('Failed to fetch notes')
+      const data = await response.json()
+
+      // Transform to vault format
+      const transformed = (data.notes || []).map(n => ({
+        id: n.id,
+        title: n.title,
+        content: n.title, // Use title as content placeholder
+        author: n.agent,
+        type: n.type || 'permanent',
+        status: 'evergreen',
+        tags: n.tags || [],
+        links: [],
+        backlinks: [],
+        created: n.created_at,
+        modified: n.created_at,
+        ...n
+      }))
+
+      setAllNotes(transformed)
+      return transformed
     } catch (err) {
-      console.warn('Vault API unavailable, using mock data:', err.message);
-      // Fall back to mock data
-      setNotes(mockVaultData.notes);
-      return mockVaultData.notes;
+      console.warn('[Vault] API unavailable, using mock data:', err.message)
+      setAllNotes(mockVaultData.notes)
+      return mockVaultData.notes
     }
-  }, []);
+  }, [])
 
   // Fetch graph data
   const fetchGraph = useCallback(async () => {
     try {
-      const response = await fetch(`${VAULT_API_BASE}/graph`);
-      if (!response.ok) throw new Error('Failed to fetch graph');
-      const data = await response.json();
-      setGraph(data);
-      return data;
-    } catch (err) {
-      console.warn('Vault API unavailable, using mock graph data');
-      const mockGraph = generateGraphData();
-      setGraph(mockGraph);
-      return mockGraph;
-    }
-  }, []);
+      // Build graph from notes links
+      const notesData = allNotes.length > 0 ? allNotes : await fetchNotes()
 
-  // Fetch vault health
+      const nodes = notesData.map(n => ({
+        id: n.id,
+        title: n.title,
+        type: n.type,
+        status: n.status,
+        backlinks: n.backlinks?.length || 0,
+        links: n.links?.length || 0
+      }))
+
+      const links = []
+      for (const note of notesData) {
+        if (note.outbound_links) {
+          for (const targetId of note.outbound_links) {
+            links.push({ source: note.id, target: targetId })
+          }
+        }
+      }
+
+      const graphData = { nodes, links }
+      setGraph(graphData)
+      return graphData
+    } catch (err) {
+      console.warn('[Vault] Graph fetch failed, using mock:', err.message)
+      const mockGraph = generateGraphData()
+      setGraph(mockGraph)
+      return mockGraph
+    }
+  }, [allNotes, fetchNotes])
+
+  // Fetch vault health/stats
   const fetchHealth = useCallback(async () => {
     try {
-      const response = await fetch(`${VAULT_API_BASE}/health`);
-      if (!response.ok) throw new Error('Failed to fetch health');
-      const data = await response.json();
-      setVaultHealth(data);
-      return data;
+      const response = await fetch(`${API_BASE}/zettelkasten/stats`)
+      if (!response.ok) throw new Error('Failed to fetch health')
+      const data = await response.json()
+
+      const health = {
+        score: Math.min(100, 50 + data.total_permanent_notes * 5),
+        totalNotes: data.total_permanent_notes,
+        totalLinks: data.total_permanent_notes * 3, // Estimate
+        orphans: data.total_fleeting_pending,
+        conflicts: 0,
+        status: data.total_permanent_notes > 10 ? 'good' : 'building',
+        stats: data
+      }
+
+      setVaultHealth(health)
+      return health
     } catch (err) {
-      console.warn('Vault API unavailable, using mock health data');
+      console.warn('[Vault] Health fetch failed, using mock:', err.message)
       const mockHealth = {
         score: 87,
         totalNotes: mockVaultData.notes.length,
@@ -79,222 +127,189 @@ export const useVault = () => {
         orphans: 3,
         conflicts: 0,
         status: 'good'
-      };
-      setVaultHealth(mockHealth);
-      return mockHealth;
+      }
+      setVaultHealth(mockHealth)
+      return mockHealth
     }
-  }, []);
+  }, [])
 
-  // Search notes
+  // Search notes via API
   const searchNotes = useCallback(async (query) => {
     if (!query.trim()) {
-      return notes;
+      return allNotes
     }
 
     try {
-      const response = await fetch(`${VAULT_API_BASE}/search?q=${encodeURIComponent(query)}`);
-      if (!response.ok) throw new Error('Search failed');
-      const data = await response.json();
-      return data.results || [];
+      const response = await fetch(`${API_BASE}/zettelkasten/search?q=${encodeURIComponent(query)}`)
+      if (!response.ok) throw new Error('Search failed')
+      const data = await response.json()
+      return data.results || []
     } catch (err) {
       // Fallback to local search
-      const q = query.toLowerCase();
-      return notes.filter(note =>
+      const q = query.toLowerCase()
+      return allNotes.filter(note =>
         note.title.toLowerCase().includes(q) ||
-        note.content.toLowerCase().includes(q) ||
+        (note.content && note.content.toLowerCase().includes(q)) ||
         note.tags?.some(tag => tag.toLowerCase().includes(q))
-      );
+      )
     }
-  }, [notes]);
+  }, [allNotes])
 
-  // Create note
+  // Create note (fleeting note in Zettelkasten)
   const createNote = useCallback(async (noteData) => {
     try {
-      const response = await fetch(`${VAULT_API_BASE}/notes`, {
+      const response = await fetch(`${API_BASE}/zettelkasten/fleeting`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(noteData)
-      });
-      if (!response.ok) throw new Error('Failed to create note');
-      const newNote = await response.json();
-      setNotes(prev => [newNote, ...prev]);
-      return newNote;
-    } catch (err) {
-      console.error('Failed to create note:', err);
-      throw err;
-    }
-  }, []);
+        body: JSON.stringify({
+          agent: noteData.author || 'human',
+          team: noteData.team || 'agency',
+          content: noteData.content || noteData.title,
+          context: noteData.type
+        })
+      })
 
-  // Update note
+      if (!response.ok) throw new Error('Failed to create note')
+
+      const newNote = await response.json()
+      // Refresh notes after creation
+      await fetchNotes()
+      return newNote
+    } catch (err) {
+      console.error('[Vault] Failed to create note:', err)
+      throw err
+    }
+  }, [fetchNotes])
+
+  // Update note (would need a PUT endpoint - for now just local)
   const updateNote = useCallback(async (id, changes) => {
     try {
-      const response = await fetch(`${VAULT_API_BASE}/notes/${id}`, {
+      // Try to update in backend
+      const response = await fetch(`${API_BASE}/zettelkasten/note/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(changes)
-      });
-      if (!response.ok) throw new Error('Failed to update note');
-      const updatedNote = await response.json();
-      setNotes(prev => prev.map(n => n.id === id ? updatedNote : n));
+      })
+
+      if (!response.ok) throw new Error('Failed to update note')
+
+      const updatedNote = await response.json()
+      setAllNotes(prev => prev.map(n => n.id === id ? { ...n, ...updatedNote } : n))
       if (selectedNote?.id === id) {
-        setSelectedNote(updatedNote);
+        setSelectedNote({ ...selectedNote, ...updatedNote })
       }
-      return updatedNote;
+      return updatedNote
     } catch (err) {
-      console.error('Failed to update note:', err);
-      throw err;
+      console.error('[Vault] Failed to update note:', err)
+      // Fallback to local update
+      const updated = { ...allNotes.find(n => n.id === id), ...changes }
+      setAllNotes(prev => prev.map(n => n.id === id ? updated : n))
+      return updated
     }
-  }, [selectedNote]);
+  }, [allNotes, selectedNote])
 
   // Select note
   const selectNote = useCallback((note) => {
     if (typeof note === 'string') {
-      const found = notes.find(n => n.id === note);
-      setSelectedNote(found || null);
+      const found = allNotes.find(n => n.id === note)
+      setSelectedNote(found || null)
     } else {
-      setSelectedNote(note);
+      setSelectedNote(note)
     }
-  }, [notes]);
+  }, [allNotes])
 
-  // Connect to SSE stream
+  // Connect to live updates via Socket.io
   const setLive = useCallback((enabled) => {
     if (enabled) {
-      if (eventSourceRef.current) return; // Already connected
+      // For now, just refresh periodically
+      // In production, you'd connect to a socket for real-time updates
+      if (eventSourceRef.current) return
 
-      try {
-        const eventSource = new EventSource(`${VAULT_API_BASE}/stream`);
-        eventSourceRef.current = eventSource;
+      // Simple polling for live updates
+      const pollInterval = setInterval(async () => {
+        await fetchNotes()
+        await fetchHealth()
+      }, 10000) // Every 10 seconds
 
-        eventSource.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          handleStreamEvent(data);
-        };
-
-        eventSource.onerror = () => {
-          console.warn('SSE connection error, retrying...');
-          eventSource.close();
-          eventSourceRef.current = null;
-          // Retry after 5 seconds
-          setTimeout(() => setLive(true), 5000);
-        };
-
-        setIsLive(true);
-      } catch (err) {
-        console.warn('Failed to connect to SSE stream:', err);
-      }
+      eventSourceRef.current = { close: () => clearInterval(pollInterval) }
+      setIsLive(true)
     } else {
       if (eventSourceRef.current) {
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
+        eventSourceRef.current.close()
+        eventSourceRef.current = null
       }
-      setIsLive(false);
+      setIsLive(false)
     }
-  }, []);
-
-  // Handle SSE events
-  const handleStreamEvent = useCallback((event) => {
-    switch (event.type) {
-      case 'note_created':
-        setNotes(prev => [event.note, ...prev]);
-        // Also update graph
-        setGraph(prev => ({
-          ...prev,
-          nodes: [...prev.nodes, {
-            id: event.note.id,
-            title: event.note.title,
-            type: event.note.type,
-            status: event.note.status,
-            backlinks: 0,
-            links: event.note.links?.length || 0
-          }]
-        }));
-        break;
-
-      case 'note_updated':
-        setNotes(prev => prev.map(n =>
-          n.id === event.note.id ? event.note : n
-        ));
-        break;
-
-      case 'link_created':
-        setGraph(prev => ({
-          ...prev,
-          links: [...prev.links, { source: event.source, target: event.target }]
-        }));
-        break;
-
-      default:
-        break;
-    }
-  }, []);
+  }, [fetchNotes, fetchHealth])
 
   // Filtered and sorted notes
   const filteredNotes = useCallback(() => {
-    let result = [...notes];
+    let result = [...allNotes]
 
     // Apply filters
     if (filter.type !== 'all') {
-      result = result.filter(n => n.type === filter.type);
+      result = result.filter(n => n.type === filter.type)
     }
     if (filter.status !== 'all') {
-      result = result.filter(n => n.status === filter.status);
+      result = result.filter(n => n.status === filter.status)
     }
     if (filter.author !== 'all') {
-      result = result.filter(n => n.author === filter.author);
+      result = result.filter(n => n.author === filter.author)
     }
     if (filter.search) {
-      const q = filter.search.toLowerCase();
+      const q = filter.search.toLowerCase()
       result = result.filter(n =>
         n.title.toLowerCase().includes(q) ||
-        n.content.toLowerCase().includes(q) ||
+        (n.content && n.content.toLowerCase().includes(q)) ||
         n.tags?.some(t => t.toLowerCase().includes(q))
-      );
+      )
     }
 
     // Apply sort
     switch (sortBy) {
       case 'recent':
-        result.sort((a, b) => new Date(b.modified) - new Date(a.modified));
-        break;
+        result.sort((a, b) => new Date(b.created) - new Date(a.created))
+        break
       case 'linked':
-        result.sort((a, b) => (b.backlinks?.length || 0) - (a.backlinks?.length || 0));
-        break;
+        result.sort((a, b) => (b.backlinks?.length || 0) - (a.backlinks?.length || 0))
+        break
       case 'alpha':
-        result.sort((a, b) => a.title.localeCompare(b.title));
-        break;
+        result.sort((a, b) => a.title.localeCompare(b.title))
+        break
       default:
-        break;
+        break
     }
 
-    return result;
-  }, [notes, filter, sortBy]);
+    return result
+  }, [allNotes, filter, sortBy])
 
   // Initialize data
   useEffect(() => {
     const init = async () => {
-      setIsLoading(true);
-      await Promise.all([fetchNotes(), fetchGraph(), fetchHealth()]);
-      setIsLoading(false);
-    };
-    init();
+      setIsLoading(true)
+      await Promise.all([fetchNotes(), fetchHealth()])
+      await fetchGraph()
+      setIsLoading(false)
+    }
+    init()
 
     return () => {
       if (eventSourceRef.current) {
-        eventSourceRef.current.close();
+        eventSourceRef.current.close()
       }
-    };
-  }, [fetchNotes, fetchGraph, fetchHealth]);
+    }
+  }, [fetchNotes, fetchGraph, fetchHealth])
 
   // Get authors for filter
-  const authors = [...new Set(notes.map(n => n.author))];
+  const authors = [...new Set(allNotes.map(n => n.author).filter(Boolean))]
 
   // Get tags for autocomplete
-  const allTags = [...new Set(notes.flatMap(n => n.tags || []))];
+  const allTags = [...new Set(allNotes.flatMap(n => n.tags || []))]
 
   return {
     // Data
     notes: filteredNotes(),
-    allNotes: notes,
+    allNotes,
     graph,
     selectedNote,
     vaultHealth,
@@ -319,9 +334,9 @@ export const useVault = () => {
     searchNotes,
     setLive,
     refresh: async () => {
-      await Promise.all([fetchNotes(), fetchGraph(), fetchHealth()]);
+      await Promise.all([fetchNotes(), fetchGraph(), fetchHealth()])
     }
-  };
-};
+  }
+}
 
-export default useVault;
+export default useVault

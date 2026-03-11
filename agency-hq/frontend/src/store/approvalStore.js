@@ -1,6 +1,20 @@
 import { create } from 'zustand'
 
-const API_BASE = 'http://localhost:3001/api/approvals'
+const API_BASE = 'http://localhost:4001/api/approvals'
+const TIMELINE_API = 'http://localhost:4001/api/timeline'
+
+// Helper to log to timeline
+const logToTimeline = async (type, summary, metadata = {}) => {
+  try {
+    await fetch(`${TIMELINE_API}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, summary, ...metadata })
+    })
+  } catch (e) {
+    console.warn('[ApprovalStore] Timeline log failed:', e.message)
+  }
+}
 
 export const useApprovalStore = create((set, get) => ({
   smokeApprovals: [],
@@ -36,36 +50,72 @@ export const useApprovalStore = create((set, get) => ({
   get stackzPendingCount() { return get().stackzApprovals.length },
   get totalPendingCount() { return get().smokeApprovals.length + get().stackzApprovals.length },
 
-  approveSmoke: (id, note = '') => {
+  approveSmoke: async (id, note = '') => {
     const item = get().smokeApprovals.find((a) => a.id === id)
     if (!item) return
+
+    // Log to timeline
+    await logToTimeline('approval_granted', `smoke approved: ${item.type || 'request'}`, {
+      agentId: 'smoke',
+      approvalType: item.type,
+      decision: 'approved',
+      details: { note, item }
+    })
+
     set((state) => ({
       smokeApprovals: state.smokeApprovals.filter((a) => a.id !== id),
       history: [{ ...item, status: 'approved', note, resolvedAt: new Date().toISOString() }, ...state.history],
     }))
   },
 
-  rejectSmoke: (id, note = '') => {
+  rejectSmoke: async (id, note = '') => {
     const item = get().smokeApprovals.find((a) => a.id === id)
     if (!item) return
+
+    // Log to timeline
+    await logToTimeline('approval_rejected', `smoke rejected: ${item.type || 'request'}`, {
+      agentId: 'smoke',
+      approvalType: item.type,
+      decision: 'rejected',
+      details: { note, item }
+    })
+
     set((state) => ({
       smokeApprovals: state.smokeApprovals.filter((a) => a.id !== id),
       history: [{ ...item, status: 'rejected', note, resolvedAt: new Date().toISOString() }, ...state.history],
     }))
   },
 
-  approveStackz: (id, note = '') => {
+  approveStackz: async (id, note = '') => {
     const item = get().stackzApprovals.find((a) => a.id === id)
     if (!item) return
+
+    // Log to timeline
+    await logToTimeline('approval_granted', `stackz approved: ${item.type || 'request'}`, {
+      agentId: 'stackz',
+      approvalType: item.type,
+      decision: 'approved',
+      details: { note, item }
+    })
+
     set((state) => ({
       stackzApprovals: state.stackzApprovals.filter((a) => a.id !== id),
       history: [{ ...item, status: 'approved', note, resolvedAt: new Date().toISOString() }, ...state.history],
     }))
   },
 
-  rejectStackz: (id, note = '') => {
+  rejectStackz: async (id, note = '') => {
     const item = get().stackzApprovals.find((a) => a.id === id)
     if (!item) return
+
+    // Log to timeline
+    await logToTimeline('approval_rejected', `stackz rejected: ${item.type || 'request'}`, {
+      agentId: 'stackz',
+      approvalType: item.type,
+      decision: 'rejected',
+      details: { note, item }
+    })
+
     set((state) => ({
       stackzApprovals: state.stackzApprovals.filter((a) => a.id !== id),
       history: [{ ...item, status: 'rejected', note, resolvedAt: new Date().toISOString() }, ...state.history],
