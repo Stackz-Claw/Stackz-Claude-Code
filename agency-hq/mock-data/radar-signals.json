@@ -1,0 +1,40 @@
+{
+  "signals": [
+    {
+      "id": "sig_001",
+      "title": "AI Agent Market Growth",
+      "description": "Autonomous agent platforms growing 340% YoY",
+      "stage": "validated",
+      "confidence": 92,
+      "source": "market_research",
+      "discovered": "2026-03-10T10:00:00Z"
+    },
+    {
+      "id": "sig_002",
+      "title": "Stripe Issuing API New Features",
+      "description": "Virtual card controls expanded with spending limits",
+      "stage": "researching",
+      "confidence": 78,
+      "source": "api_updates",
+      "discovered": "2026-03-09T14:30:00Z"
+    },
+    {
+      "id": "sig_003",
+      "title": "Claude Code MCP Integration",
+      "description": "Native MCP support enables deeper agent tool access",
+      "stage": "raw",
+      "confidence": 65,
+      "source": "developer_tools",
+      "discovered": "2026-03-08T09:15:00Z"
+    },
+    {
+      "id": "sig_004",
+      "title": "Obsidian API Rate Limits",
+      "description": "New rate limits on vault sync operations",
+      "stage": "validated",
+      "confidence": 88,
+      "source": "api_updates",
+      "discovered": "2026-03-07T16:45:00Z"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "status": "healthy",
+  "score": 87,
+  "kpis": {
+    "tasksCompleted": 142,
+    "avgResponseTime": "1.2s",
+    "errorRate": 0.03,
+    "uptime": 99.8
+  },
+  "agents": [
+    { "name": "stackz", "status": "active", "tasks": 58, "errors": 1 },
+    { "name": "smoke", "status": "active", "tasks": 34, "errors": 0 },
+    { "name": "cashflow", "status": "active", "tasks": 22, "errors": 0 },
+    { "name": "nova", "status": "standby", "tasks": 12, "errors": 0 },
+    { "name": "radar", "status": "active", "tasks": 16, "errors": 2 }
+  ],
+  "lastUpdated": "2026-03-11T08:00:00Z"
+}

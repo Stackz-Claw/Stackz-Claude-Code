@@ -8,7 +8,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {},
+    alias: {
+      '@mock': path.resolve(__dirname, '../mock-data'),
+    },
   },
   server: {
     port: 5173,

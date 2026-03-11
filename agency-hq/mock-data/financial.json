@@ -1,0 +1,24 @@
+{
+  "revenue": [
+    { "month": "2025-10", "amount": 1200, "source": "SaaS" },
+    { "month": "2025-11", "amount": 1850, "source": "SaaS" },
+    { "month": "2025-12", "amount": 2100, "source": "SaaS" },
+    { "month": "2026-01", "amount": 2800, "source": "SaaS" },
+    { "month": "2026-02", "amount": 3200, "source": "SaaS" },
+    { "month": "2026-03", "amount": 3500, "source": "SaaS" }
+  ],
+  "burn": {
+    "current": 4200,
+    "lastMonth": 3800,
+    "projected": 4500
+  },
+  "runway": {
+    "months": 2.5,
+    "cashOnHand": 10500
+  },
+  "transactions": [
+    { "id": "tx_001", "type": "revenue", "amount": 500, "date": "2026-03-10", "source": "Subscription" },
+    { "id": "tx_002", "type": "spend", "amount": -120, "date": "2026-03-09", "vendor": "AWS" },
+    { "id": "tx_003", "type": "revenue", "amount": 1200, "date": "2026-03-08", "source": "Enterprise" }
+  ]
+}

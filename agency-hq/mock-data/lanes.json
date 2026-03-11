@@ -1,0 +1,38 @@
+{
+  "lanes": [
+    {
+      "id": "lane_001",
+      "name": "Immediate",
+      "priority": "critical",
+      "items": [
+        { "id": "item_001", "title": "Review Stripe MCP integration", "agent": "stackz", "age": 120000, "status": "pending" },
+        { "id": "item_002", "title": "Approve optimization proposals", "agent": "stackz", "age": 3600000, "status": "pending" }
+      ]
+    },
+    {
+      "id": "lane_002",
+      "name": "Today",
+      "priority": "high",
+      "items": [
+        { "id": "item_003", "title": "Morning briefing review", "agent": "smoke", "age": 7200000, "status": "in_progress" },
+        { "id": "item_004", "title": "Health dashboard update", "agent": "stackz", "age": 10800000, "status": "pending" }
+      ]
+    },
+    {
+      "id": "lane_003",
+      "name": "This Week",
+      "priority": "medium",
+      "items": [
+        { "id": "item_005", "title": "RADAR_SCAN workflow build", "agent": "stackz", "age": 86400000, "status": "backlog" }
+      ]
+    },
+    {
+      "id": "lane_004",
+      "name": "Backlog",
+      "priority": "low",
+      "items": [
+        { "id": "item_006", "title": "Skill evaluation framework", "agent": "stackz", "age": 172800000, "status": "backlog" }
+      ]
+    }
+  ]
+}

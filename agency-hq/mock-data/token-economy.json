@@ -1,0 +1,16 @@
+{
+  "totalSupply": 1000000,
+  "circulating": 425000,
+  "locked": 575000,
+  "tokens": [
+    { "name": "Stackz", "balance": 250000, "allocation": 25, "vested": 180000 },
+    { "name": "Smoke", "balance": 75000, "allocation": 7.5, "vested": 60000 },
+    { "name": "Operations", "balance": 100000, "allocation": 10, "vested": 100000 },
+    { "name": "Treasury", "balance": 300000, "allocation": 30, "vested": 0 },
+    { "name": "Incentives", "balance": 275000, "allocation": 27.5, "vested": 85000 }
+  ],
+  "burnRate": {
+    "monthly": 5000,
+    "lastBurn": "2026-03-01"
+  }
+}

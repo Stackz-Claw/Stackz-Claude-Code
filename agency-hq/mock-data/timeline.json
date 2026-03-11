@@ -1,0 +1,76 @@
+{
+  "entries": [
+    {
+      "id": "evt_001",
+      "type": "project_launched",
+      "timestamp": "2026-03-11T08:30:00Z",
+      "summary": "Radar Signal Processing v1 launched to production",
+      "details": "Stackz deployed automated opportunity scanning pipeline",
+      "agent": "stackz",
+      "cost": 0
+    },
+    {
+      "id": "evt_002",
+      "type": "approval_granted",
+      "timestamp": "2026-03-10T14:22:00Z",
+      "summary": "Weekly infrastructure budget approved",
+      "details": "Q2 cloud spending allocation: $2,400/month",
+      "agent": "cashflow",
+      "cost": 0
+    },
+    {
+      "id": "evt_003",
+      "type": "agent_deployed",
+      "timestamp": "2026-03-10T09:00:00Z",
+      "summary": "Nova agent activated for API integration",
+      "details": "New agent specializing in third-party API connections",
+      "agent": "stackz",
+      "cost": 0
+    },
+    {
+      "id": "evt_004",
+      "type": "decision_made",
+      "timestamp": "2026-03-09T16:45:00Z",
+      "summary": "Adopted Stripe MCP for financial operations",
+      "details": "Replacing manual Stripe SDK with MCP tool access",
+      "agent": "stackz",
+      "cost": 0
+    },
+    {
+      "id": "evt_005",
+      "type": "sentinel_flagged",
+      "timestamp": "2026-03-09T11:30:00Z",
+      "summary": "Runway projection below 90 days",
+      "details": "Current runway at 78 days based on burn rate",
+      "agent": "sentinel",
+      "cost": 0
+    },
+    {
+      "id": "evt_006",
+      "type": "pivot",
+      "timestamp": "2026-03-08T10:15:00Z",
+      "summary": "Shifted from B2C to B2B focus",
+      "details": "Market research indicated higher LTV in enterprise segment",
+      "agent": "radar",
+      "cost": 0
+    },
+    {
+      "id": "evt_007",
+      "type": "approval_rejected",
+      "timestamp": "2026-03-07T15:00:00Z",
+      "summary": "Marketing campaign proposal declined",
+      "details": "Q2 campaign budget too aggressive for current runway",
+      "agent": "cashflow",
+      "cost": 0
+    },
+    {
+      "id": "evt_008",
+      "type": "project_launched",
+      "timestamp": "2026-03-06T12:00:00Z",
+      "summary": "Self-optimization workflow activated",
+      "details": "Daily 5 AM automated performance review",
+      "agent": "stackz",
+      "cost": 0
+    }
+  ]
+}

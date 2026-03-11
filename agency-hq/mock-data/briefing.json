@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-03-11T08:00:00Z",
+  "highest_leverage_action": "Review and approve the 2 self-optimization proposals to fix schedule overlap and build RADAR_SCAN workflow",
+  "overnight_activity": {
+    "count": 5,
+    "highlights": [
+      "Stackz completed self-optimization cycle at 5 AM",
+      "Generated 2 optimization proposals (schedule fix, RADAR_SCAN)",
+      "Stripe MCP integration docs created",
+      "Safety rules documented for financial operations",
+      "Daily briefing generated for March 11"
+    ]
+  },
+  "active_blockers": [
+    {
+      "id": "blk_001",
+      "severity": "high",
+      "agent": "stackz",
+      "team": "infrastructure",
+      "summary": "Schedule conflict: SELF_BUILD and idea-conversation both at 2 AM"
+    }
+  ],
+  "decisions_needed": {
+    "count": 2,
+    "urgent": [
+      "Approve self-optimization proposal: move idea-conversation to 3 AM",
+      "Approve self-optimization proposal: build RADAR_SCAN workflow"
+    ]
+  },
+  "radar_found": [
+    { "title": "AI Agent Market 340% YoY", "source": "market_research", "confidence": 92 },
+    { "title": "Stripe Issuing API Updates", "source": "api_updates", "confidence": 78 },
+    { "title": "Claude Code MCP Support", "source": "developer_tools", "confidence": 65 }
+  ],
+  "financial_pulse": {
+    "revenue_mtd": "$3,500",
+    "burn_mtd": "$4,200",
+    "runway": "2.5 months"
+  },
+  "x_activity": {
+    "posts_today": 0,
+    "total_impressions": 0,
+    "best_post": null,
+    "engagement_rate": 0,
+    "replies_responded": "0/0",
+    "phase": "1 - Buzz Building",
+    "weeks_best_format": null,
+    "accounts_replied": 0,
+    "status": "System initializing"
+  }
+}
