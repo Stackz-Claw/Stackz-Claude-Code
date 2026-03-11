@@ -19,6 +19,7 @@ The Agency HQ is an interactive dashboard for managing AI agents that operate li
 | **Frontend** | React 18 + Vite + Three.js |
 | **Backend** | Express + Socket.io |
 | **Agents Active** | 7 (Smoke, Stackz, Nova, Bolt, Rex, Zip, Chill) |
+| **Workflows** | 7 (Brainstorm, Idea Refinement, Launch Planning, Task Decomposition, Daily Self-Optimization, Conversational Idea Collaboration, SELF_BUILD) |
 
 ---
 
@@ -45,6 +46,19 @@ The Agency HQ is an interactive dashboard for managing AI agents that operate li
 ### 2026-03-11 — v0.1.0
 
 #### Added
+- **Workflow Documentation System** — Created comprehensive workflow documentation in `docs/workflows/`:
+  - `morning-brainstorm-idea-generation.md` — Daily morning workflow that generates 3 new ideas
+  - `idea-refinement.md` — Transforms raw ideas into detailed proposals
+  - `launch-planning.md` — Creates launch plans from approved proposals
+  - `task-decomposition.md` — Breaks down plans into actionable tasks
+  - `daily-self-optimization.md` — Stackz's daily self-optimization workflow (5:00 AM)
+  - `conversational-idea-collaboration.md` — Live conversation threads between Jaleel, Stackz, Smoke (2:00 AM)
+- **Idea Conversation Skill** — New skill (`skills/idea-conversation.json`) enabling nightly conversation pass
+- **Self-Optimize Skill** — New skill for Stackz (`skills/self-optimize.json`) enabling daily self-optimization cycle
+- **Conversational Idea Collaboration** — New workflow for live idea discussion between Jaleel, Stackz, and Smoke (`docs/workflows/conversational-idea-collaboration.md`)
+- **Idea Conversation Skill** — New skill (`skills/idea-conversation.json`) enabling Stackz & Smoke to read/reply to idea threads nightly at 2 AM
+- **Idea Conversation Skill** — New skill for Stackz & Smoke (`skills/idea-conversation.json`) enabling nightly conversation pass at 2 AM
+- **Conversational Idea Collaboration Workflow** — Live discussion threads in Agency HQ/Ideas/ where Jaleel, Stackz, and Smoke debate ideas in open threads
 - **GitHub Integration** — Added Git, GitHub CLI, and GitHub API `curl` commands to the allowed list in local settings
 - **Idea Brainstorm Workflow** — Implemented comprehensive brainstorming workflow with bookmark and vault notepad skills
 - **Brave Search Server Module** — Added Brave Search server module for web searching capabilities
@@ -124,6 +138,20 @@ The Agency HQ is an interactive dashboard for managing AI agents that operate li
 
 ---
 
+## 🔄 Workflows
+
+| Workflow | Description | Schedule |
+|----------|-------------|----------|
+| [SELF_BUILD](./.claude/workflows/SELF_BUILD.md) | Daily self-build with autoharness-inspired iterative improvement | Daily @ 2:00 AM |
+| [Conversational Idea Collaboration](./docs/workflows/conversational-idea-collaboration.md) | Stackz & Smoke read/reply to idea threads | Daily @ 2:00 AM |
+| [Daily Self-Optimization](./docs/workflows/daily-self-optimization.md) | Stackz analyzes performance, proposes improvements | Daily @ 5:00 AM |
+| [Morning Brainstorm](./docs/workflows/morning-brainstorm-idea-generation.md) | Generates 3 new ideas through structured brainstorming | Daily @ 8:00 AM |
+| [Idea Refinement](./docs/workflows/idea-refinement.md) | Transforms raw ideas into detailed proposals | Manual |
+| [Launch Planning](./docs/workflows/launch-planning.md) | Creates launch plans from approved proposals | Manual |
+| [Task Decomposition](./docs/workflows/task-decomposition.md) | Breaks plans into actionable tasks with owners | Manual |
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -151,8 +179,14 @@ agency-hq/
 │   └── middleware/              # Express middleware
 ├── mock-data/                   # Seed data for development
 ├── skills/                      # Agent skill definitions
+│   ├── self-optimize.json      # Stackz self-optimization skill
+│   ├── idea-conversation.json  # Stackz & Smoke conversation pass skill
+│   └── self-build.json         # Self-build workflow skill
 ├── docs/                        # Documentation templates
-└── .claude/                     # Claude Code configuration
+│   └── workflows/              # Workflow documentation
+├── .claude/                   # Claude Code configuration
+│   └── workflows/             # Core workflow definitions
+│       └── SELF_BUILD.md      # Daily self-build workflow (2 AM)
 ```
 
 ---

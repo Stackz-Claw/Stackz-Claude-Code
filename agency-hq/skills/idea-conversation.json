@@ -1,0 +1,117 @@
+{
+  "name": "idea-conversation",
+  "description": "Nightly conversation pass - Stackz and Smoke read all idea notes in Agency HQ/Ideas/, reply to new messages, and update morning brief with conversation summaries",
+  "agents": ["stackz", "smoke"],
+  "trigger": {
+    "type": "schedule",
+    "cron": "0 2 * * *",
+    "label": "Nightly Idea Conversation Pass"
+  },
+  "phase": 0,
+  "purpose": "Read and reply before planning any build work",
+  "steps": [
+    {
+      "id": "stackz_read",
+      "name": "Stackz Reads All Ideas",
+      "agent": "stackz",
+      "action": "Scan every note in Agency HQ/Ideas/ folder. Read full thread context.",
+      "outputs": ["idea_notes", "thread_contexts"]
+    },
+    {
+      "id": "stackz_check_timestamps",
+      "name": "Stackz Checks Timestamps",
+      "agent": "stackz",
+      "action": "Compare Jaleel's last message timestamp vs Stackz's last reply timestamp in each note",
+      "depends_on": ["stackz_read"],
+      "outputs": ["notes_needing_reply"]
+    },
+    {
+      "id": "stackz_reply",
+      "name": "Stackz Replies Where Needed",
+      "agent": "stackz",
+      "action": "For each note where Jaleel newer: answer questions, ask clarifications (max 2), acknowledge new ideas, report build outcomes, propose approaches, or flag blockers",
+      "depends_on": ["stackz_check_timestamps"],
+      "outputs": ["stackz_replies"]
+    },
+    {
+      "id": "smoke_read",
+      "name": "Smoke Reads Notes",
+      "agent": "smoke",
+      "action": "Read all idea notes and Stackz's replies. Review full thread context.",
+      "outputs": ["smoke_review_notes"]
+    },
+    {
+      "id": "smoke_identify_concerns",
+      "name": "Smoke Identifies Concerns",
+      "agent": "smoke",
+      "action": "Flag: risks, scope issues, side effects on other systems, complexity concerns, reasonable timeline",
+      "depends_on": ["smoke_read"],
+      "outputs": ["flagged_concerns"]
+    },
+    {
+      "id": "smoke_reply",
+      "name": "Smoke Replies Where Needed",
+      "agent": "smoke",
+      "action": "Reply only when has meaningful input: concerns about Stackz's approach, unintended side effects, scope reasonableness, tradeoff flags. Does not reply to every thread.",
+      "depends_on": ["smoke_identify_concerns"],
+      "outputs": ["smoke_replies"]
+    },
+    {
+      "id": "update_frontmatter",
+      "name": "Update Note Frontmatter",
+      "agent": "stackz",
+      "action": "For each note with activity: update status field (open/needs_clarification/in_progress/actioned/deferred) and last_updated timestamp",
+      "depends_on": ["stackz_reply", "smoke_reply"],
+      "outputs": ["updated_notes"]
+    },
+    {
+      "id": "check_stuck_threads",
+      "name": "Check for Stuck Threads",
+      "agent": "stackz",
+      "action": "Identify threads open 3+ nights with no resolution. Prepare explanation for why stuck.",
+      "depends_on": ["update_frontmatter"],
+      "outputs": ["stuck_threads"]
+    },
+    {
+      "id": "write_brief_section",
+      "name": "Write Morning Brief Section",
+      "agent": "stackz",
+      "action": "Create 'Conversation Updates' section in morning brief. Summarize each active note: title, status, 1-2 sentence discussion summary, Obsidian link.",
+      "depends_on": ["update_frontmatter", "check_stuck_threads"],
+      "outputs": ["brief_section"]
+    },
+    {
+      "id": "notify",
+      "name": "Send Notification",
+      "agent": "stackz",
+      "action": "Notify Jaleel: 'Conversation pass complete. X notes updated. Check morning brief for summary.'",
+      "depends_on": ["write_brief_section"],
+      "outputs": ["notification_sent"]
+    }
+  ],
+  "outputs": {
+    "notes_read": "number of idea notes reviewed",
+    "replies_made": "total replies from Stackz + Smoke",
+    "threads_updated": "notes with status changes",
+    "stuck_count": "threads flagged as stuck",
+    "brief_generated": "morning brief section created"
+  },
+  "reply_rules": {
+    "max_questions_per_reply": 2,
+    "never_close_threads": true,
+    "never_repeat_others": true,
+    "disagree_openly": true,
+    "summarize_decisions": true
+  },
+  "status_mapping": {
+    "new_note_no_replies": "open",
+    "clarification_needed": "needs_clarification",
+    "execution_planned": "in_progress",
+    "built_and_committed": "actioned",
+    "too_complex_near_term": "deferred",
+    "waiting_on_jaleel": "needs_clarification"
+  },
+  "tags": ["conversation", "ideas", "collaboration", "nightly", "phase-0"],
+  "requires_approval": false,
+  "always_runs_before_build": true
+}

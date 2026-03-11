@@ -1,0 +1,122 @@
+{
+  "name": "self-optimize",
+  "description": "Run daily self-optimization cycle to analyze performance, identify inefficiencies, and draft improvement proposals for approval in both Obsidian and UI",
+  "agent": "stackz",
+  "trigger": {
+    "type": "schedule",
+    "cron": "0 5 * * *",
+    "label": "Daily Self-Optimization"
+  },
+  "level": 0,
+  "sync_enabled": true,
+  "sync_bidirectional": true,
+  "steps": [
+    {
+      "id": "snapshot",
+      "name": "Pull Semantic Snapshot",
+      "action": "Pull current operational state including active context, recent conversations, loaded memories, and current skillset",
+      "outputs": ["semantic_snapshot"]
+    },
+    {
+      "id": "analyze",
+      "name": "Analyze Current State",
+      "action": "Parse the semantic snapshot to understand: active skills, recent workflows executed, performance metrics, conversation history",
+      "depends_on": ["snapshot"],
+      "outputs": ["state_analysis"]
+    },
+    {
+      "id": "review_skills",
+      "name": "Review Active Skills",
+      "action": "List all currently active skills, their usage frequency, and effectiveness ratings",
+      "depends_on": ["analyze"],
+      "outputs": ["skill_review"]
+    },
+    {
+      "id": "review_metrics",
+      "name": "Review Performance Metrics",
+      "action": "Check: tasks completed, response times, error rates, user satisfaction scores, workflow success rates",
+      "depends_on": ["analyze"],
+      "outputs": ["metrics_review"]
+    },
+    {
+      "id": "identify_inefficiencies",
+      "name": "Identify Inefficiencies",
+      "action": "Analyze findings to identify: slow processes, underutilized skills, redundant steps, capability gaps, bottlenecks",
+      "depends_on": ["review_skills", "review_metrics"],
+      "outputs": ["inefficiency_list"]
+    },
+    {
+      "id": "prioritize",
+      "name": "Prioritize by Impact",
+      "action": "Score each inefficiency on potential improvement (1-5) and effort to fix (1-5). Select top issues.",
+      "depends_on": ["identify_inefficiencies"],
+      "outputs": ["prioritized_issues"]
+    },
+    {
+      "id": "draft_proposals",
+      "name": "Draft Improvement Proposals",
+      "action": "Write 1-3 optimization proposals with: title, description, expected impact, effort estimate, risk level, unique ID",
+      "depends_on": ["prioritize"],
+      "outputs": ["proposals"]
+    },
+    {
+      "id": "format_for_approval",
+      "name": "Format for Approval Inbox",
+      "action": "Format each proposal using the approval inbox template with metadata: id, type, agent, status, timestamps",
+      "depends_on": ["draft_proposals"],
+      "outputs": ["formatted_proposals"]
+    },
+    {
+      "id": "write_to_obsidian",
+      "name": "Write to Obsidian Vault",
+      "action": "Save proposals to Agency HQ/Approvals/pending/ with timestamp filenames using the same IDs as UI",
+      "depends_on": ["format_for_approval"],
+      "outputs": ["obsidian_files"]
+    },
+    {
+      "id": "post_to_ui",
+      "name": "Post to Approval UI",
+      "action": "POST each proposal to /api/approvals with same ID, agent info, title, summary, full_context, risk_level, confidence",
+      "depends_on": ["format_for_approval"],
+      "outputs": ["ui_entries"],
+      "api_endpoint": "POST /api/approvals"
+    },
+    {
+      "id": "verify_sync",
+      "name": "Verify Dual Entry",
+      "action": "Confirm both Obsidian and UI have same proposal IDs. Log sync verification.",
+      "depends_on": ["write_to_obsidian", "post_to_ui"],
+      "outputs": ["sync_verified"]
+    },
+    {
+      "id": "notify",
+      "name": "Send Notification",
+      "action": "Notify user: 'Stackz has completed daily self-optimization. X proposals ready for review in Approval Inbox or Obsidian (both synced)'",
+      "depends_on": ["verify_sync"],
+      "outputs": ["notification_sent"]
+    }
+  ],
+  "outputs": {
+    "proposals_count": "number of optimization proposals generated",
+    "proposal_titles": "array of proposal titles",
+    "obsidian_paths": "array of file paths where proposals were saved",
+    "ui_entries": "array of UI entry IDs created",
+    "sync_status": "verified/failed"
+  },
+  "sync": {
+    "enabled": true,
+    "bidirectional": true,
+    "sources": ["obsidian", "ui"],
+    "on_approval": {
+      "obsidian_action": "Update markdown file status frontmatter",
+      "ui_action": "PATCH /api/approvals/:id with status"
+    },
+    "on_rejection": {
+      "obsidian_action": "Update markdown file status frontmatter",
+      "ui_action": "PATCH /api/approvals/:id with status"
+    }
+  },
+  "requires_approval": true,
+  "approval_level": 0,
+  "tags": ["optimization", "self-improvement", "stackz", "daily", "performance", "sync"]
+}

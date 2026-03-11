@@ -1,0 +1,377 @@
+{
+  "name": "self-build",
+  "description": "Daily Self-Build & Iteration - Includes integrated conversation pass (Phase 0), then Stackz builds while Smoke reviews. Runs 2 AM nightly.",
+  "agents": ["stackz", "smoke"],
+  "workflow_file": ".claude/workflows/SELF_BUILD.md",
+  "trigger": {
+    "type": "schedule",
+    "cron": "0 2 * * *",
+    "label": "Daily Self-Build"
+  },
+  "session": "isolated",
+  "phase": "full-7-phase",
+  "includes_conversation_pass": true,
+  "steps": [
+    {
+      "id": "phase0a_conversation",
+      "name": "Phase 0-A: Stackz Reads & Replies to Ideas",
+      "agent": "stackz",
+      "description": "Read Agency HQ/Ideas/, reply to Jaleel's messages, parse ideas",
+      "substeps": [
+        {
+          "id": "read_ideas_folder",
+          "name": "Read All Ideas",
+          "agent": "stackz",
+          "action": "Connect to obsidian-vault-mcp, read all notes in Agency HQ/Ideas/"
+        },
+        {
+          "id": "check_timestamps",
+          "name": "Check Timestamps",
+          "agent": "stackz",
+          "action": "For each note: is Jaleel's last message newer than Stackz's last reply?"
+        },
+        {
+          "id": "stackz_reply",
+          "name": "Stackz Reply Where Needed",
+          "agent": "stackz",
+          "action": "Reply: answer questions, ask clarifications (max 2), acknowledge new ideas, propose approach"
+        },
+        {
+          "id": "parse_ideas",
+          "name": "Parse Ideas",
+          "agent": "stackz",
+          "action": "Mark each idea as: feature, bug, improvement, behavior, workflow, question"
+        }
+      ]
+    },
+    {
+      "id": "phase0b_smoke_review",
+      "name": "Phase 0-B: Smoke Reviews Conversation",
+      "agent": "smoke",
+      "description": "Read Stackz's replies, add concerns/feedback",
+      "substeps": [
+        {
+          "id": "smoke_read_replies",
+          "name": "Read Stackz Replies",
+          "agent": "smoke",
+          "action": "Review what Stackz just responded"
+        },
+        {
+          "id": "smoke_identify_concerns",
+          "name": "Identify Concerns",
+          "agent": "smoke",
+          "action": "Flag risks, scope issues, side effects, complexity"
+        },
+        {
+          "id": "smoke_reply",
+          "name": "Smoke Reply Where Needed",
+          "agent": "smoke",
+          "action": "Reply only when she has meaningful input"
+        }
+      ]
+    },
+    {
+      "id": "phase0c_update",
+      "name": "Phase 0-C: Update Status & Summary",
+      "agent": "stackz",
+      "description": "Update note frontmatter, write conversation summary",
+      "substeps": [
+        {
+          "id": "update_frontmatter",
+          "name": "Update Frontmatter",
+          "agent": "stackz",
+          "action": "Set status: open/needs_clarification/in_progress/acted/deferred"
+        },
+        {
+          "id": "write_conv_summary",
+          "name": "Write Conversation Summary",
+          "agent": "stackz",
+          "action": "Add to morning brief: each note's status and summary"
+        }
+      ]
+    },
+    {
+      "id": "phase1_load_context",
+      "name": "Phase 1: Load Context",
+      "agent": "both",
+      "description": "Load all context before planning",
+      "substeps": [
+        {
+          "id": "read_project_overview",
+          "name": "Read PROJECT_OVERVIEW.md",
+          "agent": "stackz",
+          "action": "Read /Users/jaleeljenkins/Desktop/Stackz/agency-hq/PROJECT_OVERVIEW.md"
+        },
+        {
+          "id": "read_codebase_structure",
+          "name": "Read Codebase Structure",
+          "agent": "stackz",
+          "action": "find . -type f -name '*.js' -o -name '*.jsx' -o -name '*.ts' -o -name '*.tsx' -o -name '*.json' | grep -v node_modules | grep -v .git"
+        },
+        {
+          "id": "read_package_json",
+          "name": "Read package.json files",
+          "agent": "stackz",
+          "action": "Read frontend/package.json and backend/package.json"
+        },
+        {
+          "id": "read_git_commits",
+          "name": "Read Last 7 Days Commits",
+          "agent": "stackz",
+          "action": "git log --oneline --since='7 days ago'"
+        },
+        {
+          "id": "find_todos",
+          "name": "Find TODO/FIXME Comments",
+          "agent": "stackz",
+          "action": "grep -r 'TODO|FIXME|HACK|XXX' --include='*.js' --include='*.jsx' --include='*.ts' --include='*.tsx' --exclude-dir=node_modules"
+        },
+        {
+          "id": "read_ideas_folder",
+          "name": "Read Ideas Folder",
+          "agent": "stackz",
+          "action": "Connect to obsidian-vault-mcp and read all notes in Agency HQ/Ideas/. Parse each for: feature|bug|improvement|behavior|workflow|question"
+        },
+        {
+          "id": "read_previous_logs",
+          "name": "Read Previous Build Logs",
+          "agent": "stackz",
+          "action": "Read Agency HQ/Self-Build/logs/build-<last-7-days>.md for failures and deferrals"
+        },
+        {
+          "id": "load_semantic_snapshot",
+          "name": "Load Semantic Snapshot",
+          "agent": "stackz",
+          "action": "Read Agency HQ/State/semantic-snapshot.json"
+        },
+        {
+          "id": "write_build_brief",
+          "name": "Write BUILD_BRIEF",
+          "agent": "stackz",
+          "action": "Write session brief: project state, 7-day builds, pending ideas, failures, tech stack"
+        }
+      ]
+    },
+    {
+      "id": "phase1_plan",
+      "name": "Phase 1: Stackz Plans",
+      "agent": "stackz",
+      "description": "Create work plan for tonight's session",
+      "substeps": [
+        {
+          "id": "prioritize_ideas",
+          "name": "Prioritize Ideas",
+          "agent": "stackz",
+          "action": "Prioritize: 1) Jaleel's ideas from folder, 2) TODO comments, 3) Stackz's judgment"
+        },
+        {
+          "id": "scope_tasks",
+          "name": "Scope Tasks",
+          "agent": "stackz",
+          "action": "Max 3 tasks, must complete tonight. Downscope HIGH complexity or 10+ file changes."
+        },
+        {
+          "id": "write_work_plan",
+          "name": "Write Work Plan",
+          "agent": "stackz",
+          "action": "Write to Agency HQ/Self-Build/plans/plan-<YYYY-MM-DD>.md with TASK format"
+        }
+      ]
+    },
+    {
+      "id": "phase2_build",
+      "name": "Phase 2: Stackz Builds",
+      "agent": "stackz",
+      "description": "Execute planned tasks",
+      "substeps": [
+        {
+          "id": "match_code_style",
+          "name": "Match Code Style",
+          "agent": "stackz",
+          "action": "Read 3-5 existing files to match style exactly"
+        },
+        {
+          "id": "implement_task_1",
+          "name": "Implement Task 1",
+          "agent": "stackz",
+          "action": "Build first task. Add comment block. Never remove existing functionality."
+        },
+        {
+          "id": "implement_task_2",
+          "name": "Implement Task 2",
+          "agent": "stackz",
+          "action": "Build second task if planned"
+        },
+        {
+          "id": "implement_task_3",
+          "name": "Implement Task 3",
+          "agent": "stackz",
+          "action": "Build third task if planned"
+        },
+        {
+          "id": "stage_changes",
+          "name": "Stage Changes",
+          "agent": "stackz",
+          "action": "git add <specific files> for each task. Write detailed commit messages."
+        },
+        {
+          "id": "write_build_report",
+          "name": "Write BUILD_REPORT",
+          "agent": "stackz",
+          "action": "Write to Agency HQ/Self-Build/logs/build-<YYYY-MM-DD>.md with task details"
+        }
+      ]
+    },
+    {
+      "id": "phase3_review",
+      "name": "Phase 3: Smoke Reviews",
+      "agent": "smoke",
+      "description": "Full code review of staged changes",
+      "substeps": [
+        {
+          "id": "run_git_diff",
+          "name": "Run git diff --staged",
+          "agent": "smoke",
+          "action": "Read every line of every staged change"
+        },
+        {
+          "id": "check_correctness",
+          "name": "Check Correctness",
+          "agent": "smoke",
+          "action": "Verify logic matches task, handles null/empty, async properly awaited"
+        },
+        {
+          "id": "check_quality",
+          "name": "Check Code Quality",
+          "agent": "smoke",
+          "action": "Style match, clear names, no duplication, no stray console.log"
+        },
+        {
+          "id": "check_safety",
+          "name": "Check Safety",
+          "agent": "smoke",
+          "action": "SQL injection, input validation, credentials exposed, auth bypass"
+        },
+        {
+          "id": "check_integration",
+          "name": "Check Integration",
+          "agent": "smoke",
+          "action": "No existing breakage, correct imports, migrations created"
+        },
+        {
+          "id": "check_obsidian_sync",
+          "name": "Check Obsidian Sync",
+          "agent": "smoke",
+          "action": "Agent behavior changes → verify soul files updated"
+        },
+        {
+          "id": "write_review_report",
+          "name": "Write REVIEW_REPORT",
+          "agent": "smoke",
+          "action": "Write to Agency HQ/Self-Build/reviews/review-<YYYY-MM-DD>.md with verdict"
+        }
+      ]
+    },
+    {
+      "id": "phase4_commit",
+      "name": "Phase 4: Commit or Hold",
+      "agent": "both",
+      "description": "Commit approved changes or hold blocked",
+      "substeps": [
+        {
+          "id": "check_verdicts",
+          "name": "Check All Verdicts",
+          "agent": "smoke",
+          "action": "If all APPROVED/APPROVED_WITH_NOTES → commit. If any BLOCKED → stash and alert."
+        },
+        {
+          "id": "commit_and_push",
+          "name": "Commit and Push",
+          "agent": "smoke",
+          "action": "git commit -m '<message>' && git push origin main. Update change-log.md"
+        },
+        {
+          "id": "stash_and_alert",
+          "name": "Stash and Alert",
+          "agent": "smoke",
+          "action": "git stash. Write morning alert to Agency HQ/Self-Build/alerts/alert-<YYYY-MM-DD>.md"
+        }
+      ]
+    },
+    {
+      "id": "phase5_briefing",
+      "name": "Phase 5: Morning Briefing",
+      "agent": "stackz",
+      "description": "Write morning brief for Jaleel",
+      "substeps": [
+        {
+          "id": "write_morning_brief",
+          "name": "Write Morning Brief",
+          "agent": "stackz",
+          "action": "Write to Agency HQ/Self-Build/morning-brief-<YYYY-MM-DD>.md with: what built, ideas status, smoke flags, needs eyes, tomorrow plan"
+        }
+      ]
+    },
+    {
+      "id": "phase6_meta",
+      "name": "Phase 6: Iterative Improvement (Weekly)",
+      "agent": "both",
+      "description": "Weekly meta-review every 7th session",
+      "condition": "session_number % 7 == 0",
+      "substeps": [
+        {
+          "id": "review_7_logs",
+          "name": "Review Last 7 Logs",
+          "agent": "both",
+          "action": "Analyze patterns: blocked tasks, hot spots, review issues"
+        },
+        {
+          "id": "flag_stale_ideas",
+          "name": "Flag Stale Ideas",
+          "agent": "stackz",
+          "action": "Identify ideas untouched for 7+ days"
+        },
+        {
+          "id": "propose_workflow_updates",
+          "name": "Propose Workflow Updates",
+          "agent": "stackz",
+          "action": "Propose changes to SELF_BUILD.md → send to Approval Inbox"
+        },
+        {
+          "id": "write_meta_review",
+          "name": "Write Meta Review",
+          "agent": "both",
+          "action": "Write to Agency HQ/Self-Build/meta/meta-review-week-<N>.md"
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "tasks_planned": "number of tasks in work plan",
+    "tasks_completed": "number of tasks successfully built",
+    "tasks_failed": "number of tasks that failed",
+    "tasks_deferred": "number of tasks deferred",
+    "verdict": "APPROVED | PARTIAL | BLOCKED",
+    "commit_hash": "git commit hash if pushed",
+    "morning_brief": "path to morning brief file"
+  },
+  "limits": {
+    "max_tasks_per_night": 3,
+    "max_file_changes_per_task": 10,
+    "session_isolation": true
+  },
+  "approval_requirements": {
+    "auth_changes": "require_approval_inbox",
+    "payments_changes": "require_approval_inbox",
+    "production_deployment": "require_approval_inbox"
+  },
+  "error_handling": {
+    "git_failure": "write to Agency HQ/Ops/errors.md, stash all, stop",
+    "obsidian_unreachable": "skip ideas phase, continue with code context, note gap",
+    "task_cannot_complete": "mark DEFERRED, document why, move to next task",
+    "critical_security": "stop commits, write URGENT alert, notify all channels"
+  },
+  "tags": ["self-build", "autonomous", "nightly", "stackz-builder", "smoke-reviewer"],
+  "requires_approval": false,
+  "always_runs": true
+}
