@@ -5,6 +5,18 @@ const path = require('path')
 // Load Stripe config
 const STRIPE_CONFIG_PATH = path.join(__dirname, '..', 'config', 'stripe.json')
 
+// MCP mode flag - when true, uses Stripe MCP for API calls instead of direct Stripe SDK
+let mcpModeEnabled = false
+
+function setMcpMode(enabled) {
+  mcpModeEnabled = enabled
+  console.log(`[WalletService] MCP mode ${enabled ? 'enabled' : 'disabled'}`)
+}
+
+function getMcpMode() {
+  return mcpModeEnabled
+}
+
 function getStripeConfig() {
   try {
     if (fs.existsSync(STRIPE_CONFIG_PATH)) {
@@ -15,6 +27,36 @@ function getStripeConfig() {
   }
   return {}
 }
+
+/**
+ * Stripe MCP Integration
+ *
+ * When MCP mode is enabled, financial operations should use the intent-before-action pattern:
+ * 1. Agent proposes action (e.g., "Create invoice for $X")
+ * 2. Cashflow reviews and questions intent
+ * 3. User approves in Approval Inbox
+ * 4. Only then does the actual Stripe MCP call execute
+ *
+ * MCP Tools available:
+ * - stripe_list_customers: List all customers
+ * - stripe_create_customer: Create new customer
+ * - stripe_get_customer: Get customer details
+ * - stripe_list_invoices: List invoices
+ * - stripe_create_invoice: Create invoice
+ * - stripe_finalize_invoice: Finalize/send invoice
+ * - stripe_list_subscriptions: List subscriptions
+ * - stripe_create_subscription: Create subscription
+ * - stripe_cancel_subscription: Cancel subscription
+ * - stripe_list_payments: List payments
+ * - stripe_get_balance: Get account balance
+ * - stripe_list_payouts: List payouts
+ * - stripe_create_payout: Create payout
+ * - stripe_list_cards: List issued cards
+ * - stripe_create_card: Create virtual card
+ * - stripe_authorize_card: Authorize card
+ * - stripe_capture_card: Capture authorization
+ * - stripe_list_transactions: List transactions
+ */
 
 // Constants
 const MAX_LIMIT_INCREASE_PER_DAY = 0.20 // 20%
@@ -414,5 +456,7 @@ module.exports = {
   getRunway,
   getTransactions,
   getRevenue,
-  CRITICAL_BALANCE_THRESHOLD
+  CRITICAL_BALANCE_THRESHOLD,
+  setMcpMode,
+  getMcpMode
 }

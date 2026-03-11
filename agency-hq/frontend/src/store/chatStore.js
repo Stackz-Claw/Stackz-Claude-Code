@@ -1,31 +1,39 @@
 import { create } from 'zustand'
-import chatData from '@mock/chat-messages.json'
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api'
 
 export const useChatStore = create((set) => ({
-  messages: chatData.messages,
-  isAutoPlay: true,
+  messages: [],
+  isLoading: false,
+  error: null,
 
-  addMessage: (message) =>
-    set((state) => ({
-      messages: [...state.messages, message],
-    })),
+  // Fetch chat messages from live API
+  fetchMessages: async () => {
+    set({ isLoading: true, error: null })
+    try {
+      const response = await fetch(`${API_BASE}/chat`)
+      if (!response.ok) throw new Error('Failed to fetch messages')
+      const data = await response.json()
 
-  addBossMessage: (text) =>
+      set({
+        messages: data.messages || [],
+        isLoading: false
+      })
+    } catch (error) {
+      console.error('[ChatStore] Error:', error)
+      set({ error: error.message, isLoading: false })
+    }
+  },
+
+  addMessage: (msg) =>
     set((state) => ({
       messages: [
-        ...state.messages,
         {
-          id: `msg_boss_${Date.now()}`,
-          agentId: 'boss',
-          text,
+          id: `msg_${Date.now()}`,
           timestamp: new Date().toISOString(),
-          type: 'boss',
+          ...msg,
         },
+        ...state.messages,
       ],
     })),
-
-  toggleAutoPlay: () =>
-    set((state) => ({ isAutoPlay: !state.isAutoPlay })),
-
-  clearMessages: () => set({ messages: [] }),
 }))

@@ -1,10 +1,32 @@
 import { create } from 'zustand'
-import notesData from '@mock/notes.json'
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api'
 
 export const useNotesStore = create((set, get) => ({
-  nodes: notesData.nodes,
-  edges: notesData.edges,
+  nodes: [],
+  edges: [],
   filter: { agentId: 'all', category: 'all' },
+  isLoading: false,
+  error: null,
+
+  // Fetch notes from live API
+  fetchNotes: async () => {
+    set({ isLoading: true, error: null })
+    try {
+      const response = await fetch(`${API_BASE}/notes`)
+      if (!response.ok) throw new Error('Failed to fetch notes')
+      const data = await response.json()
+
+      set({
+        nodes: data.nodes || [],
+        edges: data.edges || [],
+        isLoading: false
+      })
+    } catch (error) {
+      console.error('[NotesStore] Error:', error)
+      set({ error: error.message, isLoading: false })
+    }
+  },
 
   setNodes: (nodes) => set({ nodes }),
   setEdges: (edges) => set({ edges }),

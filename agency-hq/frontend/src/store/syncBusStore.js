@@ -1,11 +1,33 @@
 import { create } from 'zustand'
-import syncBusData from '@mock/sync-bus.json'
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api'
 
 export const useSyncBusStore = create((set, get) => ({
-  messages: syncBusData.messages,
-  overrides: syncBusData.overrides,
+  messages: [],
+  overrides: [],
   isActive: false,
   lastPulse: null,
+  isLoading: false,
+  error: null,
+
+  // Fetch sync bus data from live API
+  fetchSyncBus: async () => {
+    set({ isLoading: true, error: null })
+    try {
+      const response = await fetch(`${API_BASE}/sync-bus`)
+      if (!response.ok) throw new Error('Failed to fetch sync bus')
+      const data = await response.json()
+
+      set({
+        messages: data.messages || [],
+        overrides: data.overrides || [],
+        isLoading: false
+      })
+    } catch (error) {
+      console.error('[SyncBusStore] Error:', error)
+      set({ error: error.message, isLoading: false })
+    }
+  },
 
   addMessage: (msg) =>
     set((state) => ({

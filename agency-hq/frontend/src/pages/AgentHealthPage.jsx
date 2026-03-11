@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PageHeader from '../components/layout/PageHeader'
 import GlassPanel from '../components/layout/GlassPanel'
 import AgentAvatar from '../components/AgentAvatar'
 import StatusChip from '../components/shared/StatusChip'
+import { useAgentStore } from '../store/agentStore'
 import { AGENT_PERSONALITIES } from '../data/personalities'
-import healthData from '@mock/agent-health.json'
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api'
 
 function formatTime(ms) {
   const m = Math.floor(ms / 60000)
