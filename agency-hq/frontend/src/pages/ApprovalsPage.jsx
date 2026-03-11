@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useEffect } from 'react'
 import PageHeader from '../components/layout/PageHeader'
 import { useApprovalStore } from '../store/approvalStore'
 import ApprovalBoard from '../components/approvals/ApprovalBoard'
@@ -6,6 +8,20 @@ import IdeaSubmit from '../components/approvals/IdeaSubmit'
 export default function ApprovalsPage() {
   const smokeCount = useApprovalStore((s) => s.smokeApprovals.length)
   const stackzCount = useApprovalStore((s) => s.stackzApprovals.length)
+  const loading = useApprovalStore((s) => s.loading)
+  const fetchApprovals = useApprovalStore((s) => s.fetchApprovals)
+
+  // Load real data from Obsidian vault on mount
+  useEffect(() => {
+    fetchApprovals()
+  }, [fetchApprovals])
+  const loading = useApprovalStore((s) => s.loading)
+  const fetchApprovals = useApprovalStore((s) => s.fetchApprovals)
+
+  // Fetch real data from Obsidian vault on mount
+  useEffect(() => {
+    fetchApprovals()
+  }, [fetchApprovals])
 
   return (
     <div className="h-full overflow-y-auto p-6 space-y-5">

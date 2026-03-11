@@ -1,14 +1,36 @@
 import { create } from 'zustand'
-import approvalsData from '@mock/approvals.json'
+
+const API_BASE = 'http://localhost:4001/api/approvals'
 
 export const useApprovalStore = create((set, get) => ({
-  // Dual stream
-  smokeApprovals: approvalsData.smokeApprovals.filter((a) => a.status === 'pending'),
-  stackzApprovals: approvalsData.stackzApprovals.filter((a) => a.status === 'pending'),
-  history: [
-    ...approvalsData.smokeApprovals.filter((a) => a.status !== 'pending'),
-    ...approvalsData.stackzApprovals.filter((a) => a.status !== 'pending'),
-  ],
+  smokeApprovals: [],
+  stackzApprovals: [],
+  history: [],
+  loading: true,
+
+  // Fetch from backend API (which reads from Obsidian vault)
+  fetchApprovals: async () => {
+    set({ loading: true })
+    try {
+      const response = await fetch(API_BASE)
+      const data = await response.json()
+
+      // Transform vault data to approval format
+      const approvals = (data.pending || []).map(item => ({
+        ...item,
+        stream: 'stackz',
+      }))
+
+      set({
+        stackzApprovals: approvals,
+        history: data.history || [],
+        loading: false,
+      })
+    } catch (error) {
+      console.error('Error fetching approvals:', error)
+      set({ loading: false })
+    }
+  },
 
   get smokePendingCount() { return get().smokeApprovals.length },
   get stackzPendingCount() { return get().stackzApprovals.length },
@@ -19,10 +41,7 @@ export const useApprovalStore = create((set, get) => ({
     if (!item) return
     set((state) => ({
       smokeApprovals: state.smokeApprovals.filter((a) => a.id !== id),
-      history: [
-        { ...item, status: 'approved', note, resolvedAt: new Date().toISOString() },
-        ...state.history,
-      ],
+      history: [{ ...item, status: 'approved', note, resolvedAt: new Date().toISOString() }, ...state.history],
     }))
   },
 
@@ -31,22 +50,7 @@ export const useApprovalStore = create((set, get) => ({
     if (!item) return
     set((state) => ({
       smokeApprovals: state.smokeApprovals.filter((a) => a.id !== id),
-      history: [
-        { ...item, status: 'rejected', note, resolvedAt: new Date().toISOString() },
-        ...state.history,
-      ],
-    }))
-  },
-
-  rescheduleSmoke: (id, note = '') => {
-    const item = get().smokeApprovals.find((a) => a.id === id)
-    if (!item) return
-    set((state) => ({
-      smokeApprovals: state.smokeApprovals.filter((a) => a.id !== id),
-      history: [
-        { ...item, status: 'reschedule', note, resolvedAt: new Date().toISOString() },
-        ...state.history,
-      ],
+      history: [{ ...item, status: 'rejected', note, resolvedAt: new Date().toISOString() }, ...state.history],
     }))
   },
 
@@ -55,10 +59,7 @@ export const useApprovalStore = create((set, get) => ({
     if (!item) return
     set((state) => ({
       stackzApprovals: state.stackzApprovals.filter((a) => a.id !== id),
-      history: [
-        { ...item, status: 'approved', note, resolvedAt: new Date().toISOString() },
-        ...state.history,
-      ],
+      history: [{ ...item, status: 'approved', note, resolvedAt: new Date().toISOString() }, ...state.history],
     }))
   },
 
@@ -67,10 +68,7 @@ export const useApprovalStore = create((set, get) => ({
     if (!item) return
     set((state) => ({
       stackzApprovals: state.stackzApprovals.filter((a) => a.id !== id),
-      history: [
-        { ...item, status: 'rejected', note, resolvedAt: new Date().toISOString() },
-        ...state.history,
-      ],
+      history: [{ ...item, status: 'rejected', note, resolvedAt: new Date().toISOString() }, ...state.history],
     }))
   },
 
@@ -84,7 +82,6 @@ export const useApprovalStore = create((set, get) => ({
       stackzApprovals: [{ ...request, stream: 'stackz', status: 'pending' }, ...state.stackzApprovals],
     })),
 
-  // Legacy: unified addApprovalRequest routes by stream field
   addApprovalRequest: (request) => {
     if (request.stream === 'smoke') {
       get().addSmokeApproval(request)
