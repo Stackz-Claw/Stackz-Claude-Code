@@ -26,6 +26,7 @@ app.use('/api/financial', require('./routes/financial'))
 app.use('/api/health', require('./routes/health'))
 app.use('/api/notes', require('./routes/notes'))
 app.use('/api/chat', require('./routes/chat'))
+app.use('/api/zettelkasten', require('./routes/zettelkasten'))
 
 // Health check
 app.get('/api/ping', (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }))

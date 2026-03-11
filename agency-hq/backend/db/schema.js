@@ -58,5 +58,59 @@ module.exports = function initSchema(db) {
       target TEXT NOT NULL,
       label TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS wallet_transactions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      stripe_transaction_id TEXT UNIQUE,
+      type TEXT,
+      agent_id TEXT,
+      team TEXT,
+      amount INTEGER,
+      currency TEXT DEFAULT 'usd',
+      vendor TEXT,
+      category TEXT,
+      description TEXT,
+      status TEXT,
+      venture_id TEXT,
+      authorized_at TEXT DEFAULT (datetime('now')),
+      settled_at TEXT,
+      flagged INTEGER DEFAULT 0,
+      flag_reason TEXT,
+      stripe_payload TEXT,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS wallet_balances (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      snapshot_at TEXT DEFAULT (datetime('now')),
+      available INTEGER,
+      pending INTEGER,
+      restricted INTEGER,
+      recorded_by TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS agent_spend_limits (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      agent_id TEXT UNIQUE,
+      card_id TEXT,
+      cardholder_id TEXT,
+      daily_limit INTEGER,
+      monthly_limit INTEGER,
+      per_tx_limit INTEGER,
+      allowed_categories TEXT,
+      last_updated TEXT DEFAULT (datetime('now')),
+      updated_by TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS revenue_records (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      stripe_payment_intent_id TEXT UNIQUE,
+      source TEXT,
+      source_type TEXT,
+      amount INTEGER,
+      venture_id TEXT,
+      received_at TEXT DEFAULT (datetime('now')),
+      notes TEXT
+    );
   `)
 }
