@@ -112,5 +112,41 @@ module.exports = function initSchema(db) {
       received_at TEXT DEFAULT (datetime('now')),
       notes TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS workflow_status (
+      workflow_id TEXT PRIMARY KEY,
+      status TEXT NOT NULL DEFAULT 'idle',
+      current_phase INTEGER,
+      last_run TEXT,
+      last_result TEXT,
+      last_error TEXT,
+      next_run TEXT,
+      block_reason TEXT,
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS workflow_run_history (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      workflow_id TEXT NOT NULL,
+      run_date TEXT NOT NULL,
+      result TEXT,
+      duration_minutes INTEGER,
+      phases_completed INTEGER,
+      notes TEXT,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS workflow_improvements (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      workflow_id TEXT NOT NULL,
+      submitted_by TEXT DEFAULT 'jaleel',
+      text TEXT NOT NULL,
+      priority TEXT DEFAULT 'medium',
+      execution TEXT DEFAULT 'next_run',
+      status TEXT DEFAULT 'open',
+      obsidian_path TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      actioned_at TEXT
+    );
   `)
 }

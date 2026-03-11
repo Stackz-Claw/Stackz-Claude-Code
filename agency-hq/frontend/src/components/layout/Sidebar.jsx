@@ -19,6 +19,7 @@ const NAV_ITEMS = [
   { id: 'health', label: 'Health & Life', icon: '🧬', shortcut: '8' },
   { id: 'notes', label: 'Smart Notes', icon: '🔗', shortcut: '9' },
   { id: 'timeline', label: 'Timeline', icon: '🕐', shortcut: '0' },
+  { id: 'workflows', label: 'Workflows', icon: '⚙️', shortcut: '-' },
 ]
 
 const DOMAIN_LEADS = [

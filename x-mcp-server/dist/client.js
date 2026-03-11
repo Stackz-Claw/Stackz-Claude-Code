@@ -123,7 +123,9 @@ class TwitterClient {
     }
     async followUser(targetUsername, accountId) {
         const client = this.getClient(accountId);
-        // First get user ID
+        // Get current user ID first
+        const me = await client.v2.me();
+        // Then get target user ID
         const user = await client.v2.userByUsername(targetUsername);
         // Then follow
         const result = await client.v2.follow(me.data.id, user.data.id);

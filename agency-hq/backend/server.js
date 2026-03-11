@@ -32,6 +32,7 @@ app.use('/api/notes', require('./routes/notes'))
 app.use('/api/chat', require('./routes/chat'))
 app.use('/api/zettelkasten', require('./routes/zettelkasten'))
 app.use('/api/timeline', require('./routes/timeline'))
+app.use('/api/workflows', require('./routes/workflows'))
 app.use('/api/browser', require('./routes/browser'))
 
 // Health check

@@ -18,8 +18,8 @@ export class TwitterClient {
     // Load account 1
     if (process.env.X_ACCOUNT_1_ACCESS_TOKEN) {
       this.addAccount(1, {
-        bearerToken: process.env.X_BEARER_TOKEN || '',
         accessToken: process.env.X_ACCOUNT_1_ACCESS_TOKEN || '',
+        accessSecret: process.env.X_ACCOUNT_1_ACCESS_SECRET || '',
         apiKey: process.env.X_ACCOUNT_1_API_KEY || '',
         apiSecret: process.env.X_ACCOUNT_1_API_SECRET || ''
       });
@@ -28,8 +28,8 @@ export class TwitterClient {
     // Load account 2
     if (process.env.X_ACCOUNT_2_ACCESS_TOKEN) {
       this.addAccount(2, {
-        bearerToken: process.env.X_BEARER_TOKEN || '',
         accessToken: process.env.X_ACCOUNT_2_ACCESS_TOKEN || '',
+        accessSecret: process.env.X_ACCOUNT_2_ACCESS_SECRET || '',
         apiKey: process.env.X_ACCOUNT_2_API_KEY || '',
         apiSecret: process.env.X_ACCOUNT_2_API_SECRET || ''
       });
@@ -38,8 +38,8 @@ export class TwitterClient {
     // Load account 3
     if (process.env.X_ACCOUNT_3_ACCESS_TOKEN) {
       this.addAccount(3, {
-        bearerToken: process.env.X_BEARER_TOKEN || '',
         accessToken: process.env.X_ACCOUNT_3_ACCESS_TOKEN || '',
+        accessSecret: process.env.X_ACCOUNT_3_ACCESS_SECRET || '',
         apiKey: process.env.X_ACCOUNT_3_API_KEY || '',
         apiSecret: process.env.X_ACCOUNT_3_API_SECRET || ''
       });
@@ -53,11 +53,12 @@ export class TwitterClient {
 
   private addAccount(index: number, credentials: TwitterCredentials): void {
     try {
+      // Use OAuth 1.0a user context - the correct parameter names for twitter-api-v2
       const client = new TwitterApi({
-        bearerToken: credentials.bearerToken,
+        appKey: credentials.apiKey,
+        appSecret: credentials.apiSecret,
         accessToken: credentials.accessToken,
-        apiKey: credentials.apiKey,
-        apiSecret: credentials.apiSecret
+        accessSecret: credentials.accessSecret
       });
 
       this.accounts.set(index, client);
@@ -149,7 +150,10 @@ export class TwitterClient {
   async followUser(targetUsername: string, accountId?: number): Promise<any> {
     const client = this.getClient(accountId);
 
-    // First get user ID
+    // Get current user ID first
+    const me = await client.v2.me();
+
+    // Then get target user ID
     const user = await client.v2.userByUsername(targetUsername);
 
     // Then follow

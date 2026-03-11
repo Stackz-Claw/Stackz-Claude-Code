@@ -8,11 +8,23 @@
 
 Stackz runs a self-optimization cycle each morning to review its own performance, identify inefficiencies, and propose improvements for approval.
 
+**MCP Servers:**
+- brave-search (for researching best practices, new tools, industry standards)
+- x-mcp-server (for community feedback, engagement metrics, **bookmark mining**, brand sentiment)
+
+**Related Skills (Separate from Business Brainstorm):**
+- **Self-Optimization Brainstorm Skill** — For identifying internal improvements, skill gaps, and process optimizations
+- **Iterative Improvement Workflow** — For implementing and testing improvements incrementally
+
+**Uses separate workflows:**
+1. **Self-Optimization Brainstorming Skill** - For generating optimization ideas
+2. **Iterative Improvement Workflow** - For implementing and testing fixes
+
 ---
 
 ## 🎯 Workflow Goal
 
-**Generate optimization proposals** by analyzing Stackz's current state, skills, and processes, then draft improvement proposals for both Obsidian AND the Approval UI — with bidirectional sync.
+**Generate optimization proposals** using the Self-Optimization Brainstorming Skill to analyze Stackz's current state, skills, and processes, then draft improvement proposals via the Iterative Improvement Workflow for both Obsidian AND the Approval UI — with bidirectional sync.
 
 ---
 

@@ -3,8 +3,9 @@
  */
 
 export interface TwitterCredentials {
-  bearerToken: string;
+  bearerToken?: string;
   accessToken: string;
+  accessSecret: string;
   apiKey: string;
   apiSecret: string;
 }

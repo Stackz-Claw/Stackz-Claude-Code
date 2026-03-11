@@ -2,13 +2,19 @@
 
 ## Overview
 
-This workflow combines **Brainstorming** and **Idea Generation** into a unified process that runs until **3 new ideas** are created. It is designed to run **every morning**.
+This workflow generates **profitable business ideas** for the agency. It runs every morning until **3 new revenue-generating ideas** are created, then routes them through the startup pipeline.
+
+**Output Pipeline:** Ideas → Idea Refinement → Launch Planning → Task Decomposition → Startup Sub-Agent Team
+
+**MCP Servers:**
+- brave-search (for market research, competitor analysis, trending topics)
+- x-mcp-server (for social listening, trend detection, market sentiment, **bookmark mining**)
 
 ---
 
 ## 🎯 Workflow Goal
 
-**Generate 3 new actionable ideas** through structured brainstorming and idea development.
+**Generate 3 new profitable business ideas** that could generate revenue for the agency.
 
 ---
 
@@ -18,7 +24,8 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 |---------|-------|
 | **Frequency** | Daily (Morning) |
 | **Run Time** | 8:00 AM - until completion |
-| **Target** | 3 new ideas generated |
+| **Target** | 3 profitable business ideas |
+| **Output** | Startup Pipeline (Refinement → Launch → Tasks → Execution) |
 | **Status** | Ready to schedule |
 
 ---
@@ -27,24 +34,26 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                          MORNING IDEA GENERATION                            │
-│                           ┌───────────────────┐                             │
-│                           │  ☀️ WAKE UP &     │                             │
-│                           │  CONTEXT SETUP    │                             │
-│                           └─────────┬─────────┘                             │
+│                     PROFITABLE IDEA GENERATION                             │
+│                        (Startup Pipeline)                                  │
+│                           ┌───────────────────┐                            │
+│                           │  ☀️ MORNING       │                            │
+│                           │  TRIGGER          │                            │
+│                           └─────────┬─────────┘                            │
 │                                     │                                        │
 │                                     ▼                                        │
-│                           ┌───────────────────┐                             │
-│                           │  📊 CURRENT       │                             │
-│                           │  IDEAS COUNT: 0   │                             │
-│                           └─────────┬─────────┘                             │
+│                           ┌───────────────────┐                            │
+│                           │  💰 REVENUE      │                            │
+│                           │  FOCUS CHECK     │                            │
+│                           └─────────┬─────────┘                            │
 │                                     │                                        │
 │                                     ▼                                        │
-│                          ╔═════════════════════╗                             │
-│                          ║   🔄 LOOP START     ║                             │
-│                          ║                     ║                             │
-│                          ║  Target: 3 ideas    ║                             │
-│                          ╚═════════╤═══════════╝                             │
+│                          ╔═════════════════════╗                            │
+│                          ║   🔄 LOOP START     ║                            │
+│                          ║                     ║                            │
+│                          ║  Target: 3 ideas    ║                            │
+│                          ║  (must be profitable)║                           │
+│                          ╚═════════╤═══════════╝                            │
 │                                    │                                          │
 │          ┌────────────────────────┼────────────────────────┐              │
 │          │                        │                        │              │
@@ -52,7 +61,7 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 │   ┌──────────────┐        ┌──────────────┐        ┌──────────────┐       │
 │   │   STAGE 1    │        │   STAGE 2    │        │   STAGE 3    │       │
 │   │  BRAINSTORM  │───────▶│   FILTER     │───────▶│   DEVELOP    │       │
-│   │              │        │              │        │              │       │
+│   │  (Revenue)   │        │  (Profitable)│        │  (Business)  │       │
 │   └──────────────┘        └──────────────┘        └──────────────┘       │
 │          │                        │                        │              │
 │          │                        │                        │              │
@@ -60,23 +69,36 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 │                                   │                                          │
 │                                   ▼                                          │
 │                          ┌───────────────────┐                              │
-│                          │   💾 SAVE IDEA    │                              │
-│                          │   TO NOTEPAD      │                              │
+│                          │   💾 SAVE TO     │                              │
+│                          │   STARTUP PIPELINE│                             │
 │                          └─────────┬─────────┘                              │
 │                                    │                                         │
 │                                    ▼                                         │
 │                          ┌───────────────────┐                              │
-│                          │   📈 IDEAS        │                              │
-│                          │   COUNT: +1       │                              │
+│                          │   📈 IDEAS       │                              │
+│                          │   COUNT: +1      │                              │
 │                          └─────────┬─────────┘                              │
 │                                    │                                         │
 │                                    ▼                                         │
 │                          ╔═════════════════════╗                            │
-│                          ║   ❓ 3 IDEAS?      ║                            │
+│                          ║   ❓ 3 PROFITABLE   ║                            │
+│                          ║       IDEAS?       ║                            │
 │                          ║                     ║                            │
-│                          ║  YES → ✅ COMPLETE ║                            │
+│                          ║  YES → 📤 PIPELINE ║                            │
 │                          ║  NO  → 🔄 LOOP     ║                            │
 │                          ╚═════════════════════╝                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+AFTER COMPLETION:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         STARTUP PIPELINE                                    │
+│                                                                             │
+│   ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌────────┐ │
+│   │ IDEA         │───▶│ LAUNCH       │───▶│ TASK         │───▶│ STARTUP│ │
+│   │ REFINEMENT   │    │ PLANNING     │    │ DECOMPOSITION│    │ SUB-   │ │
+│   │              │    │              │    │              │    │ AGENT  │ │
+│   └──────────────┘    └──────────────┘    └──────────────┘    │ TEAM   │ │
+│                                                                             └────────┘
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -84,39 +106,41 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 
 ## 📝 Step-by-Step Process
 
-### Stage 1: Brainstorm 🔥
+### Stage 1: Revenue-Focused Brainstorm 🔥
 
 | Step | Action | Description |
 |------|--------|-------------|
-| 1.1 | **Gather Context** | Review current projects, problems, and opportunities |
-| 1.2 | **Seed Questions** | Ask: "What if...", "How might we...", "What about..." |
-| 1.3 | **Rapid Fire** | Generate 10+ raw ideas in 5 minutes (no filtering) |
-| 1.4 | **Cluster** | Group similar ideas together |
+| 1.0 | **Sync X Bookmarks** | Call `x-mcp-server.get_bookmarks()` to pull saved tweets for research |
+| 1.1 | **Revenue Context** | Review: current revenue, market gaps, customer pain points, competitive opportunities |
+| 1.2 | **Bookmark Mining** | Analyze bookmarks for: product ideas, pain points, competitor mentions, revenue signals |
+| 1.3 | **Seed Questions** | Ask: "What would people pay for?", "What's missing in the market?", "What could we charge for?" |
+| 1.4 | **Rapid Fire** | Generate 10+ business ideas in 5 minutes (must have monetization path) |
+| 1.5 | **Cluster** | Group similar ideas by business model |
 
-### Stage 2: Filter 🔍
-
-| Step | Action | Description |
-|------|--------|-------------|
-| 2.1 | **Evaluate** | Score each idea on: Impact (1-5), Feasibility (1-5), Originality (1-5) |
-| 2.2 | **Select Top** | Keep only ideas with total score ≥ 10 |
-| 2.3 | **Validate** | Check if idea aligns with project goals |
-
-### Stage 3: Develop 📐
+### Stage 2: Profitability Filter 🔍
 
 | Step | Action | Description |
 |------|--------|-------------|
-| 3.1 | **Flesh Out** | Write 2-3 sentences describing the idea |
-| 3.2 | **Identify Benefits** | List 3 key benefits of implementing this idea |
-| 3.3 | **Note Risks** | Document 1-2 potential challenges |
-| 3.4 | **Next Steps** | Define immediate action (1 sentence) |
+| 2.1 | **Evaluate** | Score each idea on: Revenue Potential (1-5), Time to Market (1-5), Scalability (1-5) |
+| 2.2 | **Select Top** | Keep only ideas with total score ≥ 12 |
+| 2.3 | **Validate** | Must answer: "Who pays?", "How much?", "Why us?" |
 
-### Stage 4: Save & Track 💾
+### Stage 3: Business Development 📐
 
 | Step | Action | Description |
 |------|--------|-------------|
-| 4.1 | **Record** | Save idea to Vault Notepad with timestamp |
-| 4.2 | **Tag** | Add tags: `idea`, `brainstorm`, `morning-session` |
-| 4.3 | **Increment** | Update counter: ideas_generated += 1 |
+| 3.1 | **Business Case** | Write: target customer, pricing model, revenue projection |
+| 3.2 | **Unique Value** | What makes this different from competitors? |
+| 3.3 | **Go-to-Market** | How do we acquire first paying customer? |
+| 3.4 | **Next Step** | Ready for Idea Refinement |
+
+### Stage 4: Pipeline & Route 💾
+
+| Step | Action | Description |
+|------|--------|-------------|
+| 4.1 | **Save to Pipeline** | Add to: `Agency HQ/Ideas/startup-pipeline/` |
+| 4.2 | **Tag** | Add tags: `idea`, `profitable`, `startup-pipeline` |
+| 4.3 | **Route** | Trigger Idea Refinement workflow |
 | 4.4 | **Check** | If counter < 3, loop back to Stage 1 |
 
 ---
@@ -124,15 +148,13 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 ## 📋 Execution Checklist
 
 - [ ] Morning trigger activates workflow
-- [ ] Load previous session context (if any)
-- [ ] Begin brainstorming cycle
-- [ ] Filter and select ideas
-- [ ] Develop each idea fully
-- [ ] Save to Vault Notepad
-- [ ] Increment idea counter
-- [ ] Check if 3 ideas reached
-- [ ] If yes → mark complete, send notification
-- [ ] If no → continue loop
+- [ ] Revenue context loaded
+- [ ] Generate profitable business ideas only
+- [ ] Filter for monetization potential
+- [ ] Develop business case for each idea
+- [ ] Save to startup pipeline
+- [ ] Route to Idea Refinement
+- [ ] Continue until 3 profitable ideas
 
 ---
 
@@ -140,10 +162,10 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 
 | Metric | Target | Actual |
 |--------|--------|--------|
-| Ideas Generated | 3 | — |
+| Profitable Ideas Generated | 3 | — |
 | Completion Time | < 30 min | — |
-| Ideas Saved to Vault | 3 | — |
-| Notification Sent | Yes | — |
+| Ideas Routed to Pipeline | 3 | — |
+| Ready for Launch Planning | 3 | — |
 
 ---
 
@@ -151,39 +173,34 @@ This workflow combines **Brainstorming** and **Idea Generation** into a unified 
 
 When the workflow completes:
 
-1. **Summary Report** — Display count of ideas generated
-2. **Quick Review** — Show titles of 3 new ideas
-3. **Export Option** — Option to export ideas to markdown
-4. **Schedule Next** — Auto-schedule next morning run
+1. **Summary Report** — Display count of profitable ideas generated
+2. **Pipeline Notification** — Send to Startup Sub-Agent Team
+3. **Auto-Queue** — Queue ideas for Idea Refinement workflow
 
 ---
 
 ## 📅 Scheduling Instructions
 
 ### Cron Expression
-
 ```
 0 8 * * *  # 8:00 AM daily
 ```
 
-### Alternative: Claude Code Loop
-
-```
-/loop 24h /brainstorm-ideas --target 3
-```
-
 ---
 
-## 🔗 Related Workflows
+## 🔗 Startup Pipeline
 
-| Workflow | Description |
-|----------|-------------|
-| [Idea Refinement](./idea-refinement.md) | Takes generated ideas and fleshes them out into full proposals |
-| [Launch Planning](./launch-planning.md) | Turns approved ideas into actionable launch plans |
-| [Task Decomposition](./task-decomposition.md) | Breaks down ideas into implementable tasks |
+| Stage | Workflow | Description |
+|-------|----------|-------------|
+| 1 | **Brainstorm** | Generate 3 profitable business ideas |
+| 2 | [Idea Refinement](./idea-refinement.md) | Flesh out into full proposals |
+| 3 | [Launch Planning](./launch-planning.md) | Turn into actionable launch plans |
+| 4 | [Task Decomposition](./task-decomposition.md) | Break down into implementable tasks |
+| 5 | **Startup Sub-Agent Team** | Execute the business |
 
 ---
 
 *Created: 2026-03-11*
 *Last Updated: 2026-03-11*
 *Status: Ready to Schedule*
+*Focus: Profitable Business Ideas Only*

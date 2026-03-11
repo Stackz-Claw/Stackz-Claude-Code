@@ -14,6 +14,7 @@ import TokenEconomyPage from './pages/TokenEconomyPage'
 import RadarPage from './pages/RadarPage'
 import BriefingPage from './pages/BriefingPage'
 import TimelinePage from './pages/TimelinePage'
+import Workflows from './pages/Workflows'
 
 const PAGE_MAP = {
   briefing: BriefingPage,
@@ -26,6 +27,7 @@ const PAGE_MAP = {
   health: HealthDashboard,
   notes: SmartNotes,
   timeline: TimelinePage,
+  workflows: Workflows,
 }
 
 function MainApp() {

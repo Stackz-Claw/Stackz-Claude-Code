@@ -15,8 +15,8 @@ export class TwitterClient {
     // Load account 1
     if (process.env.X_ACCOUNT_1_ACCESS_TOKEN) {
       this.addAccount(1, {
-        bearerToken: process.env.X_BEARER_TOKEN || '',
         accessToken: process.env.X_ACCOUNT_1_ACCESS_TOKEN || '',
+        accessSecret: process.env.X_ACCOUNT_1_ACCESS_SECRET || '',
         apiKey: process.env.X_ACCOUNT_1_API_KEY || '',
         apiSecret: process.env.X_ACCOUNT_1_API_SECRET || ''
       });
@@ -25,8 +25,8 @@ export class TwitterClient {
     // Load account 2
     if (process.env.X_ACCOUNT_2_ACCESS_TOKEN) {
       this.addAccount(2, {
-        bearerToken: process.env.X_BEARER_TOKEN || '',
         accessToken: process.env.X_ACCOUNT_2_ACCESS_TOKEN || '',
+        accessSecret: process.env.X_ACCOUNT_2_ACCESS_SECRET || '',
         apiKey: process.env.X_ACCOUNT_2_API_KEY || '',
         apiSecret: process.env.X_ACCOUNT_2_API_SECRET || ''
       });
@@ -39,11 +39,12 @@ export class TwitterClient {
 
   addAccount(index, credentials) {
     try {
+      // Use OAuth 1.0a user context - the correct parameter names for twitter-api-v2
       const client = new TwitterApi({
-        bearerToken: credentials.bearerToken,
+        appKey: credentials.apiKey,
+        appSecret: credentials.apiSecret,
         accessToken: credentials.accessToken,
-        apiKey: credentials.apiKey,
-        apiSecret: credentials.apiSecret
+        accessSecret: credentials.accessSecret
       });
 
       this.accounts.set(index, client);
@@ -169,6 +170,20 @@ export class TwitterClient {
 
     const result = await client.v2.retweet(me.data.id, tweetId);
     console.error(`Retweeted: ${tweetId}`);
+    return result;
+  }
+
+  async followUser(targetUsername, accountId) {
+    const client = this.getClient(accountId);
+
+    // Get current user ID first
+    const me = await client.v2.me();
+
+    // Then get target user ID
+    const user = await client.v2.userByUsername(targetUsername);
+
+    // Then follow
+    const result = await client.v2.follow(me.data.id, user.data.id);
     return result;
   }
 
