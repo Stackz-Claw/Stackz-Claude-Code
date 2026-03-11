@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-const API_BASE = 'http://localhost:4001/api/approvals'
+const API_BASE = 'http://localhost:3001/api/approvals'
 
 export const useApprovalStore = create((set, get) => ({
   smokeApprovals: [],

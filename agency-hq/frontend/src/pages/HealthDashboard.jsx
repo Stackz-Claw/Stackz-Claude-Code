@@ -1,7 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PageHeader from '../components/layout/PageHeader'
-import healthData from '@mock/health.json'
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+
+// Default health data (fallback)
+const defaultHealthData = {
+  kpiOverview: {
+    healthScore: { current: 75, trend: '+2' },
+    sleep: { hours: 7.5, quality: 82 },
+    exercise: { minutes: 45, streak: 5 },
+    nutrition: { score: 78 },
+    recovery: { score: 80 },
+  },
+  goals: [],
+  dailyHabits: [],
+  weeklySchedule: [],
+  streaks: { exercise: 0, sleep: 0, nutrition: 0 },
+}
 
 // Overview tab
 import HealthKPIStrip from '../components/health/HealthKPIStrip'

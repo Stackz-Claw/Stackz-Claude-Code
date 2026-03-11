@@ -6,7 +6,7 @@
 import { create } from 'zustand'
 import { useSocket } from './useSocket'
 
-const API_BASE = 'http://localhost:4001/api'
+const API_BASE = 'http://localhost:3001/api'
 
 // Create zustand store
 export const useSoulStore = create((set, get) => ({

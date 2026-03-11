@@ -69,7 +69,7 @@ function tick() {
   // Pick a random agent and update their task
   const agents = agentsData.agents
   const agent = agents[Math.floor(Math.random() * agents.length)]
-  const newTask = getRandomTask(agent.id)
+  const newTask = getRandomTask(agent.id, TASK_POOL)
 
   io.emit('agent:update', {
     agentId: agent.id,

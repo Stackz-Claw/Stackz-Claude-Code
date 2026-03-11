@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PageHeader from '../components/layout/PageHeader'
 import GlassPanel from '../components/layout/GlassPanel'
@@ -146,7 +146,12 @@ function ApprovalCard({ item, onApprove, onReject, onModify, isResolved }) {
 }
 
 export default function ApprovalInboxPage() {
-  const { pending, resolved, approve, reject, modify } = useApprovalInboxStore()
+  const { pending, resolved, approve, reject, modify, fetchApprovals } = useApprovalInboxStore()
+
+  // Fetch approvals on mount
+  useEffect(() => {
+    fetchApprovals()
+  }, [fetchApprovals])
 
   return (
     <div className="h-full overflow-y-auto p-6 space-y-5">

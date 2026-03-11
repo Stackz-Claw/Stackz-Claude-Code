@@ -4,10 +4,22 @@ import PageHeader from '../components/layout/PageHeader'
 import GlassPanel from '../components/layout/GlassPanel'
 import AgentAvatar from '../components/AgentAvatar'
 import StatusChip from '../components/shared/StatusChip'
-import { useAgentStore } from '../store/agentStore'
 import { AGENT_PERSONALITIES } from '../data/personalities'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+
+// Sample health data (will be replaced by API data)
+const defaultHealthData = {
+  teams: {
+    health: { name: 'Health', color: '#14B8A6', budget: { used: 0, allocated: 1000 }, agents: [] },
+    business: { name: 'Business', color: '#10B981', budget: { used: 0, allocated: 1000 }, agents: [] },
+    security: { name: 'Security', color: '#6366F1', budget: { used: 0, allocated: 1000 }, agents: [] },
+    marketing: { name: 'Marketing', color: '#F59E0B', budget: { used: 0, allocated: 1000 }, agents: [] },
+    builder: { name: 'Builder', color: '#EF4444', budget: { used: 0, allocated: 1000 }, agents: [] },
+    research: { name: 'Research', color: '#8B5CF6', budget: { used: 0, allocated: 1000 }, agents: [] },
+    creative: { name: 'Creative', color: '#EC4899', budget: { used: 0, allocated: 1000 }, agents: [] },
+  }
+}
 
 function formatTime(ms) {
   const m = Math.floor(ms / 60000)
@@ -88,7 +100,26 @@ function BudgetBar({ used, allocated, color }) {
 
 export default function AgentHealthPage() {
   const [collapsed, setCollapsed] = useState({})
-  const teams = Object.entries(healthData.teams)
+  const [healthData, setHealthData] = useState(defaultHealthData)
+  const [loading, setLoading] = useState(true)
+
+  // Fetch agent health data from API
+  useEffect(() => {
+    fetch(`${API_BASE}/agents`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.teams) {
+          setHealthData({ teams: data.teams })
+        }
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Error fetching agent health:', err)
+        setLoading(false)
+      })
+  }, [])
+
+  const teams = Object.entries(healthData.teams).filter(([, t]) => t.agents.length > 0)
 
   const toggle = (key) => setCollapsed(s => ({ ...s, [key]: !s[key] }))
 

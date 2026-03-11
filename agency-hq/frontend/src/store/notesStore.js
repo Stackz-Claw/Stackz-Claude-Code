@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
 
 export const useNotesStore = create((set, get) => ({
   nodes: [],

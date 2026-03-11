@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const API_BASE = 'http://localhost:4001'
+const API_BASE = 'http://localhost:3001'
 
 function SkillBadge({ winRate }) {
   let color = '#EF4444' // red

@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PageHeader from '../components/layout/PageHeader'
 import GlassPanel from '../components/layout/GlassPanel'
 import PriorityBadge from '../components/shared/PriorityBadge'
 import { AGENT_PERSONALITIES } from '../data/personalities'
-import lanesData from '@mock/lanes.json'
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
 
 function formatElapsed(ms) {
   if (!ms) return '—'
@@ -116,7 +117,15 @@ const COLUMNS = [
 ]
 
 export default function LaneQueuePage() {
-  const lanes = lanesData.lanes
+  const [lanes, setLanes] = useState([])
+
+  // Fetch lanes from backend
+  useEffect(() => {
+    fetch(`${API_BASE}/lanes`)
+      .then(res => res.json())
+      .then(data => setLanes(data.lanes || []))
+      .catch(err => console.error('Error fetching lanes:', err))
+  }, [])
   const grouped = {
     pending: lanes.filter(l => l.status === 'pending'),
     active: lanes.filter(l => l.status === 'active'),

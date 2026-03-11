@@ -1,4 +1,12 @@
 {
-  "agents": [],
+  "agents": [
+    { "id": "smoke", "name": "Sheldon", "codename": "Smoke", "type": "health" },
+    { "id": "stackz", "name": "Stackz", "codename": "Stackz", "type": "business" },
+    { "id": "warden", "name": "Warden", "codename": "Warden", "type": "security" },
+    { "id": "megaphone", "name": "Megaphone", "codename": "Megaphone", "type": "marketing" },
+    { "id": "forge", "name": "Forge", "codename": "Forge", "type": "builder" },
+    { "id": "radar", "name": "Radar", "codename": "Radar", "type": "research" },
+    { "id": "canvas", "name": "Canvas", "codename": "Canvas", "type": "creative" }
+  ],
   "subAgents": {}
 }

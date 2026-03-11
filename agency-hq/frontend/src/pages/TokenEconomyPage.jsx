@@ -1,7 +1,7 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import PageHeader from '../components/layout/PageHeader'
 import GlassPanel from '../components/layout/GlassPanel'
-import tokenData from '@mock/token-economy.json'
 
 function KPICard({ label, value, sub, accent = '#0EA5E9', delay = 0 }) {
   return (
@@ -44,7 +44,31 @@ function TeamBar({ teams }) {
 }
 
 export default function TokenEconomyPage() {
-  const { overview, teams, agents, warnings } = tokenData
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/token-economy')
+      .then(res => res.json())
+      .then(tokenData => {
+        setData(tokenData)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Failed to load token economy:', err)
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="text-white/30 font-mono animate-pulse">Loading token economy...</div>
+      </div>
+    )
+  }
+
+  const { overview, teams, agents, warnings } = data
   const overBudget = overview.projected_month_end > overview.total_budget
 
   return (

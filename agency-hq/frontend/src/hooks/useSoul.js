@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 
-const API_BASE = 'http://localhost:4001/api'
+const API_BASE = 'http://localhost:3001/api'
 
 export const useSoul = (agentId) => {
   const [soul, setSoul] = useState(null)
