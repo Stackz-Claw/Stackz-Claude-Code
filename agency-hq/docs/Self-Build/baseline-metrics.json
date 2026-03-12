@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-03-11T00:00:00Z",
+  "metrics": {
+    "build_pass_rate": 0.0,
+    "selfop_completion_rate": 0.0,
+    "avg_cycle_time_min": 0.0,
+    "open_completion_matrix_items": 99,
+    "smoke_block_rate": 0.0,
+    "zettelkasten_notes": 0,
+    "test_pass_rate": 0.0
+  }
+}

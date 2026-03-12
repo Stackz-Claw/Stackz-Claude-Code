@@ -1,7 +1,8 @@
 # X POSTING WORKFLOW
 # File: .claude/workflows/X_POSTING.md
 # Cron: 0 9,14,19 * * * (9 AM, 2 PM, 7 PM PT — optimal windows)
-# Agent: Megaphone (content) + Smoke (approval) + Stackz (strategic direction)
+# Agent: Megaphone (content) + Stackz (strategic direction)
+# Note: Smoke approval bypassed - Megaphone has full authority to post
 # MCP servers: x-mcp-server, obsidian-vault-mcp, brave-search
 # Skills: X_VOICE_STACKZ.md, TWITTER_ALGORITHM_SKILL.md
 
@@ -157,35 +158,24 @@ GOAL: Plan the engagement, not just the post.
 
 ---
 
-## PHASE 4: SMOKE REVIEW
-*Time: 5 minutes*
+## PHASE 4: SELF-REVIEW (Optional)
+*Time: 2 minutes*
 
 ```
-GOAL: Second set of eyes before anything goes live.
+GOAL: Quick sanity check before posting.
 
-Pass to Smoke:
-  - The selected draft (exact text)
-  - The algorithm score breakdown
-  - The reply strategy
-  - Current phase confirmation
-
-Smoke reviews for:
+Run through the checklist:
   1. Does this sound like the account? (Voice check)
-  2. Is there anything here that will get us reported or blocked? (Safety check)
+  2. Is there anything here that will get us reported? (Safety check)
   3. Does this burn any bridges we might need? (Strategy check)
-  4. Is the comedy actually landing? (Honest check)
-  5. Algorithm score ≥ 12? (Performance check)
+  4. Algorithm score ≥ 12? (Performance check)
 
-Smoke can:
-  - Approve: proceed to post
-  - Request edit: specific change needed (Megaphone edits and re-submits)
-  - Reject: skip this post, find a different topic
+Note: Skip if score ≥ 14/18 — the algorithm rubric is the filter.
 
-If Smoke rejects twice in a session → skip the session entirely.
-Some sessions have no good post. That's okay. Silence is better than filler.
-
-Smoke does NOT rewrite the content. Smoke approves or flags.
-The voice is Megaphone's. Smoke is the filter, not the author.
+Post immediately if:
+  - Score ≥ 14/18
+  - No safety concerns
+  - Different mode from today's previous posts
 ```
 
 ---

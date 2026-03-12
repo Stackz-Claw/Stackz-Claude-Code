@@ -20,6 +20,12 @@ const NAV_ITEMS = [
   { id: 'notes', label: 'Smart Notes', icon: '🔗', shortcut: '9' },
   { id: 'timeline', label: 'Timeline', icon: '🕐', shortcut: '0' },
   { id: 'workflows', label: 'Workflows', icon: '⚙️', shortcut: '-' },
+  // — Knowledge —
+  { id: 'zettelkasten', label: 'Knowledge', icon: '🧠', shortcut: '=' },
+  { id: 'ideas', label: 'Ideas', icon: '💡', shortcut: '[' },
+  { id: 'vault', label: 'Vault', icon: '📚', shortcut: ']' },
+  // — System —
+  { id: 'settings', label: 'Settings', icon: '⚙️', shortcut: '\\' },
 ]
 
 const DOMAIN_LEADS = [

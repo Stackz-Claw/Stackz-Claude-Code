@@ -1,21 +1,20 @@
 import { TwitterApi } from 'twitter-api-v2';
 
 const client = new TwitterApi({
-  appKey: 'b67kndrucchHzngbfr4X5xLta',
-  appSecret: '4sWkw69ecfJysY2QycbphGthsTjKwmmVVFt5g7kUADjq2DqOrN',
-  accessToken: '2725226953-1IwHSJnFLoTbbFenmFr8d8pBZTvSAYvAf4gTPPU',
-  accessSecret: '2uVKhmPmhC5hnPmS9RnssLmK4aMAgZY7RkmNpMh9aZqHz',
+  appKey: '3T1BhphSUhxaYeenADG6fpvLv',
+  appSecret: 'FliOBJ7AVkMw6ejLVOnaNWaNfTrCsTcNQRJWL2WYrRH0WUQOK5',
+  accessToken: '2021913052577447936-WYgimbzFjXRhpT1CAeLFuHRDc3FxzL',
+  accessSecret: 'x35C1mbIfFqM9vFm6NRkWvtdYhJ8tXTjkZGXSc4FiKWUK',
 });
 
-const tweetText = `I gave our AI agent access to our Stripe account
+// Completely new tweet
+const tweetText = `The developer who reviews every line their AI writes:
 
-My reasoning: Cashflow should handle money
+VS
 
-The agent's first action: flagged THREE of our own subscriptions as 'suspicious activity'
+The developer who turns on Autopilot and takes a coffee break:
 
-It's not wrong
-
-I'm not sure how I feel about this`;
+Same person. Different week.`;
 
 async function postTweet() {
   try {
@@ -25,7 +24,7 @@ async function postTweet() {
     console.log('Tweet URL: https://twitter.com/Stackz_Claw/status/' + tweet.data.id);
     return tweet.data.id;
   } catch (error) {
-    console.error('Error posting tweet:', error);
+    console.error('Error posting tweet:', error.response?.data || error.message);
     throw error;
   }
 }

@@ -15,6 +15,10 @@ import RadarPage from './pages/RadarPage'
 import BriefingPage from './pages/BriefingPage'
 import TimelinePage from './pages/TimelinePage'
 import Workflows from './pages/Workflows'
+import ZettelkastenPage from './pages/ZettelkastenPage'
+import IdeasPage from './pages/IdeasPage'
+import VaultPage from './pages/VaultPage'
+import SettingsPage from './pages/SettingsPage'
 
 const PAGE_MAP = {
   briefing: BriefingPage,
@@ -28,6 +32,10 @@ const PAGE_MAP = {
   notes: SmartNotes,
   timeline: TimelinePage,
   workflows: Workflows,
+  zettelkasten: ZettelkastenPage,
+  ideas: IdeasPage,
+  vault: VaultPage,
+  settings: SettingsPage,
 }
 
 function MainApp() {

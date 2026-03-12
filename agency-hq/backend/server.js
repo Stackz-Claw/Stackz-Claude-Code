@@ -33,7 +33,11 @@ app.use('/api/chat', require('./routes/chat'))
 app.use('/api/zettelkasten', require('./routes/zettelkasten'))
 app.use('/api/timeline', require('./routes/timeline'))
 app.use('/api/workflows', require('./routes/workflows'))
+app.use('/api/completion-matrix', require('./routes/completionMatrix'))
 app.use('/api/browser', require('./routes/browser'))
+app.use('/api/ideas', require('./routes/ideas'))
+app.use('/api/vault', require('./routes/vault'))
+app.use('/api/completion-matrix', require('./routes/completionMatrix'))
 
 // Health check
 app.get('/api/ping', (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }))
@@ -43,6 +47,12 @@ require('./sockets/socketHandlers')(io)
 
 // Agent engine (autonomous activity)
 require('./services/agentEngine').start(io)
+
+// Self-optimization scheduler
+require('./scheduler')
+
+// Self-optimization scheduler
+require('./scheduler')
 
 // Telegram bots (gracefully skip if tokens not set)
 const smokeBot = require('./services/smokeBot')
