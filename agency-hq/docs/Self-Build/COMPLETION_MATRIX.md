@@ -42,14 +42,32 @@ Single source of truth for all buildable components.
 
 ## Autoresearch Integration
 
-| Component | Status | Priority | Owner | Notes |
-|-----------|--------|----------|-------|-------|
-| TimeBudgetService | COMPLETE | P1 | Stackz | SELF-OP discipline |
+| Component | Status | Priority | Owner | Description |
+|-----------|--------|----------|-------|-------------|
+| TimeBudgetService | COMPLETE | P1 | Stackz | Fixed time budget per experiment |
 | SystemScoreService + baseline | COMPLETE | P1 | Smoke | Experiment ratchet |
-| systemChecks.js test suite | COMPLETE | P1 | Smoke | Metric-first eval |
+| systemChecks.js test suite | COMPLETE | P1 | Smoke | Metric-first evaluation |
 | SELF-OP STRATEGY section | TODO | P1 | Stackz | program.md pattern |
-| Experiment log | TODO | P2 | Stackz | Visibility |
+| selfbuild_experiments table | TODO | P2 | Stackz | Experiment log DB |
+| Experiment log UI widget | TODO | P2 | Stackz | Visibility |
 | SELF_BUILD micro-experiment loop | TODO | P2 | Stackz | Overnight cadence |
+
+## Autonomous Wallet
+
+| Component | Status | Priority | Owner | Description |
+|-----------|--------|----------|-------|-------------|
+| WALLET_PRIME_DIRECTIVE.md | COMPLETE | P0 | Stackz | Financial core |
+| WALLET_AUTONOMOUS skill | COMPLETE | P0 | Stackz | Self-pay |
+| SMOKE_COSIGN skill | COMPLETE | P0 | Smoke | Spend gate |
+| TOOL_ACQUISITION skill | COMPLETE | P0 | Stackz | Tool lifecycle |
+| CAMPAIGN_SPEND skill | COMPLETE | P1 | Megaphone | Campaigns |
+| FINANCIAL_SELF_PRESERVATION | COMPLETE | P0 | Stackz | Circuit breakers |
+| autoRenewalService.js | COMPLETE | P0 | Stackz | Auto top-up |
+| compoundingTrackerService.js | COMPLETE | P1 | Cashflow | Growth tracking |
+| wallet-autonomous routes | COMPLETE | P0 | Stackz | API surface |
+| Tools/ Obsidian folder tree | COMPLETE | P0 | Stackz | Tool tracking |
+| Finance/Compounding folder | COMPLETE | P1 | Cashflow | Weekly report |
+| Seed initialization | TODO | P0 | Jaleel | Initial deposit |
 
 ## Infrastructure
 
@@ -61,18 +79,6 @@ Single source of truth for all buildable components.
 | Smoke review service | COMPLETE | P0 | Smoke | Code quality |
 | System health service | COMPLETE | P1 | Stackz | Diagnostics |
 | Claude Code settings | COMPLETE | P0 | Stackz | Permissions |
-
-## Autoresearch Integration
-
-| Component | Status | Priority | Owner | Description |
-|-----------|--------|----------|-------|-------------|
-| TimeBudgetService | COMPLETE | P1 | Stackz | Fixed time budget per experiment |
-| SystemScoreService + baseline | COMPLETE | P1 | Smoke | Experiment ratchet |
-| systemChecks.js test suite | COMPLETE | P1 | Smoke | Metric-first evaluation |
-| SELF-OP STRATEGY section | TODO | P1 | Stackz | program.md pattern |
-| selfbuild_experiments table | TODO | P2 | Stackz | Experiment log DB |
-| Experiment log UI widget | TODO | P2 | Stackz | Visibility |
-| SELF_BUILD micro-experiment loop | TODO | P2 | Stackz | Overnight cadence |
 
 ---
 
@@ -93,5 +99,5 @@ Single source of truth for all buildable components.
 
 ---
 
-*Last updated: 2026-03-11*
+*Last updated: 2026-03-12*
 *Auto-maintained by SELF_BUILD workflow*
