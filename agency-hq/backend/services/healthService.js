@@ -19,6 +19,7 @@ const HEALTH_TARGETS = {
   obsidianMcp: 'Obsidian MCP',
   stripeMcp: 'Stripe MCP',
   xMcp: 'X MCP',
+  braveSearchMcp: 'Brave Search MCP',
   ollamaApi: 'Ollama API',
   scheduledWorkflows: 'Scheduled workflows',
   socketIo: 'Socket.io',
@@ -47,6 +48,7 @@ async function runHealthChecks() {
     checkObsidianMcp(),
     checkStripeMcp(),
     checkXMcp(),
+    checkBraveSearchMcp(),
     checkOllamaApi(),
     checkScheduledWorkflows(),
     checkSocketIo(),
@@ -149,9 +151,17 @@ async function checkObsidianMcp() {
   // Try to read a test note via Obsidian MCP
   try {
     // This would use obsidian-vault-mcp if configured
+    // For now, we'll check if the heartbeat service can reach it
+    const heartbeatService = require('./heartbeatService');
+    const obsidianCheck = await heartbeatService.checkMcpServer('obsidian', heartbeatService.MCP_SERVERS.obsidian);
+
     return {
-      status: 'warn',
-      message: 'Obsidian MCP check not implemented - requires vault access'
+      status: obsidianCheck.status === 'healthy' ? 'pass' :
+              obsidianCheck.status === 'warning' ? 'warn' : 'fail',
+      message: obsidianCheck.message,
+      details: {
+        responseTime: obsidianCheck.responseTime
+      }
     };
   } catch (error) {
     return {
@@ -191,11 +201,25 @@ async function checkStripeMcp() {
 }
 
 async function checkXMcp() {
-  // Check if X credentials are valid by trying to post
-  return {
-    status: 'warn',
-    message: 'X MCP check requires active posting to verify'
-  };
+  // Check X MCP server health using heartbeat service
+  try {
+    const heartbeatService = require('./heartbeatService');
+    const xCheck = await heartbeatService.checkMcpServer('x', heartbeatService.MCP_SERVERS.x);
+
+    return {
+      status: xCheck.status === 'healthy' ? 'pass' :
+              xCheck.status === 'warning' ? 'warn' : 'fail',
+      message: xCheck.message,
+      details: {
+        responseTime: xCheck.responseTime
+      }
+    };
+  } catch (error) {
+    return {
+      status: 'fail',
+      message: `X MCP error: ${error.message}`
+    };
+  }
 }
 
 async function checkOllamaApi() {
@@ -292,6 +316,28 @@ async function checkGitRepo() {
     return {
       status: 'warn',
       message: 'Git check unavailable'
+    };
+  }
+}
+
+async function checkBraveSearchMcp() {
+  // Check Brave Search MCP server health using heartbeat service
+  try {
+    const heartbeatService = require('./heartbeatService');
+    const braveCheck = await heartbeatService.checkMcpServer('braveSearch', heartbeatService.MCP_SERVERS.braveSearch);
+
+    return {
+      status: braveCheck.status === 'healthy' ? 'pass' :
+              braveCheck.status === 'warning' ? 'warn' : 'fail',
+      message: braveCheck.message,
+      details: {
+        responseTime: braveCheck.responseTime
+      }
+    };
+  } catch (error) {
+    return {
+      status: 'fail',
+      message: `Brave Search MCP error: ${error.message}`
     };
   }
 }

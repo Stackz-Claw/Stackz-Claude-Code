@@ -5,6 +5,7 @@
 
 const agentsData = require('../../mock-data/agents.json')
 const { generateChatMessage } = require('./dialogueService')
+const { logAgentThought } = require('../middleware/zettelkastenMiddleware')
 
 let io
 let agentTasks = {}
@@ -70,6 +71,14 @@ function tick() {
   const agents = agentsData.agents
   const agent = agents[Math.floor(Math.random() * agents.length)]
   const newTask = getRandomTask(agent.id, TASK_POOL)
+
+  // Log agent thinking to Zettelkasten
+  logAgentThought(
+    agent.id,
+    `Agent is considering next actions while performing: ${newTask}`,
+    `Continuing with task: ${newTask}`,
+    'Periodic agent activity simulation'
+  )
 
   io.emit('agent:update', {
     agentId: agent.id,

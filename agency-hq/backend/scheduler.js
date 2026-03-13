@@ -1,6 +1,6 @@
 /**
- * Stackz Self-Optimization Scheduler
- * Runs all 5 self-optimization workflows on cron schedule
+ * Stackz Workflow Scheduler
+ * Runs all scheduled workflows on cron schedule
  *
  * Each job triggers a Claude Code session that reads the workflow file and executes it.
  * All inference routes through Ollama API - no Anthropic credits consumed.
@@ -20,6 +20,10 @@ if (!fs.existsSync(LOG_DIR)) {
 const CLAUDE_BIN = 'claude'; // Assumes Claude Code is in PATH
 const PROJECT_DIR = '/Users/jaleeljenkins/Desktop/Stackz/agency-hq';
 const SELF_BUILD_PROMPT = `Run the SELF_BUILD workflow. Load GOAL.md and COMPLETION_MATRIX.md first. Focus on the highest-priority incomplete component.`;
+const SELF_OPTIMIZE_PROMPT = `Run the SELF_OPTIMIZATION workflow. Analyze performance, identify inefficiencies, and generate improvement proposals for approval.`;
+const MORNING_BRAINSTORM_PROMPT = `Run the MORNING_BRAINSTORM workflow. Generate 3 new profitable business ideas through structured brainstorming.`;
+const WEEKLY_REPORT_PROMPT = `Run the WEEKLY_REPORT workflow. Generate comprehensive weekly report with key metrics and insights.`;
+const SEMANTIC_SNAPSHOT_PROMPT = `Run the SEMANTIC_SNAPSHOT workflow. Capture current state and generate semantic snapshot for historical tracking.`;
 
 // === Helper Functions ===
 
@@ -97,12 +101,35 @@ cron.schedule('0 2 * * *', async () => {
  */
 cron.schedule('0 3 * * *', async () => {
   logToFile('Starting ZETTELKASTEN...');
-  const prompt = `Run the ZETTELKASTEN workflow. Consolidate fleeting notes and detect clusters.`;
   const logFile = path.join(LOG_DIR, `zettelkasten-${new Date().toISOString().split('T')[0]}.log`);
 
   try {
-    await runClaudeSession(prompt, logFile);
-    logToFile('ZETTELKASTEN completed');
+    // Use the dedicated Zettelkasten processor instead of Claude session
+    const { runZettelkastenWorkflow } = require('./scripts/run-zettelkasten-workflow');
+
+    // Redirect stdout to log file
+    const originalStdoutWrite = process.stdout.write;
+    const originalStderrWrite = process.stderr.write;
+
+    const logStream = require('fs').createWriteStream(logFile, { flags: 'a' });
+    process.stdout.write = function(chunk, encoding, callback) {
+      logStream.write(chunk, encoding, callback);
+      return originalStdoutWrite.call(this, chunk, encoding, callback);
+    };
+
+    process.stderr.write = function(chunk, encoding, callback) {
+      logStream.write(chunk, encoding, callback);
+      return originalStderrWrite.call(this, chunk, encoding, callback);
+    };
+
+    await runZettelkastenWorkflow();
+
+    // Restore stdout/stderr
+    process.stdout.write = originalStdoutWrite;
+    process.stderr.write = originalStderrWrite;
+    logStream.end();
+
+    logToFile('ZETTELKASTEN completed successfully');
   } catch (error) {
     logToFile(`ZETTELKASTEN failed: ${error.message}`);
   }
@@ -181,6 +208,78 @@ cron.schedule('*/30 * * * *', async () => {
   // TODO: Implement actual SELF-OP polling via obsidian-vault-mcp
   // const file = await obsidianMcp.read('SELF-OP.md');
   // if (hasNewTasking(file)) { triggerSession(); }
+}, {
+  timezone: 'America/Los_Angeles'
+});
+
+/**
+ * STACKZ SELF-OPTIMIZATION - 5:00 AM daily
+ * Stackz analyzes performance, identifies inefficiencies, and proposes improvements
+ */
+cron.schedule('0 5 * * *', async () => {
+  logToFile('Starting STACKZ SELF-OPTIMIZATION...');
+  const logFile = path.join(LOG_DIR, `self-optimization-${new Date().toISOString().split('T')[0]}.log`);
+
+  try {
+    await runClaudeSession(SELF_OPTIMIZE_PROMPT, logFile);
+    logToFile('STACKZ SELF-OPTIMIZATION completed successfully');
+  } catch (error) {
+    logToFile(`STACKZ SELF-OPTIMIZATION failed: ${error.message}`);
+  }
+}, {
+  timezone: 'America/Los_Angeles'
+});
+
+/**
+ * MORNING BRAINSTORM - 8:00 AM daily
+ * Generate 3 new profitable business ideas
+ */
+cron.schedule('0 8 * * *', async () => {
+  logToFile('Starting MORNING BRAINSTORM...');
+  const logFile = path.join(LOG_DIR, `morning-brainstorm-${new Date().toISOString().split('T')[0]}.log`);
+
+  try {
+    await runClaudeSession(MORNING_BRAINSTORM_PROMPT, logFile);
+    logToFile('MORNING BRAINSTORM completed');
+  } catch (error) {
+    logToFile(`MORNING BRAINSTORM failed: ${error.message}`);
+  }
+}, {
+  timezone: 'America/Los_Angeles'
+});
+
+/**
+ * WEEKLY REPORT - 9:00 AM Sundays
+ * Generate comprehensive weekly report
+ */
+cron.schedule('0 9 * * 0', async () => {
+  logToFile('Starting WEEKLY REPORT...');
+  const logFile = path.join(LOG_DIR, `weekly-report-${new Date().toISOString().split('T')[0]}.log`);
+
+  try {
+    await runClaudeSession(WEEKLY_REPORT_PROMPT, logFile);
+    logToFile('WEEKLY REPORT completed');
+  } catch (error) {
+    logToFile(`WEEKLY REPORT failed: ${error.message}`);
+  }
+}, {
+  timezone: 'America/Los_Angeles'
+});
+
+/**
+ * SEMANTIC SNAPSHOT - 9:00 PM daily
+ * Capture current state for historical tracking
+ */
+cron.schedule('0 21 * * *', async () => {
+  logToFile('Starting SEMANTIC SNAPSHOT...');
+  const logFile = path.join(LOG_DIR, `semantic-snapshot-${new Date().toISOString().split('T')[0]}.log`);
+
+  try {
+    await runClaudeSession(SEMANTIC_SNAPSHOT_PROMPT, logFile);
+    logToFile('SEMANTIC SNAPSHOT completed');
+  } catch (error) {
+    logToFile(`SEMANTIC SNAPSHOT failed: ${error.message}`);
+  }
 }, {
   timezone: 'America/Los_Angeles'
 });

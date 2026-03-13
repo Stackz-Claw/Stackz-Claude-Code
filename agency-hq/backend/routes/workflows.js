@@ -3,6 +3,7 @@ const router = express.Router()
 const fs = require('fs')
 const path = require('path')
 const { getDb } = require('../db/database')
+const { logWorkflowContext } = require('../middleware/zettelkastenMiddleware')
 
 // Workflows data file
 const WORKFLOWS_FILE = path.join(__dirname, '..', 'data', 'workflows.json')
@@ -328,6 +329,15 @@ router.post('/:id/status', (req, res) => {
   try {
     const { status, currentPhase, lastResult, lastError, blockReason } = req.body
     const { id } = req.params
+
+    // Log workflow context to Zettelkasten
+    logWorkflowContext(
+      id,
+      currentPhase || 'unknown',
+      { status, lastResult, lastError, blockReason },
+      lastResult || status,
+      'workflow-manager'
+    )
 
     const db = getDb()
 

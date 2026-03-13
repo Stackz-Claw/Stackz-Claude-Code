@@ -7,18 +7,113 @@ const path = require('path')
 const OBSIDIAN_VAULT_PATH = '/Users/jaleeljenkins/Documents/Agents'
 const ZETTELKASTEN_BASE = path.join(OBSIDIAN_VAULT_PATH, 'Agency HQ/Zettelkasten')
 
-// Helper: scan a directory for notes with frontmatter
-function scanNotes(dir, typeFilter = null) {
+// Helper: scan a directory for notes with frontmatter (optimized version)
+function scanNotes(dir, typeFilter = null, options = {}) {
   const notes = []
+  const { limit = 0, batch = false, batchSize = 100 } = options
 
   if (!fs.existsSync(dir)) {
     return notes
   }
 
+  function walk(directory, currentBatch = []) {
+    const files = fs.readdirSync(directory)
+    let batchCount = 0
+
+    for (const file of files) {
+      if (limit > 0 && notes.length >= limit) break
+
+      if (!file.endsWith('.md')) continue
+
+      const filePath = path.join(directory, file)
+      const stat = fs.statSync(filePath)
+
+      if (stat.isDirectory()) {
+        walk(filePath, currentBatch)
+        continue
+      }
+
+      try {
+        // For performance, only read frontmatter initially
+        const content = fs.readFileSync(filePath, 'utf-8')
+        const frontmatter = parseFrontmatter(content)
+
+        if (typeFilter && frontmatter.type !== typeFilter) {
+          continue
+        }
+
+        const relativePath = path.relative(ZETTELKASTEN_BASE, filePath)
+
+        // Extract title (first heading or filename)
+        const titleMatch = content.match(/^##?\s+(.+)$/m)
+        const title = titleMatch ? titleMatch[1] : file.replace('.md', '')
+
+        const note = {
+          path: relativePath,
+          obsidianPath: filePath,
+          filename: file,
+          title,
+          type: frontmatter.type || 'unknown',
+          agent: frontmatter.agent || 'unknown',
+          tags: frontmatter.tags || [],
+          created_at: frontmatter.created_at || frontmatter.captured_at || stat.mtime.toISOString(),
+          frontmatter
+        }
+
+        // Only do expensive link counting when needed
+        if (!batch || batchCount < batchSize) {
+          // Count outbound links only when necessary
+          const linkMatches = content.match(/\[\[ZK-[^\]]+\]\]/g) || []
+          note.link_count = linkMatches.length
+          note.outbound_links = [...new Set(linkMatches.map(m => m.replace(/[\[\]]/g, '')))]
+
+          if (batch) {
+            currentBatch.push(note)
+            batchCount++
+
+            if (batchCount >= batchSize) {
+              notes.push(...currentBatch)
+              currentBatch.length = 0
+              batchCount = 0
+            }
+          } else {
+            notes.push(note)
+          }
+        } else {
+          notes.push(note)
+        }
+      } catch (e) {
+        // Skip malformed files
+        console.warn(`Skipping malformed file: ${filePath}`, e.message)
+      }
+    }
+
+    // Add remaining batch items
+    if (batch && currentBatch.length > 0) {
+      notes.push(...currentBatch)
+    }
+  }
+
+  walk(dir, [])
+  return notes
+}
+
+// Helper: scan directory for file paths only (for performance)
+function scanPaths(dir, typeFilter = null, limit = 0) {
+  const paths = []
+
+  if (!fs.existsSync(dir)) {
+    return paths
+  }
+
   function walk(directory) {
+    if (limit > 0 && paths.length >= limit) return
+
     const files = fs.readdirSync(directory)
 
     for (const file of files) {
+      if (limit > 0 && paths.length >= limit) break
+
       if (!file.endsWith('.md')) continue
 
       const filePath = path.join(directory, file)
@@ -30,44 +125,25 @@ function scanNotes(dir, typeFilter = null) {
       }
 
       try {
-        const content = fs.readFileSync(filePath, 'utf-8')
-        const frontmatter = parseFrontmatter(content)
-
-        if (typeFilter && frontmatter.type !== typeFilter) {
-          return
+        // Just check the file for filtering, don't read content yet
+        if (typeFilter) {
+          const content = fs.readFileSync(filePath, 'utf-8')
+          const frontmatter = parseFrontmatter(content)
+          if (frontmatter.type !== typeFilter) {
+            continue
+          }
         }
 
-        const relativePath = path.relative(ZETTELKASTEN_BASE, filePath)
-
-        // Count outbound links
-        const linkMatches = content.match(/\[\[ZK-[^\]]+\]\]/g) || []
-        const outboundLinks = [...new Set(linkMatches.map(m => m.replace(/[\[\]]/g, '')))]
-
-        // Extract title (first heading or filename)
-        const titleMatch = content.match(/^##?\s+(.+)$/m)
-        const title = titleMatch ? titleMatch[1] : file.replace('.md', '')
-
-        notes.push({
-          path: relativePath,
-          obsidianPath: filePath,
-          filename: file,
-          title,
-          type: frontmatter.type || 'unknown',
-          agent: frontmatter.agent || 'unknown',
-          tags: frontmatter.tags || [],
-          created_at: frontmatter.created_at || frontmatter.captured_at || stat.mtime.toISOString(),
-          link_count: outboundLinks.length,
-          outbound_links: outboundLinks,
-          frontmatter
-        })
+        paths.push(filePath)
       } catch (e) {
         // Skip malformed files
+        console.warn(`Skipping malformed file during path scan: ${filePath}`, e.message)
       }
     }
   }
 
   walk(dir)
-  return notes
+  return paths
 }
 
 // Helper: parse YAML frontmatter

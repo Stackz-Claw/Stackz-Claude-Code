@@ -106,6 +106,10 @@ export const api = {
 
   // System health
   health: () => apiFetch('/api/health'),
+  heartbeat: {
+    status: () => apiFetch('/api/heartbeat/status'),
+    full: () => apiFetch('/api/heartbeat'),
+  },
 
   // Lanes
   lanes: {

@@ -98,7 +98,7 @@ router.patch('/:component', (req, res) => {
 
     // Build regex to find the component row
     const escapedComponent = component.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`(\\| ${escapedComponent} \\|)([^|]+)(\\|)`;
+    const regex = new RegExp(`(\\| ${escapedComponent} \\|)([^|]+)(\\|)`);
 
     if (!regex.test(content)) {
       return res.status(404).json({ error: `Component not found: ${component}` });

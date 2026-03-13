@@ -4,6 +4,7 @@
  */
 
 const TelegramBot = require('node-telegram-bot-api')
+const { logAgentThought } = require('../middleware/zettelkastenMiddleware')
 
 let bot = null
 let io = null
@@ -22,10 +23,26 @@ function init(socketIo) {
     bot = new TelegramBot(token, { polling: true })
     console.log('[StackzBot] Online — polling mode active')
 
+    // Log initialization to Zettelkasten
+    logAgentThought(
+      'stackz',
+      'Initializing Stackz Telegram bot for revenue monitoring and alerts',
+      'Bot initialized successfully',
+      'Telegram bot startup'
+    )
+
     // Handle incoming messages
     bot.on('message', (msg) => {
       const text = msg.text
       if (!text) return
+
+      // Log incoming message
+      logAgentThought(
+        'stackz',
+        `Received Telegram message: ${text.substring(0, 100)}...`,
+        'Processing message for potential actions',
+        'Telegram message handling'
+      )
 
       if (io) {
         io.emit('chat:message', {
@@ -42,6 +59,14 @@ function init(socketIo) {
     bot.on('callback_query', (query) => {
       const [action, approvalId] = query.data.split(':')
 
+      // Log callback action
+      logAgentThought(
+        'stackz',
+        `Received callback query: ${action} for approval ${approvalId}`,
+        `Executing action: ${action}`,
+        'Telegram callback handling'
+      )
+
       if (io) {
         io.emit('approval:action', { id: approvalId, action, note: 'Actioned via Telegram' })
       }
@@ -55,6 +80,15 @@ function init(socketIo) {
     return bot
   } catch (err) {
     console.error('[StackzBot] Init error:', err.message)
+
+    // Log error to Zettelkasten
+    logAgentThought(
+      'stackz',
+      'Failed to initialize Stackz Telegram bot',
+      `Error occurred: ${err.message}`,
+      'Telegram bot initialization error'
+    )
+
     return null
   }
 }

@@ -38,6 +38,7 @@ app.use('/api/completion-matrix', require('./routes/completionMatrix'))
 app.use('/api/browser', require('./routes/browser'))
 app.use('/api/ideas', require('./routes/ideas'))
 app.use('/api/vault', require('./routes/vault'))
+app.use('/api/heartbeat', require('./routes/heartbeat'))
 app.use('/api/completion-matrix', require('./routes/completionMatrix'))
 
 // Health check
@@ -52,14 +53,15 @@ require('./services/agentEngine').start(io)
 // Self-optimization scheduler
 require('./scheduler')
 
-// Self-optimization scheduler
-require('./scheduler')
-
 // Telegram bots (gracefully skip if tokens not set)
 const smokeBot = require('./services/smokeBot')
 const stackzBot = require('./services/stackzBot')
 smokeBot.init(io)
 stackzBot.init(io)
+
+// Heartbeat monitoring for MCP servers
+const heartbeatService = require('./services/heartbeatService')
+heartbeatService.startHeartbeatMonitoring()
 
 // Start server
 const PORT = process.env.PORT || 4001

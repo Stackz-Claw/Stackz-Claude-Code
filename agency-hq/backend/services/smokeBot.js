@@ -4,6 +4,7 @@
  */
 
 const TelegramBot = require('node-telegram-bot-api')
+const { logAgentThought } = require('../middleware/zettelkastenMiddleware')
 
 let bot = null
 let io = null
@@ -15,6 +16,15 @@ function init(socketIo) {
 
   if (!token || token === 'your_smoke_bot_token_here') {
     console.log('[SmokeBot] Token not set — Telegram integration disabled. See .env.example')
+
+    // Log to Zettelkasten
+    logAgentThought(
+      'smoke',
+      'Smoke bot initialization attempted but token not set',
+      'Skipping Telegram integration',
+      'Bot initialization'
+    )
+
     return null
   }
 
@@ -22,11 +32,27 @@ function init(socketIo) {
     bot = new TelegramBot(token, { polling: true })
     console.log('[SmokeBot] Online — polling mode active')
 
+    // Log successful initialization
+    logAgentThought(
+      'smoke',
+      'Successfully initialized Smoke Telegram bot for health monitoring',
+      'Bot is now online and polling',
+      'Telegram bot startup'
+    )
+
     // Handle incoming messages (Telegram → Dashboard)
     bot.on('message', (msg) => {
       const text = msg.text
       if (!text) return
       console.log(`[SmokeBot] Received: ${text}`)
+
+      // Log incoming message
+      logAgentThought(
+        'smoke',
+        `Received Telegram message: ${text.substring(0, 100)}...`,
+        'Routing message to dashboard',
+        'Telegram message handling'
+      )
 
       // Route back to dashboard via socket
       if (io) {
@@ -45,6 +71,14 @@ function init(socketIo) {
       const [action, approvalId] = query.data.split(':')
       console.log(`[SmokeBot] Callback: ${action} on ${approvalId}`)
 
+      // Log callback action
+      logAgentThought(
+        'smoke',
+        `Received callback query: ${action} for approval ${approvalId}`,
+        `Executing action: ${action}`,
+        'Telegram callback handling'
+      )
+
       if (io) {
         io.emit('approval:action', { id: approvalId, action, note: 'Actioned via Telegram' })
       }
@@ -60,6 +94,15 @@ function init(socketIo) {
     return bot
   } catch (err) {
     console.error('[SmokeBot] Init error:', err.message)
+
+    // Log error to Zettelkasten
+    logAgentThought(
+      'smoke',
+      'Failed to initialize Smoke Telegram bot',
+      `Error occurred: ${err.message}`,
+      'Telegram bot initialization error'
+    )
+
     return null
   }
 }
