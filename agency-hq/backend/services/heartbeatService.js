@@ -5,7 +5,10 @@
  * Sends urgent alerts to the UI when issues are detected.
  */
 
-const fetch = require('node-fetch');
+// Get fetch - native in Node 21+, or use node-fetch package
+const nodeMajorVersion = parseInt(process.version.slice(1).split('.')[0]);
+const fetch = nodeMajorVersion >= 21 ? globalThis.fetch : require('node-fetch');
+
 const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
@@ -24,24 +27,25 @@ try {
 const MCP_SERVERS = {
   bookmarks: {
     name: 'Bookmarks MCP',
-    url: 'http://localhost:3002', // Default port for bookmarks server
-    healthEndpoint: '/health',
+    type: 'stdio',
+    path: '/Users/jaleeljenkins/Desktop/Stackz/mcp-servers/bookmarks/server.js',
     apiKeyEnvVar: null // No API key needed
   },
   x: {
     name: 'X MCP',
-    url: 'http://localhost:3003', // Default port for X server
-    healthEndpoint: '/health',
+    type: 'stdio',
+    path: '/Users/jaleeljenkins/Desktop/Stackz/x-mcp-server/src/index.js',
     apiKeyEnvVar: 'X_API_KEY'
   },
   obsidian: {
     name: 'Obsidian MCP',
-    url: 'http://localhost:3004', // Default port for Obsidian server
-    healthEndpoint: '/health',
+    type: 'stdio',
+    path: '/Users/jaleeljenkins/Desktop/Stackz/obsidian-vault-mcp/src/server.ts',
     apiKeyEnvVar: null // No API key needed
   },
   braveSearch: {
     name: 'Brave Search MCP',
+    type: 'http',
     url: 'http://localhost:3005', // Default port for Brave Search
     healthEndpoint: '/health',
     apiKeyEnvVar: 'BRAVE_SEARCH_API_KEY'

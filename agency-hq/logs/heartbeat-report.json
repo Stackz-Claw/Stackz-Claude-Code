@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-03-13T16:38:46.694Z",
+  "results": [
+    {
+      "name": "X MCP",
+      "status": "error",
+      "message": "Missing or invalid API key: X_API_KEY",
+      "responseTime": 0,
+      "timestamp": "2026-03-13T16:38:46.690Z",
+      "urgent": true
+    },
+    {
+      "name": "Brave Search MCP",
+      "status": "error",
+      "message": "Missing or invalid API key: BRAVE_SEARCH_API_KEY",
+      "responseTime": 0,
+      "timestamp": "2026-03-13T16:38:46.690Z",
+      "urgent": true
+    },
+    {
+      "name": "Bookmarks MCP",
+      "status": "error",
+      "message": "Connection failed: Failed to parse URL from undefinedundefined",
+      "responseTime": 9,
+      "timestamp": "2026-03-13T16:38:46.691Z",
+      "urgent": false
+    },
+    {
+      "name": "Obsidian MCP",
+      "status": "error",
+      "message": "Connection failed: Failed to parse URL from undefinedundefined",
+      "responseTime": 1,
+      "timestamp": "2026-03-13T16:38:46.691Z",
+      "urgent": false
+    }
+  ],
+  "urgentAlerts": [
+    {
+      "server": "X MCP",
+      "message": "Missing or invalid API key: X_API_KEY",
+      "severity": "critical",
+      "timestamp": "2026-03-13T16:38:46.690Z"
+    },
+    {
+      "server": "Brave Search MCP",
+      "message": "Missing or invalid API key: BRAVE_SEARCH_API_KEY",
+      "severity": "critical",
+      "timestamp": "2026-03-13T16:38:46.690Z"
+    }
+  ]
+}
